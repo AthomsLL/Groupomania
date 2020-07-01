@@ -18,7 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         lastName : DataTypes.STRING,
         avatar : DataTypes.STRING,
         department : DataTypes.STRING,
-        isAdmin : DataTypes.BOOLEAN
+        isAdmin : { 
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
     });
     
     User.associate = models => {

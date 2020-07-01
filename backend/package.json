@@ -4,7 +4,7 @@
   "description": "Backend of Groupomania's project",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js"
   },
   "author": "AthomsLL",
@@ -16,7 +16,6 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "express-bouncer": "^0.2.0",
-    "express-handlebars": "^4.0.4",
     "express-sequelize": "0.0.4",
     "helmet": "^3.23.2",
     "jsonwebtoken": "^8.5.1",
@@ -29,7 +28,13 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.2.0",
     "sequelize-cli": "^6.0.0",
+    "supertest": "^4.0.2",
     "uniqid": "^5.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-jest": "^26.1.0",
+    "jest": "^26.1.0"
+  }
 }
