@@ -2,7 +2,7 @@ require('dotenv').config();
 const Sequelize = require('sequelize')
 const db = {}
 const database = require('../models');
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize("groupomania-test", process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
     dialect: "postgresql",
     pool: {

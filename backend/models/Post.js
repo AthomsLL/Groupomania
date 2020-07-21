@@ -8,17 +8,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        attachment : DataTypes.STRING,
-        attachmentType : DataTypes.STRING,
-        likes : DataTypes.INTEGER
+        attachment : DataTypes.STRING
     });
     
     Post.associate = models => {
         Post.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
-            },
-            through: models.PostLike
+            }
         });
 
         Post.hasMany(models.Comment, {

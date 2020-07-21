@@ -26,17 +26,23 @@ module.exports = (sequelize, DataTypes) => {
     });
     
     User.associate = models => {
-        User.belongsToMany(models.Post, {
-            onDelete: "cascade",
-            through: models.PostLike
+        User.hasMany(models.Post, {
+            onDelete: "cascade"
         });
 
-        User.belongsToMany(models.Comment, {
-            onDelete: "cascade",
-            through: models.CommentLike
+        User.hasMany(models.Comment, {
+            onDelete: "cascade"
         });
 
         User.hasMany(models.Message, {
+            onDelete: "cascade"
+        })
+
+        User.hasMany(models.Like_post, {
+            onDelete: "cascade"
+        })
+
+        User.hasMany(models.Like_comment, {
             onDelete: "cascade"
         })
     };

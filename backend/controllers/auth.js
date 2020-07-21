@@ -3,9 +3,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
 const passwordValidator = require('../middleware/passwordValidator');
-const User = require('../models/User');
+const db = require('../config/database-test');
 
-exports.signup = async (req, res, next) => {
+exports.signup = (req, res, next) => {
     let isValid = true;
     let message = '';
 
@@ -25,12 +25,10 @@ exports.signup = async (req, res, next) => {
     if (!isValid) {
         res.status(403).json({ message: message });
     } else {
-        await 
-        bcrypt.hash(req.params.password, 10)
-        .then(hash => {
-            User.create({
-                email: req.params.email,
-                username: req.params.username,
+        bcrypt.hash(req.body.password, 10, function(error, hash) {            
+            db.database.User.create({
+                email: req.body.email,
+                username: req.body.username,
                 password: hash
             })
             .then((user) => res.status(201).send(user))
@@ -39,21 +37,32 @@ exports.signup = async (req, res, next) => {
                 res.status(400).send(error);
             })
         })
-        .catch(error => res.status(500).json({ error }));
     }
 };
 
-// exports.login = (req, res, next) => {
-    // Trouver l'utilisateur dans la base de données et comparer son email et son password
-    // Si correspondent => login
-//};
-
-//exports.forgot = (req, res, next) => {
-    // Trouver l'utilisateur dans la base de données et comparer son email et son password
-    // Si correspondent => login
-//};
-
-//exports.recover = (req, res, next) => {
-    // Trouver l'utilisateur dans la base de données et comparer son email et son password
-    // Si correspondent => login
-//};
+exports.login = (req, res, next) => {
+    db.database.User.findOne({ 
+        where: {
+            email: req.body.email
+        }
+     })
+    .then(user => {
+        if (!user) {
+            return res.status(401).json({ error: 'identifiants incorrects !'});
+        }
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
+            if(!result) {
+                return res.status(401).send({ error: 'Identifiants incorrects !'});
+            }
+            res.status(200).json({
+                userId: user.id,
+                token: jwt.sign(
+                    { userId: user.id },
+                    process.env.SECRET,
+                    { expiresIn: '1h' }
+                )
+            });
+        });
+    })
+    .catch(error => res.status(500).send( error ));
+};

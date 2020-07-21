@@ -13,6 +13,7 @@ describe("POST /api/v1/auth/login", () => {
 
       const login = JSON.parse(response.body);
       
+      console.log(login);
       console.log(response.statusCode);
       
       expect(login).toHaveProperty("userId");
