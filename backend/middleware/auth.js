@@ -1,12 +1,9 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
 const db = require('../config/database-test');
+const token = require('./getToken');
 
 exports.admin = async (req, res, next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
-  console.log(userId);
+  const userId = token.getToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }})
   
@@ -21,11 +18,7 @@ exports.admin = async (req, res, next) => {
 };
 
 exports.me = async (req, res, next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
-
-  console.log(req.params.id);
+  const userId = token.getToken(req);
 
   if (req.params.id == userId) {
     return next();
@@ -38,9 +31,7 @@ exports.me = async (req, res, next) => {
 };
 
 exports.adminAndMe = async (req, res, next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
+  const userId = token.getToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }})
 
@@ -55,9 +46,7 @@ exports.adminAndMe = async (req, res, next) => {
 };
 
 exports.postMe = async (req,res,next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
+  const userId = token.getToken(req);
 
   let post = await db.database.Post.findOne({ where: { id: req.params.id }});
 
@@ -75,9 +64,7 @@ exports.postMe = async (req,res,next) => {
 };
 
 exports.commentMe = async (req, res, next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
+  const userId = token.getToken(req);
 
   let comment = await db.database.Comment.findOne({ where : { id: req.params.idComment }});
 
@@ -92,9 +79,7 @@ exports.commentMe = async (req, res, next) => {
 };
 
 exports.adminAndPostMe = async (req, res, next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
+  const userId = token.getToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }});
   let post = await db.database.Post.findOne({ where: { id: req.params.id }});
@@ -110,9 +95,7 @@ exports.adminAndPostMe = async (req, res, next) => {
 };
 
 exports.adminAndCommentMe = async (req, res, next) => {
-  const token = req.headers.authorization.split(' ');
-  const decoded = jwt.verify(token[1], `${process.env.SECRET}`);
-  const userId = decoded.userId;
+  const userId = token.getToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }});
   let comment = await db.database.Comment.findOne({ where : { id: req.params.idComment }});

@@ -1,9 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Like_comment = sequelize.define('Like_comment', {
-      like: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      }
+      
     }, {
       freezeTableName: true,
       timestamps: true,

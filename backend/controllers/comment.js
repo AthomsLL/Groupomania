@@ -9,23 +9,30 @@ exports.getAllCommentsOfUser = (req, res, next) => {
         order: [["createdAt", "DESC"]],
         include: [{
             model: db.database.User,
-            attributes: ['id', 'username']
+            attributes: ['id', 'username', 'avatar']
         }]
     })
-        .then(comments => {
-            const arrayComments = [];
-            comments.forEach(comment => 
-                arrayComments.push({
-                    "id": comment.id,
-                    "content": comment.content,
-                    "likes": comment.likes,
-                    "username": comment.User.username,
-                    "userId": comment.UserId,
-                    "postId": comment.postId,
-                    "createdAt": comment.createdAt
-                })
-            )
-            return res.status(200).json(arrayComments)
-        })
-        .catch(error => res.status(400).json({ error: error }))
+    .then(async comments => {
+        const arrayComments = [];
+        for (const comment of comments) {
+            const likesCount = await db.database.Like_comment.count({
+                where: {
+                    CommentId: comment.id, 
+                },
+            });
+
+            arrayComments.push({
+                "id": comment.id,
+                "content": comment.content,
+                "avatar": comment.User.avatar,
+                "username": comment.User.username,
+                "userId": comment.UserId,
+                "postId": comment.postId,
+                "nbLikes": likesCount,
+                "createdAt": comment.createdAt
+            })
+        }
+        return res.status(200).json(arrayComments)
+    })
+    .catch(error => res.status(400).json({ error: error }))
 };

@@ -1,31 +1,46 @@
 const db = require('../config/database-test');
+const token = require('../middleware/getToken');
 const fs = require('fs');
 
 // Controller permettant d'afficher les informations d'un utilisateur
 exports.getOnePost = (req, res, next) => {
     db.database.Post.findOne({ 
+        where: {
+            id: req.params.id
+        },
+        include: [{
+            model: db.database.User,
+            attributes: ['id', 'username', 'avatar']
+        }]
+    })
+    .then(async post => {
+        const commentsCount = await db.database.Comment.count({
             where: {
-                id: req.params.id
+                PostId: post.id,
             },
-            include: [{
-                model: db.database.User,
-                attributes: ['id', 'username']
-            }]
-        })
-        .then(post => {
-            const returnedPost = {
-                "id": post.id,
-                "title": post.title,
-                "content": post.content,
-                "attachment": post.attachment,
-                "likes": post.likes,
-                "username": post.User.username,
-                "userId": post.UserId,
-                "createdAt": post.createdAt
+        });
+        
+        const likesCount = await db.database.Like_post.count({
+            where: {
+                PostId: post.id, 
             }
-            return res.status(200).json(returnedPost)
-        })
-        .catch(error => res.status(404).json({ error }));
+        });        
+        
+        const returnedPost = {
+            "id": post.id,
+            "title": post.title,
+            "content": post.content,
+            "attachment": post.attachment,
+            "avatar": post.User.avatar,
+            "username": post.User.username,
+            "userId": post.UserId,
+            "nbLikes": likesCount,
+            "nbComments": commentsCount,
+            "createdAt": post.createdAt
+        }
+        return res.status(200).json(returnedPost)
+    })
+    .catch(error => res.status(404).json({ error }));
 };
 
 // Controller permettant d'afficher la liste des posts
@@ -34,26 +49,40 @@ exports.getAllPosts = (req, res, next) => {
         order: [["createdAt", "DESC"]],
         include: [{
             model: db.database.User,
-            attributes: ['id', 'username']
+            attributes: ['id', 'username', 'avatar']
         }]
     })
-        .then(posts => {
-            const arrayPosts = [];
-            posts.forEach(post => 
-                arrayPosts.push({
-                    "id": post.id,
-                    "title": post.title,
-                    "content": post.content,
-                    "attachment": post.attachment,
-                    "likes": post.likes,
-                    "username": post.User.username,
-                    "userId": post.UserId,
-                    "createdAt": post.createdAt
-                })
-            )
-            return res.status(200).json(arrayPosts)
-        })
-        .catch(error => res.status(400).json({ error: error }))
+    .then(async posts => {
+        const arrayPosts = [];
+        for (const post of posts) {
+            const commentsCount = await db.database.Comment.count({
+                where: {
+                    PostId: post.id,
+                }
+            });
+            
+            const likesCount = await db.database.Like_post.count({
+                where: {
+                    PostId: post.id, 
+                },
+            });
+
+            arrayPosts.push({
+                "id": post.id,
+                "title": post.title,
+                "content": post.content,
+                "attachment": post.attachment,
+                "avatar": post.User.avatar,
+                "username": post.User.username,
+                "userId": post.UserId,
+                "nbLikes": likesCount,
+                "nbComments": commentsCount,
+                "createdAt": post.createdAt
+            })
+        }
+        return res.status(200).json(arrayPosts)
+    })
+    .catch(error => res.status(400).json({ error: error }))
 };
 
 // Controller permettant d'afficher tous les posts d'un utilisateur
@@ -65,26 +94,40 @@ exports.getAllPostsOfUser = (req, res, next) => {
         order: [["createdAt", "DESC"]],
         include: [{
             model: db.database.User,
-            attributes: ['id', 'username']
+            attributes: ['id', 'username', 'avatar']
         }]
     })
-        .then(posts => {
-            const arrayPosts = [];
-            posts.forEach(post => 
-                arrayPosts.push({
-                    "id": post.id,
-                    "title": post.title,
-                    "content": post.content,
-                    "attachment": post.attachment,
-                    "likes": post.likes,
-                    "username": post.User.username,
-                    "userId": post.UserId,
-                    "createdAt": post.createdAt
-                })
-            )
-            return res.status(200).json(arrayPosts)
-        })
-        .catch(error => res.status(400).json({ error: error }))
+    .then(async posts => {
+        const arrayPosts = [];
+        for (const post of posts) {
+            const commentsCount = await db.database.Comment.count({
+                where: {
+                    PostId: post.id,
+                },
+            });
+            
+            const likesCount = await db.database.Like_post.count({
+                where: {
+                    PostId: post.id, 
+                },
+            });
+
+            arrayPosts.push({
+                "id": post.id,
+                "title": post.title,
+                "content": post.content,
+                "attachment": post.attachment,
+                "avatar": post.User.avatar,
+                "username": post.User.username,
+                "userId": post.UserId,
+                "nbLikes": likesCount,
+                "nbComments": commentsCount,
+                "createdAt": post.createdAt
+            })
+        }
+        return res.status(200).json(arrayPosts)
+    })
+    .catch(error => res.status(400).json({ error: error }))
 };
 
 // Controller permettant de créer un post
@@ -105,7 +148,6 @@ exports.createPost = (req, res, next) => {
             "content": post.content,
             "attachment": post.attachment,
             "userId": post.UserId,
-            "likes": post.likes,
             "createdAt": post.createdAt
         }
         return res.status(201).json(returnedPost)
@@ -118,7 +160,37 @@ exports.createPost = (req, res, next) => {
 
 // Controller permettant d'ajouter ou enlever un like au post
 exports.likePost = async (req, res, next) => {
+    const userId = token.getToken(req);
+    const user = await db.database.User.findOne({ where: { id: userId }});
+    const post = await db.database.Post.findByPk(req.params.id);
 
+    if (!post) {
+        return next({
+            message: `Impossible de trouver le post avec l'ID : - ${req.params.id}`,
+            statusCode: 404,
+        });
+    }
+
+    const liked = await db.database.Like_post.findOne({
+        where: {
+            UserId: user.id,
+            PostId: req.params.id,
+        },
+    });
+
+    if (liked) {
+        await db.database.Like_post.destroy({ where: {
+            UserId: user.id,
+            PostId: req.params.id,
+        }});
+        res.status(200).json({ message: 'Like enlevé du post avec succès !'});
+    } else {
+        await db.database.Like_post.create({
+            UserId: user.id,
+            PostId: req.params.id,
+        });
+        res.status(201).json({ message: 'Like ajouté au post avec succès !'});
+    }
 };
 
 // Controller permettant de modifier un post
@@ -147,7 +219,6 @@ exports.editPost = (req, res, next) => {
                 "title": updatedPost.title,
                 "content": updatedPost.content,
                 "attachment": updatedPost.attachment,
-                "likes": updatedPost.likes,
                 "userId": updatedPost.UserId,
                 "createdAt": updatedPost.createdAt
             }
@@ -185,19 +256,26 @@ exports.getAllComments = (req, res, next) => {
             attributes: ['id', 'username', 'avatar']
         }]
     })
-    .then(comments => {
+    .then(async comments => {
         const arrayComments = [];
-        comments.forEach(comment => 
+        for (const comment of comments) {
+            const likesCount = await db.database.Like_comment.count({
+                where: {
+                    CommentId: comment.id, 
+                },
+            });
+
             arrayComments.push({
                 "id": comment.id,
                 "content": comment.content,
-                "likes": comment.likes,
+                "avatar": comment.User.avatar,
                 "username": comment.User.username,
                 "userId": comment.UserId,
                 "postId": comment.PostId,
+                "nbLikes": likesCount,
                 "createdAt": comment.createdAt
             })
-        )
+        }
         return res.status(200).json(arrayComments)
     })
     .catch(error => res.status(400).json({ error: error }))
@@ -216,7 +294,6 @@ exports.createComment = (req, res, next) => {
             "content": comment.content,
             "userId": comment.UserId,
             "postId": comment.PostId,
-            "likes": comment.likes,
             "createdAt": comment.createdAt
         }
         return res.status(201).json(returnedComment)
@@ -227,9 +304,39 @@ exports.createComment = (req, res, next) => {
     })
 };
 
-// Controller permettant d'ajouter ou enlever un like au commentaire
+// Controller permettant d'ajouter ou enlever un like au post
 exports.likeComment = async (req, res, next) => {
-
+    const userId = token.getToken(req);
+    const user = await db.database.User.findOne({ where: { id: userId }});
+    const comment = await db.database.Comment.findByPk(req.params.idComment);
+  
+    if (!comment) {
+        return next({
+            message: `Impossible de trouver le commentaire avec l'ID : - ${req.params.idComment}`,
+            statusCode: 404,
+        });
+    }
+  
+    const liked = await db.database.Like_comment.findOne({
+        where: {
+            UserId: user.id,
+            CommentId: req.params.idComment,
+        },
+    });
+  
+    if (liked) {
+        await db.database.Like_comment.destroy({ where: {
+            UserId: user.id,
+            CommentId: req.params.idComment,
+        }});
+        res.status(200).json({ message: 'Like enlevé du commentaire avec succès !'});
+    } else {
+        await db.database.Like_comment.create({
+            UserId: user.id,
+            CommentId: req.params.idComment,
+        });
+        res.status(201).json({ message: 'Like ajouté au commentaire avec succès !'});
+    }
 };
 
 // Controller permettant de modifier un commentaire
@@ -241,7 +348,6 @@ exports.editComment = (req, res, next) => {
             const returnedComment = {
                 "id": updatedComment.id,
                 "content": updatedComment.content,
-                "likes": updatedComment.likes,
                 "userId": updatedComment.UserId,
                 "postId": updatedComment.PostId,
                 "createdAt": updatedComment.createdAt
