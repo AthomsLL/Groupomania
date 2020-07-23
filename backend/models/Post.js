@@ -1,5 +1,13 @@
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
     const Post = sequelize.define('Post', {
+        id : {
+            type: DataTypes.UUID,
+            allowNull: false,
+            primaryKey: true,
+            defaultValue: Sequelize.UUIDV4
+        },
         title : { 
             type: DataTypes.STRING,
             allowNull: false,

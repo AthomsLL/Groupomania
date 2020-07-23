@@ -1,9 +1,9 @@
 require('dotenv').config();
 const db = require('../config/database-test');
-const token = require('./getToken');
+const token = require('./getUserIdByToken');
 
 exports.admin = async (req, res, next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }})
   
@@ -18,20 +18,20 @@ exports.admin = async (req, res, next) => {
 };
 
 exports.me = async (req, res, next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   if (req.params.id == userId) {
     return next();
   }
 
   return res.status(401).json({
-    message: "Aturorisation refusée, vous n'avez pas le droit d'utiliser cette route",
+    message: "Autorisation refusée, vous n'avez pas le droit d'utiliser cette route",
     statusCode: 401
   })
 };
 
 exports.adminAndMe = async (req, res, next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }})
 
@@ -46,7 +46,7 @@ exports.adminAndMe = async (req, res, next) => {
 };
 
 exports.postMe = async (req,res,next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   let post = await db.database.Post.findOne({ where: { id: req.params.id }});
 
@@ -64,7 +64,7 @@ exports.postMe = async (req,res,next) => {
 };
 
 exports.commentMe = async (req, res, next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   let comment = await db.database.Comment.findOne({ where : { id: req.params.idComment }});
 
@@ -79,7 +79,7 @@ exports.commentMe = async (req, res, next) => {
 };
 
 exports.adminAndPostMe = async (req, res, next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }});
   let post = await db.database.Post.findOne({ where: { id: req.params.id }});
@@ -95,7 +95,7 @@ exports.adminAndPostMe = async (req, res, next) => {
 };
 
 exports.adminAndCommentMe = async (req, res, next) => {
-  const userId = token.getToken(req);
+  const userId = token.getUserIdByToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }});
   let comment = await db.database.Comment.findOne({ where : { id: req.params.idComment }});

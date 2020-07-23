@@ -1,5 +1,5 @@
 const db = require('../config/database-test');
-const token = require('../middleware/getToken');
+const token = require('../middleware/getUserIdByToken');
 const fs = require('fs');
 
 // Controller permettant d'afficher les informations d'un utilisateur
@@ -160,7 +160,7 @@ exports.createPost = (req, res, next) => {
 
 // Controller permettant d'ajouter ou enlever un like au post
 exports.likePost = async (req, res, next) => {
-    const userId = token.getToken(req);
+    const userId = token.getUserIdByToken(req);
     const user = await db.database.User.findOne({ where: { id: userId }});
     const post = await db.database.Post.findByPk(req.params.id);
 
@@ -306,7 +306,7 @@ exports.createComment = (req, res, next) => {
 
 // Controller permettant d'ajouter ou enlever un like au post
 exports.likeComment = async (req, res, next) => {
-    const userId = token.getToken(req);
+    const userId = token.getUserIdByToken(req);
     const user = await db.database.User.findOne({ where: { id: userId }});
     const comment = await db.database.Comment.findByPk(req.params.idComment);
   
