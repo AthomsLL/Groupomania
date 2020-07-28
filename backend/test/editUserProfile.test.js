@@ -9,12 +9,11 @@ describe("PUT /api/v1/users/:id", () => {
     test("It responds with a user profile updated", async () => {
       const auth = await tools.auth();
 
-      const response = await request(app).put("/api/v1/users/1").set('Authorization', 'Bearer ' + auth.token).send({
-        firstName: "Athoms",
-        lastName: "LL",
-        avatar: "http://localhost:3000/uploads/images/avatars/coucoucava.jpg",
-        department: "Informatique",
-        isAdmin: true
+      const response = await request(app).put("/api/v1/users/22e533aa-7e8d-4e87-9de0-25ca9a1b00b0").set('Authorization', 'Bearer ' + auth.token).send({
+        firstName: "Test",
+        lastName: "Test",
+        avatar: "http://localhost:3000/uploads/images/avatars/aloha.jpg",
+        department: "Comptabilité",
       });
 
       const userProfile = JSON.parse(response.body);
