@@ -31,7 +31,15 @@ exports.signup = (req, res, next) => {
                 username: req.body.username,
                 password: hash
             })
-            .then((user) => res.status(201).send(user))
+            .then((user) => {
+                const returnedUser = {
+                    "id": user.id,
+                    "email": user.email,
+                    "username": user.username,
+                    "createdAt": user.createdAt
+                }
+                res.status(201).send(returnedUser)
+            })
             .catch((error) => {
                 console.log(error);
                 res.status(400).send(error);
@@ -55,7 +63,6 @@ exports.login = (req, res, next) => {
                 return res.status(401).send({ error: 'Identifiants incorrects !'});
             }
             res.status(200).json({
-                userId: user.id,
                 token: jwt.sign(
                     { userId: user.id },
                     process.env.SECRET,
