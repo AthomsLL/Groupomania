@@ -38,7 +38,14 @@ exports.signup = (req, res, next) => {
                     "username": user.username,
                     "createdAt": user.createdAt
                 }
-                res.status(201).send(returnedUser)
+                
+                res.status(201).send({
+                    token: jwt.sign(
+                        { user: returnedUser },
+                        process.env.SECRET,
+                        { expiresIn: '1h' }
+                    )
+                })
             })
             .catch((error) => {
                 console.log(error);
@@ -62,9 +69,22 @@ exports.login = (req, res, next) => {
             if(!result) {
                 return res.status(401).send({ error: 'Identifiants incorrects !'});
             }
-            res.status(200).json({
+
+            const returnedUser = {
+                "avatar": user.avatar,
+                "id": user.id,
+                "email": user.email,
+                "username": user.username,
+                "firstName": user.firstName,
+                "lastName": user.lastName,
+                "department": user.department,
+                "isAdmin": user.isAdmin,
+                "createdAt": user.createdAt
+            }
+
+            res.status(200).send({
                 token: jwt.sign(
-                    { userId: user.id },
+                    { user: returnedUser },
                     process.env.SECRET,
                     { expiresIn: '1h' }
                 )

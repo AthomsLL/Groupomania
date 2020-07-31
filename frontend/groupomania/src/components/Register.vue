@@ -85,9 +85,9 @@
                     password: this.password
                 })
                 .then(response => {
-                    const userId = response.data.id;
-                    console.log(userId);
-                    this.$cookie.set('userId', JSON.stringify(userId), 1);
+                    const token = response.data.token;
+                    console.log(token);
+                    this.$cookie.set('token', JSON.stringify(token), 1);
                     this.$router.push({ path: '/user/edit-profile' });
                 })
             }

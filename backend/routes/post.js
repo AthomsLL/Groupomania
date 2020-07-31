@@ -10,7 +10,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), postCtrl.getAl
 router.get('/:id', passport.authenticate('jwt', { session: false }), postCtrl.getOnePost);
 router.get('/users/:id', passport.authenticate('jwt', { session: false }), postCtrl.getAllPostsOfUser);
 router.post('/', multer, passport.authenticate('jwt', { session: false }), postCtrl.createPost);
-router.post('/:id/like', passport.authenticate('jwt', { session: false }), postCtrl.likePost);
+router.post('/:id/likes', passport.authenticate('jwt', { session: false }), postCtrl.likePost);
 router.put('/:id', multer, passport.authenticate('jwt', { session: false}), auth.postMe, postCtrl.editPost);
 router.delete('/:id', multer, passport.authenticate('jwt', { session: false}), auth.adminAndPostMe, postCtrl.deletePost);
 router.post('/:id/comments', passport.authenticate('jwt', { session: false }), postCtrl.createComment);
