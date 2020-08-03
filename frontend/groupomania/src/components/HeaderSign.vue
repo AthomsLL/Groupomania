@@ -5,7 +5,7 @@
             <div class="circle-1"></div>
             <div class="circle-2">
                 <div class="circle-2__img-box">
-                    <img src="../../src/assets/icon-left-white.png" alt="Logo Groupomania blanc">
+                    <img src="https://res.cloudinary.com/djcmfi03h/image/upload/f_auto/v1596188651/Groupomania/logos/icon-left-font-monochrome-white_ci45w3.png" alt="Logo Groupomania blanc">
                 </div>
 
                 <h1 v-if="register()">Inscription</h1>

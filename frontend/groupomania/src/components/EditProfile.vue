@@ -4,10 +4,9 @@
         <div class="container">
             <div class="avatar-container">
                 <avatar-preview :file="file" @getFile="file = $event"/>
-                <!-- <avatar-preview></avatar-preview> -->
             </div>
 
-            <!-- <p>{{ userId }}</p> -->
+            <p>{{ userId }}</p>
             <p>{{  file.name }}</p>
         </div>
     </div>

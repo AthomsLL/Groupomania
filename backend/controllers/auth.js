@@ -84,7 +84,17 @@ exports.login = (req, res, next) => {
 
             res.status(200).send({
                 token: jwt.sign(
-                    { user: returnedUser },
+                    { 
+                        userId: returnedUser.id,
+                        userAvatar: returnedUser.avatar, 
+                        userEmail: returnedUser.email, 
+                        userUsername: returnedUser.username,
+                        userFirstName: returnedUser.firstName,
+                        userLastName: returnedUser.lastName,
+                        userDepartment: returnedUser.department,
+                        userIsAdmin: returnedUser.isAdmin,
+                        userCreatedAt: returnedUser.createdAt 
+                    },
                     process.env.SECRET,
                     { expiresIn: '1h' }
                 )

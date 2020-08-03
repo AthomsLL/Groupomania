@@ -158,7 +158,28 @@ exports.createPost = (req, res, next) => {
     })
 };
 
-// Controller permettant d'ajouter ou enlever un like au post
+//Controller permettant de vérifier si l'user connecté a liké ou non le post
+exports.getLikePost = async (req, res, next) => {
+    const userId = token.getUserIdByToken(req);
+    
+    const user = await db.database.User.findOne({ where: { id: userId }});
+    const post = await db.database.Post.findByPk(req.params.id);
+
+    const like = await db.database.Like_post.findOne({
+        where: {
+            UserId: user.id,
+            PostId: post.id,
+        },
+    });
+
+    if (like) {
+        res.status(200).json({ liked : true });
+    } else {
+        res.status(200).json({ liked : false });
+    }
+}
+
+// Controller permettant d'ajouter un like au post
 exports.likePost = async (req, res, next) => {
     const userId = token.getUserIdByToken(req);
     const user = await db.database.User.findOne({ where: { id: userId }});
@@ -166,30 +187,51 @@ exports.likePost = async (req, res, next) => {
 
     if (!post) {
         return next({
-            message: `Impossible de trouver le post avec l'ID : - ${req.params.id}`,
+            message: `Impossible de trouver le post avec l'ID : - ${post.id}`,
             statusCode: 404,
         });
     }
 
-    const liked = await db.database.Like_post.findOne({
-        where: {
-            UserId: user.id,
-            PostId: req.params.id,
-        },
+    const like = await db.database.Like_post.create({
+        UserId: user.id,
+        PostId: post.id,
     });
 
-    if (liked) {
-        await db.database.Like_post.destroy({ where: {
-            UserId: user.id,
-            PostId: req.params.id,
-        }});
-        res.status(200).json({ message: 'Like enlevé du post avec succès !'});
-    } else {
-        await db.database.Like_post.create({
-            UserId: user.id,
-            PostId: req.params.id,
+    if (like) {
+        res.status(201).json({ 
+            message: 'Like ajouté au post avec succès !',
+            liked : true 
         });
-        res.status(201).json({ message: 'Like ajouté au post avec succès !'});
+    } else {
+        res.status(400).json({ message: "Impossible d'ajouter le like à ce Post !"});
+    }
+};
+
+// Controller permettant d'enlever un like au post
+exports.unlikePost = async (req, res, next) => {
+    const userId = token.getUserIdByToken(req);
+    const user = await db.database.User.findOne({ where: { id: userId }});
+    const post = await db.database.Post.findByPk(req.params.id);
+
+    if (!post) {
+        return next({
+            message: `Impossible de trouver le post avec l'ID : - ${post.id}`,
+            statusCode: 404,
+        });
+    }
+
+    const unlike = await db.database.Like_post.destroy({ where: {
+        UserId: user.id,
+        PostId: post.id,
+    }});
+
+    if (unlike) {
+        res.status(200).json({ 
+            message: 'Like enlevé du post avec succès !', 
+            liked: false 
+        });
+    } else {
+        res.status(400).json({ message: "Impossible d'enlever le like de ce Post !"});
     }
 };
 
@@ -304,38 +346,79 @@ exports.createComment = (req, res, next) => {
     })
 };
 
-// Controller permettant d'ajouter ou enlever un like au post
+//Controller permettant de vérifier si l'user connecté a liké ou non le commentaire
+exports.getLikeComment = async (req, res, next) => {
+    const userId = token.getUserIdByToken(req);
+    const user = await db.database.User.findOne({ where: { id: userId }});
+    const comment = await db.database.Comment.findByPk(req.params.commentId);
+
+    const like = await db.database.Like_comment.findOne({
+        where: {
+            UserId: user.id,
+            CommentId: comment.id,
+        },
+    });
+
+    if (like) {
+        res.status(200).json({ liked : true });
+    } else {
+        res.status(200).json({ liked : false });
+    }
+}
+
+// Controller permettant d'ajouter un like au commentaire
 exports.likeComment = async (req, res, next) => {
     const userId = token.getUserIdByToken(req);
     const user = await db.database.User.findOne({ where: { id: userId }});
-    const comment = await db.database.Comment.findByPk(req.params.idComment);
-  
+    const comment = await db.database.Comment.findByPk(req.params.commentId);
+
     if (!comment) {
         return next({
-            message: `Impossible de trouver le commentaire avec l'ID : - ${req.params.idComment}`,
+            message: `Impossible de trouver le commentaire avec l'ID : - ${comment.id}`,
             statusCode: 404,
         });
     }
-  
-    const liked = await db.database.Like_comment.findOne({
-        where: {
-            UserId: user.id,
-            CommentId: req.params.idComment,
-        },
+
+    const like = await db.database.Like_comment.create({
+        UserId: user.id,
+        CommentId: comment.id,
     });
-  
-    if (liked) {
-        await db.database.Like_comment.destroy({ where: {
-            UserId: user.id,
-            CommentId: req.params.idComment,
-        }});
-        res.status(200).json({ message: 'Like enlevé du commentaire avec succès !'});
-    } else {
-        await db.database.Like_comment.create({
-            UserId: user.id,
-            CommentId: req.params.idComment,
+
+    if (like) {
+        res.status(201).json({ 
+            message: 'Like ajouté au commentaire avec succès !',
+            liked : true 
         });
-        res.status(201).json({ message: 'Like ajouté au commentaire avec succès !'});
+    } else {
+        res.status(400).json({ message: "Impossible d'ajouter le like à ce Commentaire !"});
+    }
+};
+
+// Controller permettant d'enlever un like au commentaire
+exports.unlikeComment = async (req, res, next) => {
+    const userId = token.getUserIdByToken(req);
+    const user = await db.database.User.findOne({ where: { id: userId }});
+    const comment = await db.database.Comment.findByPk(req.params.commentId);
+
+    if (!comment) {
+        return next({
+            message: `Impossible de trouver le commentaire avec l'ID : - ${comment.id}`,
+            statusCode: 404,
+        });
+    }
+
+    const unlike = await db.database.Like_comment.destroy({ where: {
+        UserId: user.id,
+        CommentId: comment.id,
+    }});
+
+    if (unlike) {
+        res.status(200).json({ 
+            message: 'Like enlevé du commentaire avec succès !', 
+            liked: false 
+        });
+    } else {
+        res.status(400).json({ message: "Impossible d'enlever le like de ce Commentaire !"});
     }
 };
 
@@ -343,7 +426,7 @@ exports.likeComment = async (req, res, next) => {
 exports.editComment = (req, res, next) => {
     const commentObject = { ...req.body };
 
-    db.database.Comment.update({ ...commentObject }, { returning: true, where: { id: req.params.idComment }})
+    db.database.Comment.update({ ...commentObject }, { returning: true, where: { id: req.params.commentId }})
         .then(([ rowsUpdate, [updatedComment] ]) => {
             const returnedComment = {
                 "id": updatedComment.id,
@@ -359,7 +442,7 @@ exports.editComment = (req, res, next) => {
 
 // Controller permettant de supprimer un commentaire
 exports.deleteComment = (req, res, next) => {
-    db.database.Comment.destroy({ where: { id: req.params.idComment }})
+    db.database.Comment.destroy({ where: { id: req.params.commentId }})
         .then(() => res.status(200).json({ message: 'Comment supprimé !' }))
         .catch(error => res.status(400).json({ error }))
 };
