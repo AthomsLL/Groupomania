@@ -31,19 +31,17 @@ exports.signup = (req, res, next) => {
                 username: req.body.username,
                 password: hash
             })
-            .then((user) => {
-                const returnedUser = {
-                    "id": user.id,
-                    "email": user.email,
-                    "username": user.username,
-                    "createdAt": user.createdAt
-                }
-                
+            .then((user) => {  
                 res.status(201).send({
                     token: jwt.sign(
-                        { user: returnedUser },
+                        { 
+                            'id': user.id,
+                            'email': user.email, 
+                            'username': user.username, 
+                            'createdAt': user.createdAt 
+                        },
                         process.env.SECRET,
-                        { expiresIn: '1h' }
+                        { expiresIn: '2d' }
                     )
                 })
             })
@@ -70,33 +68,22 @@ exports.login = (req, res, next) => {
                 return res.status(401).send({ error: 'Identifiants incorrects !'});
             }
 
-            const returnedUser = {
-                "avatar": user.avatar,
-                "id": user.id,
-                "email": user.email,
-                "username": user.username,
-                "firstName": user.firstName,
-                "lastName": user.lastName,
-                "department": user.department,
-                "isAdmin": user.isAdmin,
-                "createdAt": user.createdAt
-            }
-
             res.status(200).send({
                 token: jwt.sign(
                     { 
-                        userId: returnedUser.id,
-                        userAvatar: returnedUser.avatar, 
-                        userEmail: returnedUser.email, 
-                        userUsername: returnedUser.username,
-                        userFirstName: returnedUser.firstName,
-                        userLastName: returnedUser.lastName,
-                        userDepartment: returnedUser.department,
-                        userIsAdmin: returnedUser.isAdmin,
-                        userCreatedAt: returnedUser.createdAt 
+                        'id': user.id,
+                        'avatar': user.avatar, 
+                        'avatarPublicId': user.avatarPublicId,
+                        'email': user.email, 
+                        'username': user.username,
+                        'firstName': user.firstName,
+                        'lastName': user.lastName,
+                        'department': user.department,
+                        'isAdmin': user.isAdmin,
+                        'createdAt': user.createdAt 
                     },
                     process.env.SECRET,
-                    { expiresIn: '1h' }
+                    { expiresIn: '2d' }
                 )
             });
         });

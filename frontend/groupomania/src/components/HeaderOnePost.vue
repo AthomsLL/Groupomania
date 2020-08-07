@@ -11,7 +11,7 @@
             height="100%" 
         />
 
-        <v-menu :close-on-content-click="closeOnContentClick">
+        <v-menu>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-on="on" v-bind="attrs">
                     <v-icon size="24px">mdi-dots-vertical</v-icon>

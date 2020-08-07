@@ -6,7 +6,7 @@
 
         <h1>Profil</h1>
 
-        <v-menu :close-on-content-click="closeOnContentClick">
+        <v-menu>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-on="on" v-bind="attrs">
                     <v-icon size="24px">mdi-dots-vertical</v-icon>
@@ -63,11 +63,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        
-    }
-
-    .v-icon {
-        color: white;
     }
 
     .v-btn--round .v-btn__content .v-icon {

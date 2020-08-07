@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        attachment : DataTypes.STRING
+        attachment : DataTypes.STRING,
+        attachmentPublicId : DataTypes.STRING,
     });
     
     Post.associate = models => {

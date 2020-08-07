@@ -25,23 +25,17 @@
                 ></v-text-field>
 
                 <v-select
-                    v-model="select"
+                    v-model="department"
                     :items="items"
                     :rules="[v => !!v || 'Votre département est requis']"
                     label="Département dans l'entreprise"
                     required
                 ></v-select>
 
-                <v-btn
-                    
-                    type="submit"
-                    @click.prevent="formSubmit()">
+                <v-btn type="submit" @click.prevent="formSubmit()">
                         Enregistrer
                 </v-btn>
             </v-form>
-
-            <p>{{ userId }}</p>
-            <p>{{  file.name }}</p>
         </div>
     </div>
 
@@ -51,39 +45,133 @@
     import { getToken } from '../../helpers/decode';
     import Header from './Header';
     import AvatarPreview from './AvatarPreview';
+    import axios from 'axios';
 
     export default {
         name: 'EditProfile',
-        data: () => ({
-            valid: true,
-            userId: '',
-            file: '',
-            firstname: '',
-            firstnameRules: [
-                v => !!v || 'Votre prénom est requis ',
-                v => v.length <= 30 || 'Votre prénom doit contenir moins de 30 caractères'
-            ],
-            lastname: '',
-            lastnameRules: [
-                v => !!v || 'Votre nom est requis ',
-                v => v.length <= 30 || 'Votre nom doit contenir moins de 30 caractères'
-            ],
-            select: null,
-            items: [
-                'Comptabilité',
-                'Informatique',
-                'Marketing',
-                'Communication',
-                'Logistique',
-            ],
-        }),
+        data() {
+            return {
+                valid: true,
+                userId: '',
+                firstname: '',
+                firstnameRules: [
+                    v => !!v || 'Votre prénom est requis ',
+                    v => v.length <= 30 || 'Votre prénom doit contenir moins de 30 caractères'
+                ],
+                lastname: '',
+                lastnameRules: [
+                    v => !!v || 'Votre nom est requis ',
+                    v => v.length <= 30 || 'Votre nom doit contenir moins de 30 caractères'
+                ],
+                department: null,
+                items: [
+                    'Comptabilité',
+                    'Informatique',
+                    'Marketing',
+                    'Communication',
+                    'Logistique',
+                ],
+                file: '',
+                preset: 'groupomania-avatars',
+                cloudName: 'djcmfi03h',
+                results: null,
+                errors: [],
+                urlAvatar: '',
+                avatarPublicId: '',
+                token: ''
+            }
+        },
         created() {
+            const token = JSON.parse(this.$cookie.get('token'));
+            this.token = token;
             const user = getToken();
             this.userId = user.id;
         },
         methods: {
             formSubmit: function() {
                 this.$refs.form.validate();
+                if (this.file) {
+                    let reader = new FileReader();
+                    reader.addEventListener(
+                        "load", 
+                        function() {
+                            this.fileContents = reader.result;
+                            this.prepareFormData();
+                            let cloudinaryUploadURL = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;
+                            let requestObj = {
+                                url: cloudinaryUploadURL,
+                                method: "POST",
+                                data: this.formData,
+                            };
+                            axios(requestObj)
+                                .then(response => {
+                                    this.results = response.data;
+                                    this.urlAvatar = this.results.secure_url;
+                                    this.avatarPublicId = this.results.public_id;
+
+                                    console.log(this.results);
+                                    console.log(this.urlAvatar);
+                                    console.log(this.avatarPublicId);
+
+                                    axios
+                                    .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
+                                        firstName: this.firstname,
+                                        lastName: this.lastname,
+                                        department: this.department,
+                                        avatar: this.urlAvatar,
+                                        avatarPublicId: this.avatarPublicId
+                                    }, {
+                                        headers: {
+                                            Authorization: `Bearer ${this.token}`
+                                        }
+                                    })
+                                    .then(response => {
+                                        const profile = response.data;
+                                        console.log(profile);
+
+                                        this.$router.push({ path: '/user/profile' });
+                                    })
+                                    .catch(error => {
+                                        this.errors.push(error);
+                                        console.log(this.errors[0]);
+                                    })
+                                })
+                                .catch(error => {
+                                    this.errors.push(error);
+                                    console.log(this.errors[0]);
+                                })
+                        }.bind(this), false
+                    );
+                    if (this.file && this.file.name) {
+                        reader.readAsDataURL(this.file);
+                    }
+                } else {
+                    axios
+                    .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
+                        firstName: this.firstname,
+                        lastName: this.lastname,
+                        department: this.department,
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${this.token}`
+                        }
+                    })
+                    .then(response => {
+                        const profile = response.data;
+                        console.log(profile);
+
+                        this.$router.push({ path: '/user/profile' });
+                    })
+                    .catch(error => {
+                        this.errors.push(error);
+                        console.log(this.errors[0]);
+                    })
+                }
+            },
+            prepareFormData: function() {
+                this.formData = new FormData();
+                this.formData.append("upload_preset", this.preset);
+                this.formData.append("file", this.fileContents);
             }
         }, 
         components: {

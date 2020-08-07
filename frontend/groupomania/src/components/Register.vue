@@ -73,13 +73,12 @@
                 v => !!v || 'Votre mot de passe est requis',
                 v => (v && v.length >= 8 && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v)) || 'Le mot de passe doit comporter au moins 8 caractères, dont au moins 1 minuscule, 1 majuscule et 1 chiffre'
             ],
-            urlApiRegister: 'http://localhost:3000/api/v1/auth/signup'
         }),
         methods: {
             formSubmit() {
                 this.$refs.form.validate();
                 axios
-                .post(`${this.urlApiRegister}`, {
+                .post('http://localhost:3000/api/v1/auth/signup', {
                     email: this.email,
                     username: this.username,
                     password: this.password
@@ -87,7 +86,7 @@
                 .then(response => {
                     const token = response.data.token;
                     console.log(token);
-                    this.$cookie.set('token', JSON.stringify(token), 1);
+                    this.$cookie.set('token', JSON.stringify(token), 2);
                     this.$router.push({ path: '/user/edit-profile' });
                 })
             }

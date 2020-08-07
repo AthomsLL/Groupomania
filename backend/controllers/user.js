@@ -1,7 +1,8 @@
+require('dotenv').config();
 const db = require('../config/database-test');
 const bcrypt = require('bcrypt');
 const passwordValidator = require('../middleware/passwordValidator');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
 // Controller permettant d'afficher les informations d'un utilisateur
 exports.getOneUser = (req, res, next) => {
@@ -45,21 +46,16 @@ exports.getAllUsers = (req, res, next) => {
 
 // Controller permettant d'éditer le profil utilisateur
 exports.editUserProfile = (req, res, next) => {
-    const userProfileObject = req.file ?
-    {
-        ...JSON.parse(req.body.userProfile),
-        avatar: `${req.protocol}://${req.get('host')}/uploads/images/avatars/${req.file.filename}`
-    } : { ...req.body };
+    const userProfileObject = { ...req.body };
 
-    if (req.file) {
-        db.database.User.findOne({ where: { id: req.params.id }}, 'avatar')
-        .then(userProfile => {
-            const filename = userProfile.avatar.split('/uploads/images/avatars/')[1];
-            fs.unlink(`uploads/images/avatars/${filename}`, () => {
-                console.log('Ancien avatar effacé avec succès !');
+    if(req.body.avatarPublicId) {
+        db.database.User.findOne({ where: { id: req.params.id }})
+           .then(user => {
+                cloudinary.uploader.destroy(`${user.avatarPublicId}`, function(error, result) {
+                    console.log(result, error);
+                })
             })
-        })
-        .catch(error => console.log( error ));
+            .catch(error => console.log(error));
     }
 
     db.database.User.update({...userProfileObject}, { returning: true, where: { id: req.params.id } })
@@ -71,12 +67,13 @@ exports.editUserProfile = (req, res, next) => {
                 "firstName": updatedProfile.firstName,
                 "lastName": updatedProfile.lastName,
                 "avatar": updatedProfile.avatar,
+                "avatarPublicId": updatedProfile.avatarPublicId,
                 "department": updatedProfile.department,
                 "isAdmin": updatedProfile.isAdmin 
             }
             res.status(201).json(returnedProfile)
         })
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => res.status(400).json({ message: error }));
 };
 
 // Controller permettant de mettre à jour le pseudo de l'utilisateur

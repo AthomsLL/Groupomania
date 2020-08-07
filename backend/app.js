@@ -44,10 +44,6 @@ app.use(cookieParser());
 // Gestionnaire servant à lire le contenu de la requête
 app.use(bodyParser.json());
 
-// Gestionnaire de routage pour les images
-app.use('/uploads/images', express.static(path.join(__dirname, '/uploads/images')));
-app.use('/uploads/images/avatars', express.static(path.join(__dirname, '/uploads/images/avatars')));
-
 // Utilisation des routes pour les users
 app.use('/api/v1/users', userRoutes);
 

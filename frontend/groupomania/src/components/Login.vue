@@ -65,20 +65,19 @@ export default {
         passwordRules: [
             v => !!v || 'Votre mot de passe est requis',
         ],
-        urlApiLogin: 'http://localhost:3000/api/v1/auth/login'
     }),
     methods: {
         formSubmit() {
             this.$refs.form.validate();
             axios
-            .post(`${this.urlApiLogin}`, {
+            .post('http://localhost:3000/api/v1/auth/login', {
                 email: this.email,
                 password: this.password
             })
             .then(response => {
                 const token = response.data.token;
                 console.log(token);
-                this.$cookie.set('token', JSON.stringify(token), 1);
+                this.$cookie.set('token', JSON.stringify(token), 2);
                 this.$router.push({ path: '/posts' });
             })
         }
