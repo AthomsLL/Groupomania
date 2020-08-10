@@ -9,10 +9,8 @@ describe("PUT /api/v1/posts/:id", () => {
     test("It responds with a post updated", async () => {
       const auth = await tools.auth();
 
-      const response = await request(app).put("/api/v1/posts/1").set('Authorization', 'Bearer ' + auth.token).send({
-        title: "L'userId 1 ne peut pas modifier le post de quelqu'un d'autre",
-        content: "Lorem ipsum sin amet, frhejpdapf hfpezfioeznf b ezbf",
-        attachment: "http://localhost:3000/uploads/images/testPost4.png",
+      const response = await request(app).put("/api/v1/posts/729d9b1e-cb01-438d-9c37-90f199e71c55").set('Authorization', 'Bearer ' + auth.token).send({
+        attachment: "https://res.cloudinary.com/djcmfi03h/image/upload/f_auto/v1597069735/priscilla-du-preez-W3SEyZODn8U-unsplash_w5ex8m.jpg",
       });
 
       const postUpdated = JSON.parse(response.body);

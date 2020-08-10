@@ -32,10 +32,14 @@
                     required
                 ></v-select>
 
-                <v-btn type="submit" @click.prevent="formSubmit()">
-                        Enregistrer
+                <v-btn class="cta-submit-profile"  type="submit" @click.prevent="formSubmit()">
+                    Enregistrer
                 </v-btn>
             </v-form>
+
+            <v-btn class="cta-cancel" type="button" outlined color="#F44336" @click.prevent="goToProfile()">
+                Annuler
+            </v-btn>
         </div>
     </div>
 
@@ -172,6 +176,9 @@
                 this.formData = new FormData();
                 this.formData.append("upload_preset", this.preset);
                 this.formData.append("file", this.fileContents);
+            },
+            goToProfile: function() {
+                this.$router.push({ path: '/user/profile' });
             }
         }, 
         components: {
@@ -200,10 +207,17 @@
     }
 
     .v-btn {
+        font-size: 20px;
+    }
+
+    .cta-submit-profile {
         background-color: #FE421A !important;
         color: #fff;
-        font-size: 20px;
         margin-top: 150px;
+    }
+
+    .cta-cancel {
+        margin-top: 15px;
     }
 
 </style>

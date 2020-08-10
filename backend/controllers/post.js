@@ -14,6 +14,8 @@ exports.getOnePost = (req, res, next) => {
         }]
     })
     .then(async post => {
+        const userId = token.getUserIdByToken(req);
+
         const commentsCount = await db.database.Comment.count({
             where: {
                 PostId: post.id,
@@ -24,7 +26,20 @@ exports.getOnePost = (req, res, next) => {
             where: {
                 PostId: post.id, 
             }
-        });        
+        });    
+
+        const like = await db.database.Like_post.findOne({
+            where: {
+                UserId: userId,
+                PostId: post.id,
+            },
+        });
+
+        if (like) {
+            liked = true;
+        } else {
+            liked = false;
+        }
         
         const returnedPost = {
             "id": post.id,
@@ -36,6 +51,7 @@ exports.getOnePost = (req, res, next) => {
             "userId": post.UserId,
             "nbLikes": likesCount,
             "nbComments": commentsCount,
+            "liked": liked,
             "createdAt": post.createdAt
         }
         return res.status(200).json(returnedPost)
@@ -53,6 +69,7 @@ exports.getAllPosts = (req, res, next) => {
         }]
     })
     .then(async posts => {
+        const userId = token.getUserIdByToken(req);
         const arrayPosts = [];
         for (const post of posts) {
             const commentsCount = await db.database.Comment.count({
@@ -67,6 +84,19 @@ exports.getAllPosts = (req, res, next) => {
                 },
             });
 
+            const like = await db.database.Like_post.findOne({
+                where: {
+                    UserId: userId,
+                    PostId: post.id,
+                },
+            });
+
+            if (like) {
+                liked = true;
+            } else {
+                liked = false;
+            }
+
             arrayPosts.push({
                 "id": post.id,
                 "title": post.title,
@@ -77,6 +107,7 @@ exports.getAllPosts = (req, res, next) => {
                 "userId": post.UserId,
                 "nbLikes": likesCount,
                 "nbComments": commentsCount,
+                "liked": liked,
                 "createdAt": post.createdAt
             })
         }
@@ -112,6 +143,19 @@ exports.getAllPostsOfUser = (req, res, next) => {
                 },
             });
 
+            const like = await db.database.Like_post.findOne({
+                where: {
+                    UserId: req.params.id,
+                    PostId: post.id,
+                },
+            });
+
+            if (like) {
+                liked = true;
+            } else {
+                liked = false;
+            }
+
             arrayPosts.push({
                 "id": post.id,
                 "title": post.title,
@@ -122,6 +166,7 @@ exports.getAllPostsOfUser = (req, res, next) => {
                 "userId": post.UserId,
                 "nbLikes": likesCount,
                 "nbComments": commentsCount,
+                "liked": liked,
                 "createdAt": post.createdAt
             })
         }
@@ -299,6 +344,7 @@ exports.getAllComments = (req, res, next) => {
         }]
     })
     .then(async comments => {
+        const userId = token.getUserIdByToken(req);
         const arrayComments = [];
         for (const comment of comments) {
             const likesCount = await db.database.Like_comment.count({
@@ -306,6 +352,19 @@ exports.getAllComments = (req, res, next) => {
                     CommentId: comment.id, 
                 },
             });
+
+            const like = await db.database.Like_comment.findOne({
+                where: {
+                    UserId: userId,
+                    CommentId: comment.id,
+                },
+            });
+
+            if (like) {
+                liked = true;
+            } else {
+                liked = false;
+            }
 
             arrayComments.push({
                 "id": comment.id,
@@ -315,6 +374,7 @@ exports.getAllComments = (req, res, next) => {
                 "userId": comment.UserId,
                 "postId": comment.PostId,
                 "nbLikes": likesCount,
+                "liked": liked,
                 "createdAt": comment.createdAt
             })
         }

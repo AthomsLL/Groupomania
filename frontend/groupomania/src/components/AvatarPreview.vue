@@ -4,7 +4,7 @@
             name="filepond"
             class="filepond"
             ref="pond"
-            label-idle="Glisser/Déposer votre avatar ou <span class='filepond--label-action'>Parcourir</span>"
+            label-idle="Choisir votre avatar <p class='filepond--label-action'>Parcourir</p>"
             allow-file-type-validation=true
             allow-mutiple=false
             instantUpload=false

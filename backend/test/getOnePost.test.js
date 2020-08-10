@@ -10,7 +10,7 @@ describe("GET /api/v1/posts/:id", () => {
       const auth = await tools.auth();
       console.log(auth);
       const response = await request(app)
-        .get("/api/v1/posts/2")
+        .get("/api/v1/posts/729d9b1e-cb01-438d-9c37-90f199e71c55")
         .set('Authorization', 'Bearer ' + auth.token);
       const post = JSON.parse(response.body);
       

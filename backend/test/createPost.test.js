@@ -10,10 +10,10 @@ describe("POST /api/v1/posts", () => {
       const auth = await tools.auth();
 
       const response = await request(app).post("/api/v1/posts").set('Authorization', 'Bearer ' + auth.token).send({
-            title: "Troisième post de l'user test@test.fr",
+            title: "Deuxième post de l'user test@test.fr",
             content: "Lorem ipsum sin amet, frhejpdapf hfpezfioeznf b ezbfioeb fznfiebfi eobfeizfn fbe ofeo fbe fbezio fnef ioeznf",
-            attachment: "http://localhost:3000/uploads/images/testPost.png",
-            UserId: "22e533aa-7e8d-4e87-9de0-25ca9a1b00b0"
+            attachment: "https://res.cloudinary.com/djcmfi03h/image/upload/f_auto/v1597069735/priscilla-du-preez-W3SEyZODn8U-unsplash_w5ex8m.jpg",
+            UserId: "1c50ee41-7752-4afa-b581-495bedf53b89"
       });
 
       const post = JSON.parse(response.body);

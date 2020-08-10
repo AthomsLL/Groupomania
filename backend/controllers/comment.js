@@ -21,6 +21,19 @@ exports.getAllCommentsOfUser = (req, res, next) => {
                 },
             });
 
+            const like = await db.database.Like_comment.findOne({
+                where: {
+                    UserId: req.params.id,
+                    CommentId: comment.id,
+                },
+            });
+
+            if (like) {
+                liked = true;
+            } else {
+                liked = false;
+            }
+
             arrayComments.push({
                 "id": comment.id,
                 "content": comment.content,
@@ -29,6 +42,7 @@ exports.getAllCommentsOfUser = (req, res, next) => {
                 "userId": comment.UserId,
                 "postId": comment.postId,
                 "nbLikes": likesCount,
+                "liked": liked,
                 "createdAt": comment.createdAt
             })
         }
