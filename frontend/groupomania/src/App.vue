@@ -32,4 +32,16 @@ export default {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.8);
   }
+
+  .container {
+    max-width: 900px !important;
+  }
+
+  .unfortunately {
+        color: #F44336;
+        font-size: 20px;
+        font-weight: 500;
+        margin-top: 20px;
+        text-align: center;
+    }
 </style>

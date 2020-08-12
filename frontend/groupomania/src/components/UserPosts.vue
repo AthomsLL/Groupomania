@@ -2,30 +2,32 @@
     <div>
         <div class="container">
             <div v-if="posts.length > 0">
-                <div v-for="post in posts" :key="post.id">
-                    <v-card class="mx-auto mb-3 card">
+                <div v-for="post in posts" :key="post.id" justify="center">
+                    <v-card class="mx-auto mb-3 card elevation-2" @click="goToOnePost(post.id)">
                         <v-card-text class="created-at">
                             Publié {{ post.createdAt | moment("from") }}
                         </v-card-text>
 
                         <v-container class="post-container">
                             <v-row>
-                                <v-col cols="auto">
-                                    <v-img
-                                        v-if="post.attachment != null"
-                                        height="230"
-                                        width="230"
-                                        :src="post.attachment"
-                                    ></v-img>
+                                <v-col cols="auto" class="col-content">
+                                    <div class="content-box">
+                                        <v-img
+                                            class="post-img"
+                                            v-if="post.attachment != null"
+                                            height=100%
+                                            width=100%
+                                            :src="post.attachment"
+                                        ></v-img>
 
-                                    <p class="post-content" v-else-if="post.content != null">
-                                        {{ post.content }}
-                                    </p>
+                                        <p class="post-content" v-else-if="post.content != null">
+                                            {{ post.content }}
+                                        </p>
+                                    </div>
                                 </v-col>
 
-                                <v-col cols="auto" class="text-center">
+                                <v-col cols="auto" class="text-center icons">
                                     <v-row class="flex-column">
-                                        <v-col class="px-0">
                                             <div class="like" v-if="post.liked == false">
                                                 <v-icon>mdi-heart</v-icon>
                                                 <p>{{ post.nbLikes }}</p>
@@ -34,14 +36,11 @@
                                                 <v-icon color="#FE421A">mdi-heart</v-icon>
                                                 <p>{{ post.nbLikes }}</p>
                                             </div>
-                                        </v-col>
-
-                                        <v-col class="px-0">
+                                        
                                             <div class="comments">
                                                 <v-icon>mdi-chat</v-icon>
-                                                <p>{{ post.nbComments }}</p>
+                                                <p class="mb-0">{{ post.nbComments }}</p>
                                             </div>
-                                        </v-col>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -101,16 +100,15 @@
                     this.posts = response.data;
                 })
                 .catch(error => console.log(error));
+            },
+            goToOnePost: function(postId) {
+                this.$router.push({ path: `/post/${postId}` });
             }
         },
     }
 </script>
 
 <style scoped lang="scss">
-
-    v-card {
-        margin-bottom: 10px !important;
-    }
 
     .created-at {
         font-size: 17px;
@@ -123,9 +121,16 @@
         padding-bottom: 0;
     }
 
+    .col-content {
+        max-width: 80%;
+    }
+
+    .post-img {
+        width: fit-content;
+    }
+
     .post-content {
         margin-top: 15px;
-        width: 230px;
     }
 
     .avatar {
@@ -141,15 +146,14 @@
         font-size: 20px !important;
     }
 
-    .username {
-        font-size: 15px;
+    .icons {
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        padding-left: 0;
     }
 
-    .unfortunately {
-        color: #F44336;
-        font-size: 20px;
-        font-weight: 500;
-        margin-top: 20px;
-        text-align: center;
+    .username {
+        font-size: 15px;
     }
 </style>

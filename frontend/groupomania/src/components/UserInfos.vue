@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-3">
         <v-list-item two-line>
             <v-list-item-content>
                 <v-list-item-title class="infos-title">Email</v-list-item-title>
@@ -37,6 +37,7 @@
 </script>
 
 <style scoped lang="scss">
+
     .infos-title {
         font-size: 20px;
         margin-bottom: 10px;

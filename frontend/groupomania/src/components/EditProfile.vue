@@ -2,6 +2,7 @@
 
     <div>
         <main-header/>
+        
         <div class="container">
             <div class="avatar-container">
                 <avatar-preview :file="file" @getFile="file = $event"/>
