@@ -51,6 +51,7 @@
 
 import HeaderSign from './HeaderSign'
 import axios from 'axios'
+import swal from 'sweetalert2'
 
 export default {
     name: 'Login',
@@ -79,6 +80,17 @@ export default {
                 console.log(token);
                 this.$cookie.set('token', JSON.stringify(token), 2);
                 this.$router.push({ path: '/posts' });
+            })
+            .catch(error => { 
+                if (error.response.status == 404) {
+                    swal.fire('UTILISATEUR INCONNU', "Merci de vous authentifier avec un utilisateur enregistré", 'error')
+                }
+
+                if (error.response.status == 401) {
+                    swal.fire('IDENTIFIANTS INCORRECTS', "Merci de renseigner vos identifiants", 'error')
+                }
+
+                console.log(error);
             })
         }
     },
@@ -111,7 +123,7 @@ export default {
         color: #fff;
         font-size: 20px;
         margin-bottom: 20px;
-        margin-top: 150px;
+        margin-top: 120px;
     }
 
 </style>

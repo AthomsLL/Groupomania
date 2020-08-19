@@ -89,6 +89,7 @@
                     this.$cookie.set('token', JSON.stringify(token), 2);
                     this.$router.push({ path: '/user/edit-profile' });
                 })
+                .catch(error => console.log(error));
             }
         },
         components: {
@@ -111,7 +112,7 @@
         color: #fff;
         font-size: 20px;
         margin-bottom: 20px;
-        margin-top: 150px;
+        margin-top: 90px;
     }
 
     .already-account a {

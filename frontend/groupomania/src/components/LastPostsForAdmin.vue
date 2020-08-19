@@ -68,14 +68,15 @@
 
 <script>
     import { getToken } from '../../helpers/decode';
+    import axios from 'axios';
 
     export default {
-        name: 'UserPosts',
-        props: ['posts'],
+        name: 'LastPostsForAdmin',
         data() {
             return {
                 token: '',
                 userId: '',
+                posts: [],
             }
         },
         created() {
@@ -83,17 +84,38 @@
             this.token = token;
             const user = getToken();
             this.userId = user.id;
+
+            this.getAllPosts();
         },
         methods: {
+            getAllPosts: function() {
+                axios
+                    .get(`http://localhost:3000/api/v1/posts`, {
+                        headers: {
+                            Authorization: "Bearer " + this.token,
+                        }
+                    })
+                    .then(response => {
+                        console.log(response.data);
+                        this.posts = response.data;
+                    })
+                    .catch(error  => {
+                        if (error.response.status == 401) {
+                            this.$cookie.delete('token');
+                            this.$router.push({ path: `/` })
+                        }
+
+                        console.log(error);
+                    });
+            },
             goToOnePost: function(postId) {
                 this.$router.push({ path: `/post/${postId}` });
             }
-        },
+        }
     }
 </script>
 
-<style scoped lang="scss">
-
+<style lang="scss" scoped>
     .created-at {
         font-size: 17px;
         font-weight: 500;

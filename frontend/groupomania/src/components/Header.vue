@@ -3,7 +3,8 @@
         <div class="header-contenu">
             <header-posts v-if="goToPosts()" />
             <header-edit-profile v-if="goToEditProfile()" />
-            <header-profile v-if="goToProfile()" />
+            <header-my-profile v-if="goToMyProfile()" />
+            <header-user-profile v-if="goToUserProfile()" />
             <header-settings v-if="goToSettings()" />
             <header-edit-username v-if="goToEditUsername()" />
             <header-edit-password v-if="goToEditPassword()" />
@@ -19,7 +20,8 @@
 <script>
     import HeaderPosts from './HeaderPosts';
     import HeaderEditProfile from './HeaderEditProfile';
-    import HeaderProfile from './HeaderProfile';
+    import HeaderMyProfile from './HeaderMyProfile';
+    import HeaderUserProfile from './HeaderUserProfile';
     import HeaderSettings from './HeaderSettings';
     import HeaderEditUsername from './HeaderEditUsername';
     import HeaderEditPassword from './HeaderEditPassword';
@@ -36,7 +38,7 @@
         }),
         methods: {
             goToOnePost: function() {
-                if(this.$route.path == '/post/:postId') {
+                if(this.$route.path == `/post/${this.$route.params.postId}`) {
                     return true;
                 }
             },
@@ -50,28 +52,33 @@
                     return true;
                 }   
             },
-            goToProfile: function() {
-                if(this.$route.path == '/user/profile') {
+            goToMyProfile: function() {
+                if(this.$route.path == `/user/profile/${this.$route.params.id}`) {
                     return true;
                 } 
             },
+            goToUserProfile: function() {
+                if(this.$route.path == `/user/${this.$route.params.username}`) {
+                    return true;
+                }
+            },
             goToSettings: function() {
-                if(this.$route.path == '/user/settings') {
+                if(this.$route.path == '/settings') {
                     return true;
                 } 
             },
             goToEditUsername: function() {
-                if(this.$route.path == '/user/edit-username') {
+                if(this.$route.path == '/edit-username') {
                     return true;
                 } 
             },
             goToEditPassword: function() {
-                if(this.$route.path == '/user/edit-password') {
+                if(this.$route.path == '/edit-password') {
                     return true;
                 } 
             },
             goToDeleteProfile: function() {
-                if(this.$route.path == '/user/delete-profile') {
+                if(this.$route.path == '/delete-profile') {
                     return true;
                 } 
             },
@@ -94,7 +101,8 @@
         components: {
             'header-posts': HeaderPosts,
             'header-edit-profile': HeaderEditProfile,
-            'header-profile': HeaderProfile,
+            'header-my-profile': HeaderMyProfile,
+            'header-user-profile': HeaderUserProfile,
             'header-settings': HeaderSettings,
             'header-edit-username': HeaderEditUsername,
             'header-edit-password': HeaderEditPassword,

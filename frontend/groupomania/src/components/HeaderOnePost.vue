@@ -44,7 +44,7 @@
                 this.$router.push({ path: '/posts' });
             },
             goToSettings: function() {
-                this.$router.push({ path: '/user/settings' });
+                this.$router.push({ path: '/settings' });
             },
             logout: function() {
                 this.$cookie.delete('token');

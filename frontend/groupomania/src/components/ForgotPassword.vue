@@ -82,7 +82,7 @@
             background-color: #FE421A !important;
             color: #fff;
             font-size: 20px;
-            margin-top: 200px;
+            margin-top: 20px;
         }
     }
 

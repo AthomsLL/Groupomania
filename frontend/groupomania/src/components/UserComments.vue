@@ -55,15 +55,14 @@
     
 <script>
     import { getToken } from '../../helpers/decode';
-    import axios from 'axios'
 
     export default {
         name: 'UserComments',
+        props: ['comments'],
         data() {
             return {
                 userId: '',
                 token: '',
-                comments: [],
             }
         },
         created() {
@@ -71,23 +70,9 @@
             this.token = token;
             const user = getToken();
             this.userId = user.id;
-
-            this.getAllCommentsOfUser();
         },
         methods: {
-            getAllCommentsOfUser: function() {
-                axios
-                .get(`http://localhost:3000/api/v1/comments/users/${this.userId}`, {
-                    headers: {
-                        Authorization: "Bearer " + this.token,
-                    }
-                })
-                .then(response => {
-                    console.log(response.data);
-                    this.comments = response.data;
-                })
-                .catch(error => console.log(error));
-            }
+            
         }
     }
 

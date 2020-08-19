@@ -1,10 +1,10 @@
 <template>
     <div class="header-home">
-        <v-btn icon @click="goToSettings()">
+        <v-btn icon @click="goHomePage()">
             <v-icon size="24px">mdi-close</v-icon>
         </v-btn>
 
-        <h1>Modifier mot de passe</h1>
+        <h1>Profil</h1>
 
         <v-menu>
             <template v-slot:activator="{ on, attrs }">
@@ -30,11 +30,14 @@
 
 <script>
     export default {
-        name: 'HeaderPosts',
+        name: 'HeaderUserProfile',
         data: () => ({
 
         }),
         methods: {
+            goHomePage: function() {
+                this.$router.push({ path: '/posts' });
+            },
             goToSettings: function() {
                 this.$router.push({ path: '/settings' });
             },
@@ -50,7 +53,7 @@
 
     h1 {
         color: white;
-        font-size: 23px;
+        font-size: 27px;
         text-transform: uppercase;
     }
 
@@ -60,7 +63,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        
     }
 
     .v-btn--round .v-btn__content .v-icon {

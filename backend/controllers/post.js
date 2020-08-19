@@ -1,6 +1,6 @@
 const db = require('../config/database-test');
 const token = require('../middleware/getUserIdByToken');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
 // Controller permettant d'afficher les informations d'un utilisateur
 exports.getOnePost = (req, res, next) => {
@@ -282,21 +282,16 @@ exports.unlikePost = async (req, res, next) => {
 
 // Controller permettant de modifier un post
 exports.editPost = (req, res, next) => {
-    const postObject = req.file ?
-    {
-        ...JSON.parse(req.body.post),
-        attachment: `${req.protocol}://${req.get('host')}/uploads/images/${req.file.filename}`
-    } : { ...req.body };
+    const postObject = { ...req.body };
 
-    if (req.file) {
+    if (req.body.attachment) {
         db.database.Post.findOne({ where: { id: req.params.id }}, 'attachment')
-        .then(post => {
-            const filename = post.attachment.split('/uploads/images/')[1];
-            fs.unlink(`uploads/images/${filename}`, () => {
-                console.log('Ancienne image effacée avec succès !');
+            .then(post => {
+                cloudinary.uploader.destroy(`${post.attachmentPublicId}`, function(error, result) {
+                    console.log(result, error);
+                })
             })
-        })
-        .catch(error => console.log( error ));
+            .catch(error => console.log( error ));
     }
 
     db.database.Post.update({...postObject}, { returning: true, where: { id: req.params.id }})
@@ -306,6 +301,7 @@ exports.editPost = (req, res, next) => {
                 "title": updatedPost.title,
                 "content": updatedPost.content,
                 "attachment": updatedPost.attachment,
+                "attachmentPublicId": updatedPost.attachmentPublicId,
                 "userId": updatedPost.UserId,
                 "createdAt": updatedPost.createdAt
             }
@@ -319,9 +315,8 @@ exports.deletePost = (req, res, next) => {
     db.database.Post.findOne({ where: { id: req.params.id }})
         .then(post => {
             if (post.attachment != null) {
-                const filename = post.attachment.split('uploads/images/')[1];
-                fs.unlink(`uploads/images/${filename}`, () => {
-                    console.log('Image du post supprimée avec succès !');
+                cloudinary.uploader.destroy(`${post.attachmentPublicId}`, function(error, result) {
+                    console.log(result, error);
                 })
             }
             db.database.Post.destroy({ where: { id: req.params.id }})

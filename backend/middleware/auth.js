@@ -11,9 +11,9 @@ exports.admin = async (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(403).json({
     message: "Autorisation refusée, seuls les admins peuvent utiliser cette route",
-    statusCode: 401
+    statusCode: 403
   });
 };
 
@@ -24,9 +24,9 @@ exports.me = async (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(403).json({
     message: "Autorisation refusée, vous n'avez pas le droit d'utiliser cette route",
-    statusCode: 401
+    statusCode: 403
   })
 };
 
@@ -39,9 +39,9 @@ exports.adminAndMe = async (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(403).json({
     message: "Autorisation refusée, vous n'avez pas le droit d'utiliser cette route",
-    statusCode: 401
+    statusCode: 403
   })
 };
 
@@ -57,9 +57,9 @@ exports.postMe = async (req,res,next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(404).json({
     message: "Autorisation refusée, vous n'avez pas le droit de modifier ce post",
-    statusCode: 401
+    statusCode: 403
   })
 };
 
@@ -72,9 +72,9 @@ exports.commentMe = async (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(403).json({
     message: "Autorisation refusée, vous n'avez pas le droit de modifier ce commentaire",
-    statusCode: 401
+    statusCode: 403
   })
 };
 
@@ -88,9 +88,9 @@ exports.adminAndPostMe = async (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(403).json({
     message: "Autorisation refusée, vous n'avez pas le droit de supprimer ce post",
-    statusCode: 401
+    statusCode: 403
   })
 };
 
@@ -104,8 +104,8 @@ exports.adminAndCommentMe = async (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({
+  return res.status(403).json({
     message: "Autorisation refusée, vous n'avez pas le droit de supprimer ce commentaire",
-    statusCode: 401
+    statusCode: 403
   })
 };

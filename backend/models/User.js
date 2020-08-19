@@ -43,10 +43,6 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: "cascade"
         });
 
-        User.hasMany(models.Message, {
-            onDelete: "cascade"
-        })
-
         User.hasMany(models.Like_post, {
             onDelete: "cascade"
         })

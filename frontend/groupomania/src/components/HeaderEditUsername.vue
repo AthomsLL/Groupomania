@@ -36,7 +36,7 @@
         }),
         methods: {
             goToSettings: function() {
-                this.$router.push({ path: '/user/settings' });
+                this.$router.push({ path: '/settings' });
             },
             logout: function() {
                 this.$cookie.delete('token');
@@ -61,10 +61,6 @@
         align-items: center;
         justify-content: space-between;
         
-    }
-
-    .v-icon {
-        color: white;
     }
 
     .v-btn--round .v-btn__content .v-icon {

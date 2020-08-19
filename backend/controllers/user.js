@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 const passwordValidator = require('../middleware/passwordValidator');
 const cloudinary = require('cloudinary').v2;
 
-// Controller permettant d'afficher les informations d'un utilisateur
-exports.getOneUser = (req, res, next) => {
+// Controller permettant d'afficher les informations de l'utilisateur connecté
+exports.getUserMe = (req, res, next) => {
     db.database.User.findOne({ 
             where: {
                 id: req.params.id
@@ -27,9 +27,32 @@ exports.getOneUser = (req, res, next) => {
         .catch(error => res.status(404).json({ error }));
 };
 
+// Controller permettant d'afficher les informations d'un autre utilisateur
+exports.getOneUser = (req, res, next) => {
+    db.database.User.findOne({ 
+            where: {
+                username: req.params.username
+            }
+        })
+        .then(user => {
+            const returnedUser = {
+                "id": user.id,
+                "email": user.email,
+                "firstName": user.firstName,
+                "lastName": user.lastName,
+                "username": user.username,
+                "avatar": user.avatar,
+                "department": user.department,
+                "isAdmin": user.isAdmin
+            }
+            return res.status(200).json(returnedUser)
+        })
+        .catch(error => res.status(404).json({ error }));
+};
+
 // Controller permettant d'afficher la liste des utilisateurs
 exports.getAllUsers = (req, res, next) => {
-    db.database.User.findAll()
+    db.database.User.findAll({ where : { isAdmin: false } })
         .then(users => {
             const arrayUsers = [];
             users.forEach(user => 
@@ -124,10 +147,13 @@ exports.deleteUser = (req, res, next) => {
     db.database.User.findOne({ where: { id: req.params.id }})
         .then(user => {
             if (user.avatar != null) {
-                const filename = user.avatar.split('uploads/images/avatars/')[1];
-                fs.unlink(`uploads/images/avatars/${filename}`, () => {
-                    console.log('Image avatar supprimée avec succès !');
+                db.database.User.findOne({ where: { id: req.params.id }})
+                .then(user => {
+                    cloudinary.uploader.destroy(`${user.avatarPublicId}`, function(error, result) {
+                        console.log(result, error);
+                    })
                 })
+                .catch(error => console.log(error));
             }
             db.database.User.destroy({ where: { id: req.params.id }})
                 .then(() => res.status(200).json({ message: 'Utilisateur supprimé !' }))

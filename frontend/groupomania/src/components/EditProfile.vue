@@ -58,6 +58,7 @@
             return {
                 valid: true,
                 userId: '',
+                username: '',
                 firstname: '',
                 firstnameRules: [
                     v => !!v || 'Votre prénom est requis ',
@@ -91,6 +92,7 @@
             this.token = token;
             const user = getToken();
             this.userId = user.id;
+            this.username = user.username;
         },
         methods: {
             formSubmit: function() {
@@ -134,11 +136,17 @@
                                         const profile = response.data;
                                         console.log(profile);
 
-                                        this.$router.push({ path: '/user/profile' });
+                                        this.$router.push({ path: `/user/profile/${this.userId}` });
                                     })
                                     .catch(error => {
                                         this.errors.push(error);
                                         console.log(this.errors[0]);
+
+                                        
+                                        if (error.response.status == 401) {
+                                            this.$cookie.delete('token');
+                                            this.$router.push({ path: `/` })
+                                        }
                                     })
                                 })
                                 .catch(error => {
@@ -165,7 +173,7 @@
                         const profile = response.data;
                         console.log(profile);
 
-                        this.$router.push({ path: '/user/profile' });
+                        this.$router.push({ path: `/user/profile/${this.userId}` });
                     })
                     .catch(error => {
                         this.errors.push(error);
@@ -179,7 +187,7 @@
                 this.formData.append("file", this.fileContents);
             },
             goToProfile: function() {
-                this.$router.push({ path: '/user/profile' });
+                this.$router.push({ path: `/user/profile/${this.userId}` });
             }
         }, 
         components: {
@@ -204,7 +212,7 @@
     }
 
     .form {
-        margin-top: 50px;
+        margin-top: 30px;
     }
 
     .v-btn {
@@ -214,11 +222,12 @@
     .cta-submit-profile {
         background-color: #FE421A !important;
         color: #fff;
-        margin-top: 150px;
+        margin-top: 20px;
     }
 
     .cta-cancel {
         margin-top: 15px;
+        margin-bottom: 15px;
     }
 
 </style>

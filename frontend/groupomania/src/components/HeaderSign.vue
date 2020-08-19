@@ -67,18 +67,18 @@
         opacity: .53;
         position: absolute;
         left: 4.38%;
-        top: -62.8%;
+        top: -58.8%;
     }
 
     .circle-2 {
         clip-path: circle(50%);
         -webkit-clip-path: circle(50%);
         position: absolute;
-        top: -64%;
+        top: -60%;
 
         &__img-box {
             position: absolute;
-            top: 52%;
+            top: 47%;
             left: 50%;
             transform: translateX(-50%);
             width: 80%;

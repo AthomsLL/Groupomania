@@ -34,18 +34,18 @@
                     <user-infos :email="email" :username="username" :department="department" />
 
                     <div v-if="userId == userDatas.id" class="cta-edit">
-                        <v-btn color="#F44336" outlined large @click="goToEditProfile()">
+                        <v-btn color="#F44336" outlined  @click="goToEditProfile()">
                             Modifier Profil
                         </v-btn>
                     </div>
                 </div>
 
                 <div class="user-posts" v-if="showPosts == true">
-                    <user-posts />
+                    <user-posts :posts="posts" />
                 </div>
 
                 <div class="user-comments" v-if="showComments == true">
-                    <user-comments />
+                    <user-comments :comments="comments" />
                 </div>
             </div>
 
@@ -61,11 +61,11 @@
                 </div>
 
                 <div class="users-list" v-if="showUsers == true">
-                    
+                    <users-list />
                 </div>
 
                 <div class="last-posts" v-if="showLastPosts == true">
-                    
+                    <last-posts />
                 </div>
             </div>
         </div>
@@ -80,9 +80,11 @@
     import UserInfos from './UserInfos';
     import UserPosts from './UserPosts';
     import UserComments from './UserComments';
+    import UsersListForAdmin from './UsersListForAdmin';
+    import LastPostsForAdmin from './LastPostsForAdmin';
 
     export default {
-        name: 'Profile',
+        name: 'MyProfile',
         data() {
             return {
                 email: '',
@@ -90,7 +92,10 @@
                 department: '',
                 token: '',
                 userId: '',
+                isAdmin: '',
                 userDatas: '',
+                posts: [],
+                comments: [],
                 showInfos: true,
                 showPosts: false,
                 showComments: false,
@@ -104,11 +109,12 @@
             this.token = token;
             const user = getToken();
             this.userId = user.id;
+            this.isAdmin = user.isAdmin;
 
-            this.getInfosUser();
+            this.getInfosUserMe();
         },
         methods: {
-            getInfosUser: function() {
+            getInfosUserMe: function() {
                 let infosUserObj = {
                     url: `http://localhost:3000/api/v1/users/${this.userId}`,
                     method: "GET",
@@ -124,8 +130,58 @@
                         this.email = this.userDatas.email;
                         this.username = this.userDatas.username;
                         this.department = this.userDatas.department;
+
+                        this.getAllPostsOfUser();
+                        this.getAllCommentsOfUser();
                     })
-                    .catch(error => console.log(error));
+                    .catch(error  => {
+                        if (error.response.status == 401) {
+                            this.$cookie.delete('token');
+                            this.$router.push({ path: `/` })
+                        }
+
+                        console.log(error);
+                    });
+            },
+            getAllPostsOfUser: function() {
+                axios
+                    .get(`http://localhost:3000/api/v1/posts/users/${this.userId}`, {
+                        headers: {
+                            Authorization: "Bearer " + this.token,
+                        }
+                    })
+                    .then(response => {
+                        console.log(response.data);
+                        this.posts = response.data;
+                    })
+                    .catch(error  => {
+                        if (error.response.status == 401) {
+                            this.$cookie.delete('token');
+                            this.$router.push({ path: `/` })
+                        }
+
+                        console.log(error);
+                    });
+            },
+            getAllCommentsOfUser: function() {
+                axios
+                .get(`http://localhost:3000/api/v1/comments/users/${this.userId}`, {
+                    headers: {
+                        Authorization: "Bearer " + this.token,
+                    }
+                })
+                .then(response => {
+                    console.log(response.data);
+                    this.comments = response.data;
+                })
+                .catch(error  => {
+                        if (error.response.status == 401) {
+                            this.$cookie.delete('token');
+                            this.$router.push({ path: `/` })
+                        }
+
+                        console.log(error);
+                    });
             },
             toggleInfos: function() {
                 this.showInfos = true,
@@ -143,29 +199,31 @@
                 this.showComments = true
             },
             toggleInfosAdmin: function() {
-                this.showInfos = true,
+                this.showInfosAdmin = true,
                 this.showUsers = false,
                 this.showLastPosts = false
             },
             toggleUsers: function() {
-                this.showInfos = false,
+                this.showInfosAdmin = false,
                 this.showUsers = true,
                 this.showLastPosts = false
             },
             toggleLastPosts: function() {
-                this.showInfos = false,
+                this.showInfosAdmin = false,
                 this.showUsers = false,
                 this.showLastPosts = true
             },
             goToEditProfile: function() {
                 this.$router.push({ path: '/user/edit-profile' });
-            }
+            },
         },
         components: {
             'main-header': Header,
             'user-infos': UserInfos,
             'user-posts': UserPosts,
             'user-comments': UserComments,
+            'users-list': UsersListForAdmin,
+            'last-posts': LastPostsForAdmin,
         }
     }
 
@@ -203,7 +261,7 @@
     .cta-edit {
         display: flex;
         justify-content: center !important;
-        margin-top: 70px;
+        margin-top: 30px;
     }
 
 </style>

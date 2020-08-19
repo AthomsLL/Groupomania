@@ -1,12 +1,12 @@
 <template>
     <div class="header-home">
-        <v-btn icon @click="goProfile()">
+        <v-btn icon @click="goMyProfile()">
             <v-icon size="24px">mdi-close</v-icon>
         </v-btn>
 
         <h1>Paramètres</h1>
 
-        <v-menu :close-on-content-click="closeOnContentClick">
+        <v-menu>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-on="on" v-bind="attrs">
                     <v-icon size="24px">mdi-dots-vertical</v-icon>
@@ -25,17 +25,25 @@
 </template>
 
 <script>
+    import { getToken } from '../../helpers/decode';
+
     export default {
         name: 'HeaderPosts',
-        data: () => ({
-
-        }),
+        data() {
+            return {
+                token: '',
+                userId: '',
+            }
+        },
+        created() {
+            const token = JSON.parse(this.$cookie.get('token'));
+            this.token = token;
+            const user = getToken();
+            this.userId = user.id;
+        },
         methods: {
-            goProfile: function() {
-                this.$router.push({ path: '/user/profile' });
-            },
-            goToSettings: function() {
-                this.$router.push({ path: '/user/settings' });
+            goMyProfile: function() {
+                this.$router.push({ path: `/user/profile/${this.userId}` });
             },
             logout: function() {
                 this.$cookie.delete('token');
@@ -60,10 +68,6 @@
         align-items: center;
         justify-content: space-between;
         
-    }
-
-    .v-icon {
-        color: white;
     }
 
     .v-btn--round .v-btn__content .v-icon {
