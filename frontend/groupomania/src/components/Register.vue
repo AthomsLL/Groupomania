@@ -5,31 +5,41 @@
 
         <div class="container">
             <v-form ref="form" v-model="valid" lazy-validation>
-                <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                ></v-text-field>
+                <v-row>
+                    <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                    ></v-text-field>
+                </v-row>
 
-                <v-text-field
-                    v-model="username"
-                    :counter="15"
-                    :rules="usernameRules"
-                    label="Pseudo"
-                    required
-                ></v-text-field>
+                <v-row>
+                    <v-text-field
+                        v-model="username"
+                        :counter="15"
+                        :rules="usernameRules"
+                        label="Pseudo"
+                        required
+                    ></v-text-field>
+                </v-row>
+                
+                <v-row class="password">
+                    <v-text-field
+                        v-model="password"
+                        :counter="8"
+                        :rules="passwordRules"
+                        label="Mot de passe"
+                        :type="passwordFieldType"
+                        required
+                    ></v-text-field>
 
-                <v-text-field
-                    v-model="password"
-                    :counter="8"
-                    :rules="passwordRules"
-                    label="Mot de passe"
-                    type="password"
-                    required
-                ></v-text-field>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType === 'password'" @click="toggleShowPassword()"><v-icon>mdi-eye</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType != 'password'" @click="toggleShowPassword()"><v-icon>mdi-eye-off</v-icon></v-btn>
+                </v-row>
 
                 <v-btn
+                    class="register"
                     :disabled="!valid"
                     type="submit"
                     @click.prevent="formSubmit">
@@ -58,6 +68,7 @@
         name: 'Register',
         data: () => ({
             valid: true,
+            passwordFieldType: 'password',
             email: '',
             emailRules: [
                 v => !!v || 'Votre E-mail est requis',
@@ -90,7 +101,10 @@
                     this.$router.push({ path: '/user/edit-profile' });
                 })
                 .catch(error => console.log(error));
-            }
+            },
+            toggleShowPassword: function() {
+                this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+            },
         },
         components: {
             'header-sign': HeaderSign
@@ -107,7 +121,16 @@
         text-align: center;
     }
 
-    .v-btn {
+    .eye {
+        margin-top: 16px !important;
+        margin-left: 10px !important;
+    }
+
+    .v-form .password {
+        flex-wrap: nowrap !important;
+    }
+
+    .register {
         background-color: #FE421A !important;
         color: #fff;
         font-size: 20px;

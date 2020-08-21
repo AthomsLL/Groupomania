@@ -5,20 +5,27 @@
 
         <div class="container">
             <v-form ref="form" v-model="valid" lazy-validation>
-                <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                ></v-text-field>
+                <v-row>
+                    <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                    ></v-text-field>
+                </v-row>
 
-                <v-text-field
-                    v-model="password"
-                    :rules="passwordRules"
-                    label="Mot de passe"
-                    type="password"
-                    required
-                ></v-text-field>
+                <v-row>
+                    <v-text-field
+                        v-model="password"
+                        :rules="passwordRules"
+                        label="Mot de passe"
+                        :type="passwordFieldType"
+                        required
+                    ></v-text-field>
+
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType === 'password'" @click="toggleShowPassword()"><v-icon>mdi-eye</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType != 'password'" @click="toggleShowPassword()"><v-icon>mdi-eye-off</v-icon></v-btn>
+                </v-row>
 
                 <router-link :to="'/forgot-password'">
                     <p class="forgot-password">
@@ -27,6 +34,7 @@
                 </router-link>
 
                 <v-btn
+                    class="login"
                     :disabled="!valid"
                     type="submit"
                     @click.prevent="formSubmit">
@@ -57,6 +65,7 @@ export default {
     name: 'Login',
     data: () => ({
         valid: true,
+        passwordFieldType: 'password',
         email: '',
         emailRules: [
             v => !!v || 'Votre E-mail est requis',
@@ -92,7 +101,10 @@ export default {
 
                 console.log(error);
             })
-        }
+        },
+        toggleShowPassword: function() {
+            this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+        },
     },
     components: {
         'header-sign': HeaderSign
@@ -114,11 +126,16 @@ export default {
         text-decoration: none;
     }
 
+    .eye {
+        margin-top: 16px !important;
+        margin-left: 10px !important;
+    }
+
     .forgot-password {
         text-align: right;
     }
 
-    .v-btn {
+    .login {
         background-color: #FE421A !important;
         color: #fff;
         font-size: 20px;

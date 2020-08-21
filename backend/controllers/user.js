@@ -114,7 +114,7 @@ exports.editUsername = (req, res, next) => {
 
 // Controller permettant de mettre à jour le mot de passe de l'utilisateur
 exports.editPassword = (req, res, next) => {
-    db.database.User.findOne({ where: { id: req.params.id, password: req.body.oldPassword }})
+    db.database.User.findOne({ where: { id: req.params.id }})
         .then(() => {
             let isValid = true;
             let message = '';
