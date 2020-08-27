@@ -34,7 +34,7 @@ export default {
   }
 
   .container {
-    max-width: 900px !important;
+    max-width: 700px !important;
   }
 
   .unfortunately {

@@ -22,30 +22,35 @@
                     </v-list-item-content>
                 </v-list-item>
 
-                <div v-if="userId == userDatas.id" class="cta-edit cta">
-                    <v-btn color="#F44336" outlined @click="goToEditUsername()">
-                        Modifier Pseudo
-                    </v-btn>
-                </div>
+                <div class="cta-row">
+                    <div v-if="userId == userDatas.id" class="cta-edit cta">
+                        <v-btn color="#F44336" outlined @click="goToEditUsername()">
+                            Modifier Pseudo
+                        </v-btn>
+                    </div>
 
-                <div v-if="userId == userDatas.id" class="cta-edit cta">
-                    <v-btn color="#F44336" outlined @click="goToEditPassword()">
-                        Modifier Mot de passe
-                    </v-btn>
-                </div>
+                    <div v-if="userId == userDatas.id" class="cta-edit cta">
+                        <v-btn color="#F44336" outlined @click="goToEditPassword()">
+                            Modifier Mot de passe
+                        </v-btn>
+                    </div>
 
-                <div v-if="userId == userDatas.id" class="cta">
-                    <v-btn class="cta-delete-profile" @click="goToDeleteProfile()">
-                        Supprimer mon compte
-                    </v-btn>
+                    <div v-if="userId == userDatas.id" class="cta">
+                        <v-btn class="cta-delete-profile" @click="goToDeleteProfile()">
+                            Supprimer mon compte
+                        </v-btn>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <footer-menu :userId="userId" />
     </div>
 </template>
 
 <script>
     import Header from './Header';
+    import FooterMenu from './FooterMenu';
     import { getToken } from '../../helpers/decode';
     import axios from 'axios'
 
@@ -105,11 +110,16 @@
         },
         components: {
             'main-header': Header,
+            'footer-menu': FooterMenu,
         }
     }
 </script>
 
 <style scoped lang="scss">
+
+    .container {
+        margin-bottom: 50px;
+    }
 
     .infos-title {
         font-size: 20px;
@@ -120,6 +130,11 @@
         font-size: 18px;
     }
 
+    .cta-row {
+        display: flex;
+        flex-direction: column;
+    }
+
     .cta-edit {
         margin-top: 20px;
     }
@@ -128,6 +143,15 @@
         background-color: #FE421A !important;
         color: #fff;
         margin-top: 20px;
+    }
+
+    // MEDIA QUERIES
+    @media screen and (min-width: 695px) {
+        .cta-row {
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
     }
 
 </style>

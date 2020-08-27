@@ -1,7 +1,8 @@
 <template>
     <div class="header-home">
         <v-img 
-            src="https://res.cloudinary.com/djcmfi03h/image/upload/c_thumb,h_100,w_300/v1596188651/Groupomania/logos/icon-left-font-monochrome-white_ci45w3.png" 
+            class="header-home__img"
+            src="https://res.cloudinary.com/djcmfi03h/image/upload/f_auto/v1598348834/Groupomania/logos/icon-left-font-monochrome-white_jhdwtn.png" 
             alt="Logo Groupomania blanc"
             contain
             height="100%" 
@@ -15,6 +16,10 @@
             </template>
 
             <v-list>
+                <v-list-item @click="goToMyProfile()">
+                    <v-icon left>mdi-account-circle-outline</v-icon>
+                    <v-list-item-title>Mon Profil</v-list-item-title>
+                </v-list-item>
                 <v-list-item @click="goToSettings()">
                     <v-icon left>mdi-cog-outline</v-icon>
                     <v-list-item-title>Paramètres</v-list-item-title>
@@ -30,12 +35,27 @@
 </template>
 
 <script>
+
+    import { getToken } from '../../helpers/decode';
+
     export default {
         name: 'HeaderPosts',
-        data: () => ({
-            closeOnContentClick: true,
-        }),
+        data() {
+            return {
+                token: '',
+                userId: '',
+            }
+        },
+        created() {
+            const token = JSON.parse(this.$cookie.get('token'));
+            this.token = token;
+            const user = getToken();
+            this.userId = user.id;
+        },
         methods: {
+            goToMyProfile: function() {
+                this.$router.push({ path: `/user/profile/${this.userId}`});
+            },
             goToSettings: function() {
                 this.$router.push({ path: '/settings' });
             },
@@ -54,6 +74,12 @@
         width: 100%;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+
+        &__img {
+            flex: auto;
+            margin: 0 10px 0 15px;
+        }
     }
 
     .v-btn--round .v-btn__content .v-icon {

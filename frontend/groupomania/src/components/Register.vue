@@ -16,6 +16,26 @@
 
                 <v-row>
                     <v-text-field
+                        v-model="firstName"
+                        :rules="firstNameRules"
+                        :counter="30"
+                        label="Prénom"
+                        required
+                    ></v-text-field>
+                </v-row>
+
+                <v-row>
+                    <v-text-field
+                        v-model="lastName"
+                        :rules="lastNameRules"
+                        :counter="30"
+                        label="Nom"
+                        required
+                    ></v-text-field>
+                </v-row>
+
+                <v-row>
+                    <v-text-field
                         v-model="username"
                         :counter="15"
                         :rules="usernameRules"
@@ -74,6 +94,16 @@
                 v => !!v || 'Votre E-mail est requis',
                 v => /.+@.+\..+/.test(v) || 'Votre E-mail doit être valide',
             ],
+            firstName: '',
+            firstNameRules: [
+                v => !!v || 'Votre prénom est requis ',
+                v => v.length <= 30 || 'Votre prénom doit contenir moins de 30 caractères'
+            ],
+            lastName: '',
+            lastNameRules: [
+                v => !!v || 'Votre nom est requis ',
+                v => v.length <= 30 || 'Votre nom doit contenir moins de 30 caractères'
+            ],
             username: '',
             usernameRules: [
                 v => !!v || 'Votre pseudo est requis',
@@ -91,13 +121,15 @@
                 axios
                 .post('http://localhost:3000/api/v1/auth/signup', {
                     email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
                     username: this.username,
                     password: this.password
                 })
                 .then(response => {
                     const token = response.data.token;
                     console.log(token);
-                    this.$cookie.set('token', JSON.stringify(token), 2);
+                    this.$cookie.set('token', JSON.stringify(token), 1);
                     this.$router.push({ path: '/user/edit-profile' });
                 })
                 .catch(error => console.log(error));
@@ -116,7 +148,7 @@
 <style scoped>
 
     .container {
-        margin-top: 50px;
+        margin-top: 25px;
         padding: 0 30px;
         text-align: center;
     }
@@ -135,7 +167,7 @@
         color: #fff;
         font-size: 20px;
         margin-bottom: 20px;
-        margin-top: 90px;
+        margin-top: 40px;
     }
 
     .already-account a {

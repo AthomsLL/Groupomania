@@ -71,7 +71,11 @@ exports.getAllUsers = (req, res, next) => {
 exports.editUserProfile = (req, res, next) => {
     const userProfileObject = { ...req.body };
 
-    if(req.body.avatarPublicId) {
+    if (userProfileObject.avatar) {
+        userProfileObject.avatar = userProfileObject.avatar.split('upload/').join('upload/f_auto,w_120/');
+    }
+
+    if(userProfileObject.avatarPublicId) {
         db.database.User.findOne({ where: { id: req.params.id }})
            .then(user => {
                 cloudinary.uploader.destroy(`${user.avatarPublicId}`, function(error, result) {

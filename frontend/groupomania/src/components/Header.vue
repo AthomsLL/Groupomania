@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="header-contenu">
+        <div class="header-content">
             <header-posts v-if="goToPosts()" />
             <header-edit-profile v-if="goToEditProfile()" />
             <header-my-profile v-if="goToMyProfile()" />
@@ -33,9 +33,11 @@
 
     export default {
         name: 'Header',
-        data: () => ({
-
-        }),
+        data() {
+            return {
+                
+            }
+        },
         methods: {
             goToOnePost: function() {
                 if(this.$route.path == `/post/${this.$route.params.postId}`) {
@@ -118,10 +120,10 @@
 
 <style scoped lang="scss">
 
-    .header-contenu {
-        height: 10vh;
+    .header-content {
         background-color: #f44336;
         box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.16);
+        padding: 10px 0;
     }
 
 </style>

@@ -31,18 +31,25 @@
                     required
                 ></v-text-field>
 
-                <v-btn
-                    class="cta cta-edit"
-                    :disabled="!valid"
-                    type="submit"
-                    @click.prevent="formSubmit">
-                        Modifier Pseudo
-                </v-btn>
-            </v-form>
+                <div class="cta-row">
+                    <div class="cta cta-edit">
+                        <v-btn
+                            class="cta-edit"
+                            color="#F44336"
+                            :disabled="!valid"
+                            type="submit"
+                            @click.prevent="formSubmit">
+                                Modifier Pseudo
+                        </v-btn>
+                    </div>
 
-            <v-btn color="#F44336" outlined class="cta" @click="goToSettings()">
-                Annuler
-            </v-btn>
+                    <div class="cta">
+                        <v-btn color="#F44336" outlined @click="goToSettings()">
+                            Annuler
+                        </v-btn>
+                    </div>
+                </div>
+            </v-form>
             
         </div>
         
@@ -94,6 +101,7 @@
                 axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
+                        this.oldUsername = this.userDatas.username;
                         console.log(this.userDatas);
                     })
                     .catch(error  => {
@@ -150,7 +158,13 @@
 <style lang="scss" scoped>
 
     .form {
+        margin-top: 30px !important;
         padding: 0 30px;
+    }
+
+    .cta-row {
+        display: flex;
+        flex-direction: column;
     }
 
     .cta {
@@ -158,8 +172,16 @@
     }
 
     .cta-edit {
-        background-color: #FE421A !important;
         color: #fff;
+    }
+
+    // MEDIA QUERIES
+    @media screen and (min-width: 450px) {
+        .cta-row {
+            flex-direction: row;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
     }
 
 </style>

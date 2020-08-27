@@ -10,16 +10,16 @@
 
             <v-form class="form" ref="form" v-model="valid" lazy-validation>
                 <v-text-field
-                    v-model="firstname"
-                    :rules="firstnameRules"
+                    v-model="firstName"
+                    :rules="firstNameRules"
                     :counter="30"
                     label="Prénom"
                     required
                 ></v-text-field>
 
                 <v-text-field
-                    v-model="lastname"
-                    :rules="lastnameRules"
+                    v-model="lastName"
+                    :rules="lastNameRules"
                     :counter="30"
                     label="Nom"
                     required
@@ -59,13 +59,14 @@
                 valid: true,
                 userId: '',
                 username: '',
-                firstname: '',
-                firstnameRules: [
+                userDatas: '',
+                firstName: '',
+                firstNameRules: [
                     v => !!v || 'Votre prénom est requis ',
                     v => v.length <= 30 || 'Votre prénom doit contenir moins de 30 caractères'
                 ],
-                lastname: '',
-                lastnameRules: [
+                lastName: '',
+                lastNameRules: [
                     v => !!v || 'Votre nom est requis ',
                     v => v.length <= 30 || 'Votre nom doit contenir moins de 30 caractères'
                 ],
@@ -76,6 +77,9 @@
                     'Marketing',
                     'Communication',
                     'Logistique',
+                    'Caissier(e)',
+                    'Hôte(esse) Accueil',
+                    'Magasinier(e)'
                 ],
                 file: '',
                 preset: 'groupomania-avatars',
@@ -93,8 +97,36 @@
             const user = getToken();
             this.userId = user.id;
             this.username = user.username;
+
+            this.getInfosUserMe();
         },
         methods: {
+            getInfosUserMe: function() {
+                let infosUserObj = {
+                    url: `http://localhost:3000/api/v1/users/${this.userId}`,
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + this.token,
+                    }
+                };
+
+                axios(infosUserObj)
+                    .then(response => {
+                        this.userDatas = response.data;
+                        console.log(this.userDatas);
+                        this.firstName = this.userDatas.firstName;
+                        this.lastName = this.userDatas.lastName;
+                        this.department = this.userDatas.department;
+                    })
+                    .catch(error  => {
+                        if (error.response.status == 401) {
+                            this.$cookie.delete('token');
+                            this.$router.push({ path: `/` })
+                        }
+
+                        console.log(error);
+                    });
+            },
             formSubmit: function() {
                 this.$refs.form.validate();
                 if (this.file) {
@@ -122,8 +154,8 @@
 
                                     axios
                                     .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
-                                        firstName: this.firstname,
-                                        lastName: this.lastname,
+                                        firstName: this.firstName,
+                                        lastName: this.lastName,
                                         department: this.department,
                                         avatar: this.urlAvatar,
                                         avatarPublicId: this.avatarPublicId
@@ -161,8 +193,8 @@
                 } else {
                     axios
                     .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
-                        firstName: this.firstname,
-                        lastName: this.lastname,
+                        firstName: this.firstName,
+                        lastName: this.lastName,
                         department: this.department,
                     }, {
                         headers: {

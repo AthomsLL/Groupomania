@@ -2,18 +2,14 @@
     
     <div>
         <div class="header-sign-contenu">
-            <div class="circle-1"></div>
-            <div class="circle-2">
-                <div class="circle-2__img-box">
-                    <img src="https://res.cloudinary.com/djcmfi03h/image/upload/f_auto/v1596188651/Groupomania/logos/icon-left-font-monochrome-white_ci45w3.png" alt="Logo Groupomania blanc">
-                </div>
-
-                <h1 v-if="register()">Inscription</h1>
-                <h1 v-if="login()">Bon retour, </h1>
-                <h1 v-if="forgotPassword()">Mot de passe oublié</h1>
-                <h1 v-if="renewPassword()">Mot de passe oublié</h1>
-                
+            <div class="header-sign-contenu__img-box">
+                <img src="https://res.cloudinary.com/djcmfi03h/image/upload/f_auto/v1598348834/Groupomania/logos/icon-left-font-monochrome-white_jhdwtn.png" alt="Logo Groupomania blanc">
             </div>
+
+            <h1 v-if="register()">Inscription</h1>
+            <h1 v-if="login()">Bon retour, </h1>
+            <h1 v-if="forgotPassword()">Mot de passe oublié</h1>
+            <h1 v-if="renewPassword()">Mot de passe oublié</h1>
         </div>
     </div>
 
@@ -52,50 +48,20 @@
 <style scoped lang="scss">
 
     .header-sign-contenu {
-        height: 25vh;
-    }
-
-    .circle-1, .circle-2 {
         background-color: #F44336;
-        height: 100vh;
-        width: 100vw;
-    }
-
-    .circle-1 {
-        clip-path: circle(50%);
-        -webkit-clip-path: circle(50%);
-        opacity: .53;
-        position: absolute;
-        left: 4.38%;
-        top: -58.8%;
-    }
-
-    .circle-2 {
-        clip-path: circle(50%);
-        -webkit-clip-path: circle(50%);
-        position: absolute;
-        top: -60%;
-
-        &__img-box {
-            position: absolute;
-            top: 47%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-        }
+        box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.16);
+        padding: 10px 15px 25px 15px;
+        text-align: center;
 
         &__img-box img {
             height: 100%;
             width: 100%;
         }
+    }
 
-        h1 {
-            color: #fff;
-            position: absolute;
-            top: 77%;
-            text-align: center;
-            width: 100%;
-        }
+    h1 {
+        color: #fff;
+        font-size: 40px;
     }
 
 </style>

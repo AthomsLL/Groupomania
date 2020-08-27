@@ -18,16 +18,18 @@
                 Êtes-vous sûr(e) de vouloir supprimer votre compte définitivement ?
             </p>
 
-            <div v-if="userId == userDatas.id" class="cta">
-                <v-btn class="cta-delete-profile" large @click="deleteProfile()">
-                    Supprimer mon compte
-                </v-btn>
-            </div>
+            <div class="cta-row">
+                <div v-if="userId == userDatas.id" class="cta">
+                    <v-btn class="cta-delete-profile" large @click="deleteProfile()">
+                        Supprimer mon compte
+                    </v-btn>
+                </div>
 
-            <div v-if="userId == userDatas.id" class="cta-edit cta">
-                <v-btn color="#F44336" outlined large @click="goToSettings()">
-                    Annuler
-                </v-btn>
+                <div v-if="userId == userDatas.id" class="cta-edit cta">
+                    <v-btn color="#F44336" outlined large @click="goToSettings()">
+                        Annuler
+                    </v-btn>
+                </div>
             </div>
         </div>
 
@@ -131,7 +133,22 @@
     }
 
     .cta-edit {
-        margin-top: 20px;
+        margin-top: 30px;
+    }
+
+    .cta-row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    // MEDIA QUERIES
+    @media screen and (min-width: 550px) {
+        .cta-row {
+            flex-direction: row;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 0 55px;
+        }
     }
 
 </style>

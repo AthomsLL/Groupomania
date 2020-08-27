@@ -41,18 +41,25 @@
                     <v-btn class="eye mb-0" icon v-if="passwordFieldType2 != 'password'" @click="toggleShowPassword2()"><v-icon>mdi-eye-off</v-icon></v-btn>
                 </v-row>
 
-                <v-btn
-                    class="cta cta-edit"
-                    :disabled="!valid"
-                    type="submit"
-                    @click.prevent="formSubmit">
-                        Modifier Mot de passe
-                </v-btn>
+                <div class="cta-row">
+                    <div>
+                        <v-btn
+                            class="cta cta-edit"
+                            :disabled="!valid"
+                            type="submit"
+                            @click.prevent="formSubmit">
+                                Modifier Mot de passe
+                        </v-btn>
+                    </div>
+
+                    <div>
+                        <v-btn color="#F44336" outlined class="cta" @click="goToSettings()">
+                            Annuler
+                        </v-btn>
+                    </div>
+                </div>
             </v-form>
 
-            <v-btn color="#F44336" outlined class="cta" @click="goToSettings()">
-                Annuler
-            </v-btn>
         </div>
         
     </div>
@@ -191,6 +198,20 @@
     .cta-edit {
         background-color: #FE421A !important;
         color: #fff;
+    }
+
+    .cta-row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    // MEDIA QUERIES
+    @media screen and (min-width: 500px) {
+        .cta-row {
+            flex-direction: row;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
     }
 
 </style>

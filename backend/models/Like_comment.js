@@ -11,12 +11,14 @@ module.exports = (sequelize, DataTypes) => {
 
     Like_comment.associate = models => {
       Like_comment.belongsTo(models.User, {
+          onDelete: "cascade",
           foreignKey: {
               allowNull: false
           }
       });
 
       Like_comment.belongsTo(models.Comment, {
+        onDelete: "cascade",
         foreignKey: {
             allowNull: false
         }

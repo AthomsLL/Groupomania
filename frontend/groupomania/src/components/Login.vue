@@ -86,8 +86,7 @@ export default {
             })
             .then(response => {
                 const token = response.data.token;
-                console.log(token);
-                this.$cookie.set('token', JSON.stringify(token), 2);
+                this.$cookie.set('token', JSON.stringify(token), 1);
                 this.$router.push({ path: '/posts' });
             })
             .catch(error => { 
@@ -116,7 +115,7 @@ export default {
 <style scoped lang="scss">
 
     .container {
-        margin-top: 50px;
+        margin-top: 25px;
         padding: 0 30px;
         text-align: center;
     }
@@ -140,7 +139,7 @@ export default {
         color: #fff;
         font-size: 20px;
         margin-bottom: 20px;
-        margin-top: 120px;
+        margin-top: 80px;
     }
 
 </style>

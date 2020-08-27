@@ -29,6 +29,8 @@ exports.signup = (req, res, next) => {
             db.database.User.create({
                 email: req.body.email,
                 username: req.body.username,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 password: hash
             })
             .then((user) => {  
@@ -41,7 +43,7 @@ exports.signup = (req, res, next) => {
                             'createdAt': user.createdAt 
                         },
                         process.env.SECRET,
-                        { expiresIn: '2d' }
+                        { expiresIn: '1d' }
                     )
                 })
             })
@@ -83,7 +85,7 @@ exports.login = (req, res, next) => {
                         'createdAt': user.createdAt 
                     },
                     process.env.SECRET,
-                    { expiresIn: '2d' }
+                    { expiresIn: '1d' }
                 )
             });
         });

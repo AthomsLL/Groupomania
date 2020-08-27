@@ -16,14 +16,14 @@
             </div>
 
             <div class="tabs">
-                <v-tabs v-if="userDatas.isAdmin == false" centered show-arrows color="#F44336">
-                    <v-tab @click="toggleInfos()">Infos</v-tab>
+                <v-tabs v-if="userDatas.isAdmin == false" centered show-arrows color="#F44336" grow>
+                    <v-tab @click="toggleInfos()">Infos Personnelles</v-tab>
                     <v-tab @click="togglePosts()">Posts</v-tab>
                     <v-tab @click="toggleComments()">Commentaires</v-tab>
                 </v-tabs>
 
-                <v-tabs v-else centered show-arrows color="#F44336">
-                    <v-tab @click="toggleInfosAdmin()">Infos</v-tab>
+                <v-tabs v-else centered show-arrows color="#F44336" grow>
+                    <v-tab @click="toggleInfosAdmin()">Infos Personnelles</v-tab>
                     <v-tab @click="toggleUsers()">Utilisateurs</v-tab>
                     <v-tab @click="toggleLastPosts()">Derniers posts</v-tab>
                 </v-tabs>
@@ -70,6 +70,8 @@
             </div>
         </div>
 
+        <footer-menu :userId="userId" />
+
     </div>
 </template>
 
@@ -82,6 +84,7 @@
     import UserComments from './UserComments';
     import UsersListForAdmin from './UsersListForAdmin';
     import LastPostsForAdmin from './LastPostsForAdmin';
+    import FooterMenu from './FooterMenu';
 
     export default {
         name: 'MyProfile',
@@ -224,12 +227,17 @@
             'user-comments': UserComments,
             'users-list': UsersListForAdmin,
             'last-posts': LastPostsForAdmin,
+            'footer-menu': FooterMenu,
         }
     }
 
 </script>
 
 <style scoped lang="scss">
+
+    .container {
+        margin-bottom: 50px;
+    }
 
     .user-header {
         border-bottom: 1px solid rgba(112,112,112, .5);

@@ -205,9 +205,7 @@ exports.createPost = (req, res, next) => {
 
 //Controller permettant de vérifier si l'user connecté a liké ou non le post
 exports.getLikePost = async (req, res, next) => {
-    const userId = token.getUserIdByToken(req);
-    
-    const user = await db.database.User.findOne({ where: { id: userId }});
+    const user = await db.database.User.findByPk(req.params.userId);
     const post = await db.database.Post.findByPk(req.params.id);
 
     const like = await db.database.Like_post.findOne({
@@ -227,7 +225,8 @@ exports.getLikePost = async (req, res, next) => {
 // Controller permettant d'ajouter un like au post
 exports.likePost = async (req, res, next) => {
     const userId = token.getUserIdByToken(req);
-    const user = await db.database.User.findOne({ where: { id: userId }});
+
+    const user = await db.database.User.findOne({ where : { id: userId }});
     const post = await db.database.Post.findByPk(req.params.id);
 
     if (!post) {
@@ -254,8 +253,7 @@ exports.likePost = async (req, res, next) => {
 
 // Controller permettant d'enlever un like au post
 exports.unlikePost = async (req, res, next) => {
-    const userId = token.getUserIdByToken(req);
-    const user = await db.database.User.findOne({ where: { id: userId }});
+    const user = await db.database.User.findByPk(req.params.userId);
     const post = await db.database.Post.findByPk(req.params.id);
 
     if (!post) {
@@ -403,8 +401,7 @@ exports.createComment = (req, res, next) => {
 
 //Controller permettant de vérifier si l'user connecté a liké ou non le commentaire
 exports.getLikeComment = async (req, res, next) => {
-    const userId = token.getUserIdByToken(req);
-    const user = await db.database.User.findOne({ where: { id: userId }});
+    const user = await db.database.User.findByPk(req.params.userId);
     const comment = await db.database.Comment.findByPk(req.params.commentId);
 
     const like = await db.database.Like_comment.findOne({
@@ -451,8 +448,7 @@ exports.likeComment = async (req, res, next) => {
 
 // Controller permettant d'enlever un like au commentaire
 exports.unlikeComment = async (req, res, next) => {
-    const userId = token.getUserIdByToken(req);
-    const user = await db.database.User.findOne({ where: { id: userId }});
+    const user = await db.database.User.findByPk(req.params.userId);
     const comment = await db.database.Comment.findByPk(req.params.commentId);
 
     if (!comment) {

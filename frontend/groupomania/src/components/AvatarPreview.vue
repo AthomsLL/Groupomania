@@ -21,7 +21,8 @@
             styleProgressIndicatorPosition="right bottom"
             styleButtonProcessItemPosition="right bottom"
             styleButtonRemoveItemPosition="center bottom"
-            v-on:addfile="handleFilePondGet" />
+            v-on:addfile="handleFilePondGet" 
+        />
     </div>
 </template>
 

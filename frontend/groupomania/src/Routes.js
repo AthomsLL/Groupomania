@@ -11,6 +11,10 @@ import UserSettings from './components/UserSettings.vue';
 import EditUsername from './components/EditUsername';
 import EditPassword from './components/EditPassword';
 import DeleteProfile from './components/DeleteProfile';
+import Posts from './components/Posts';
+import OnePost from './components/OnePost';
+import CreatePost from './components/CreatePost';
+import EditPost from './components/EditPost';
 
 // requiresAuth: true,
 //         beforeEnter: (to, from, next) => {
@@ -140,5 +144,61 @@ export default [
         path: '/delete-profile', 
         name: 'delete-profile', 
         component: DeleteProfile
+    },
+    { 
+        requiresAuth: true,
+        beforeEnter: (to, from, next) => {
+            if (VueCookie.get('token') == null) {
+                next ({ name: 'login'})
+                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
+            } else {
+                next()
+            }
+        },
+        path: '/posts', 
+        name: 'posts', 
+        component: Posts
+    },
+    { 
+        requiresAuth: true,
+        beforeEnter: (to, from, next) => {
+            if (VueCookie.get('token') == null) {
+                next ({ name: 'login'})
+                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
+            } else {
+                next()
+            }
+        },
+        path: '/post/:postId', 
+        name: 'one-post', 
+        component: OnePost
+    },
+    { 
+        requiresAuth: true,
+        beforeEnter: (to, from, next) => {
+            if (VueCookie.get('token') == null) {
+                next ({ name: 'login'})
+                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
+            } else {
+                next()
+            }
+        },
+        path: '/create-post', 
+        name: 'create-post', 
+        component: CreatePost
+    },
+    { 
+        requiresAuth: true,
+        beforeEnter: (to, from, next) => {
+            if (VueCookie.get('token') == null) {
+                next ({ name: 'login'})
+                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
+            } else {
+                next()
+            }
+        },
+        path: '/edit-post/:postId', 
+        name: 'edit-post', 
+        component: EditPost
     }
 ]
