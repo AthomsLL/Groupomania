@@ -58,7 +58,7 @@
                                             :src="post.attachment"
                                         ></v-img>
 
-                                        <p class="post-content" v-else-if="post.content != null">
+                                        <p class="post-content" v-if="post.content != null">
                                             {{ post.content }}
                                         </p>
                                     </div>
@@ -241,10 +241,6 @@
 
 <style scoped lang="scss">
 
-    .hidePost {
-        display: none !important;
-    }
-
     .moment {
         display: flex;
     }
@@ -295,9 +291,5 @@
     .username {
         font-size: 15px;
     }
-
-    .pointer {
-        cursor: pointer;
-    } 
 
 </style>

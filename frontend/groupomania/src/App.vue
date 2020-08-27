@@ -76,5 +76,9 @@ export default {
         display: flex;
         justify-content: center !important;
     }
+
+    .pointer {
+      cursor: pointer;
+    }
     
 </style>

@@ -33,9 +33,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         attachmentPublicId : { 
             type: DataTypes.STRING,
-            validate: {
-                isAlphanumeric: true,
-            }
         }
     });
     

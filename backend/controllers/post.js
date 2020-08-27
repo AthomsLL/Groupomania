@@ -177,11 +177,11 @@ exports.getAllPostsOfUser = (req, res, next) => {
 
 // Controller permettant de créer un post
 exports.createPost = (req, res, next) => {
-    const postObject = req.file ?
-    {
-        ...JSON.parse(req.body.post),
-        attachment: `${req.protocol}://${req.get('host')}/uploads/images/${req.file.filename}`
-    } : { ...req.body };
+    const postObject = { ...req.body };
+
+    if (postObject.attachment) {
+        postObject.attachment = postObject.attachment.split('upload/').join('upload/f_auto,w_600/');
+    }
 
     db.database.Post.create({
         ...postObject,
@@ -282,7 +282,7 @@ exports.unlikePost = async (req, res, next) => {
 exports.editPost = (req, res, next) => {
     const postObject = { ...req.body };
 
-    if (req.body.attachment) {
+    if (postObject.attachment) {
         db.database.Post.findOne({ where: { id: req.params.id }}, 'attachment')
             .then(post => {
                 cloudinary.uploader.destroy(`${post.attachmentPublicId}`, function(error, result) {

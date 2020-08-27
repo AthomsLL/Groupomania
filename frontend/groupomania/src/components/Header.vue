@@ -85,7 +85,7 @@
                 } 
             },
             goToCreatePost: function() {
-                if(this.$route.path == '/post/create-post') {
+                if(this.$route.path == '/create-post') {
                     return true;
                 } 
             },

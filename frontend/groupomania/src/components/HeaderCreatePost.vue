@@ -1,12 +1,13 @@
 <template>
-    <div class="header-home">
-        <v-btn icon @click="goToPosts()">
-            <v-icon size="24px">mdi-close</v-icon>
-        </v-btn>
+    <div>
+        <div class="header-home">
+            <v-btn icon @click="goToPosts()">
+                <v-icon size="24px">mdi-close</v-icon>
+            </v-btn>
 
-        <h1>Créer un post</h1>
+            <h1>Créer un post</h1>
     </div>
-
+    </div>
 </template>
 
 <script>
@@ -28,8 +29,8 @@
     h1 {
         color: white;
         font-size: 27px;
+        margin: 0 auto;
         text-transform: uppercase;
-        flex: 3;
     }
 
     .header-home {
@@ -38,12 +39,6 @@
         display: flex;
         align-items: center;
         padding: 0 5px;
-    }
-
-    .v-btn {
-        flex: 1;
-        justify-content: start;
-        
     }
 
     .v-icon {
