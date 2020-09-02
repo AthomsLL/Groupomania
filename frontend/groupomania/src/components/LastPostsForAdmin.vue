@@ -68,7 +68,6 @@
 
 <script>
     import { getToken } from '../../helpers/decode';
-    import axios from 'axios';
 
     export default {
         name: 'LastPostsForAdmin',
@@ -89,7 +88,7 @@
         },
         methods: {
             getAllPosts: function() {
-                axios
+                this.axios
                     .get(`http://localhost:3000/api/v1/posts`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
@@ -102,7 +101,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);

@@ -77,7 +77,6 @@
 
 <script>
     import { getToken } from '../../helpers/decode';
-    import axios from 'axios'
     import Header from './Header';
     import UserInfos from './UserInfos';
     import UserPosts from './UserPosts';
@@ -126,7 +125,7 @@
                     }
                 };
 
-                axios(infosUserObj)
+                this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
                         console.log(this.userDatas);
@@ -140,14 +139,14 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
                     });
             },
             getAllPostsOfUser: function() {
-                axios
+                this.axios
                     .get(`http://localhost:3000/api/v1/posts/users/${this.userId}`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
@@ -160,14 +159,14 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
                     });
             },
             getAllCommentsOfUser: function() {
-                axios
+                this.axios
                 .get(`http://localhost:3000/api/v1/comments/users/${this.userId}`, {
                     headers: {
                         Authorization: "Bearer " + this.token,
@@ -180,7 +179,7 @@
                 .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);

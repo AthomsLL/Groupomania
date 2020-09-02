@@ -31,19 +31,21 @@
 <script>
     export default {
         name: 'HeaderProfile',
-        data: () => ({
-
-        }),
+        data() {
+            return {
+                
+            }
+        },
         methods: {
             goHomePage: function() {
-                this.$router.push({ path: '/posts' });
+                this.$router.push({ path: '/' });
             },
             goToSettings: function() {
                 this.$router.push({ path: '/settings' });
             },
             logout: function() {
                 this.$cookie.delete('token');
-                this.$router.push({ path: '/' });
+                this.$router.push({ path: '/login' });
             }
         }
     }

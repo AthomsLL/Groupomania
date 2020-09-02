@@ -70,6 +70,7 @@ exports.getAllUsers = (req, res, next) => {
 // Controller permettant d'éditer le profil utilisateur
 exports.editUserProfile = (req, res, next) => {
     const userProfileObject = { ...req.body };
+    console.log(userProfileObject)
 
     if (userProfileObject.avatar) {
         userProfileObject.avatar = userProfileObject.avatar.split('upload/').join('upload/f_auto,w_120/');
@@ -80,6 +81,7 @@ exports.editUserProfile = (req, res, next) => {
            .then(user => {
                 cloudinary.uploader.destroy(`${user.avatarPublicId}`, function(error, result) {
                     console.log(result, error);
+                    next();
                 })
             })
             .catch(error => console.log(error));
@@ -100,7 +102,7 @@ exports.editUserProfile = (req, res, next) => {
             }
             res.status(201).json(returnedProfile)
         })
-        .catch(error => res.status(400).json({ message: error }));
+        .catch(error => res.status(400).json(console.log(error), { message: error }));
 };
 
 // Controller permettant de mettre à jour le pseudo de l'utilisateur
@@ -151,14 +153,11 @@ exports.deleteUser = (req, res, next) => {
     db.database.User.findOne({ where: { id: req.params.id }})
         .then(user => {
             if (user.avatar != null) {
-                db.database.User.findOne({ where: { id: req.params.id }})
-                .then(user => {
-                    cloudinary.uploader.destroy(`${user.avatarPublicId}`, function(error, result) {
-                        console.log(result, error);
-                    })
+                cloudinary.uploader.destroy(`${user.avatarPublicId}`, function(error, result) {
+                    console.log(result, error);
                 })
-                .catch(error => console.log(error));
             }
+
             db.database.User.destroy({ where: { id: req.params.id }})
                 .then(() => res.status(200).json({ message: 'Utilisateur supprimé !' }))
                 .catch(error => res.status(400).json({ error }))

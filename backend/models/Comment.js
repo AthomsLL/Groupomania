@@ -22,14 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     
     Comment.associate = models => {
         Comment.belongsTo(models.User, {
-            onDelete: "cascade",
+            onDelete: "CASCADE",
             foreignKey: {
                 allowNull: false
             }
         });
 
         Comment.belongsTo(models.Post, {
-            onDelete: "cascade",
+            onDelete: "CASCADE",
             foreignKey: {
                 allowNull: false
             }

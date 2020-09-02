@@ -36,7 +36,7 @@
         },
         methods: {
             homePage: function() {
-                if (this.$route.path == '/posts') {
+                if (this.$route.path == '/') {
                     return true;
                 }
             },
@@ -51,7 +51,7 @@
                 }
             },
             goToHomePage: function() {
-                this.$router.push({ path: '/posts' });
+                this.$router.push({ path: '/' });
             },
             goToMyProfile: function() {
                 this.$router.push({ path: `/user/profile/${this.userId}`});
@@ -61,7 +61,7 @@
             },
             logout: function() {
                 this.$cookie.delete('token');
-                this.$router.push({ path: '/' });
+                this.$router.push({ path: '/login' });
             }
         },
     }

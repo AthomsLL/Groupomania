@@ -58,28 +58,53 @@
 <script>
 
 import HeaderSign from './HeaderSign'
-import axios from 'axios'
+import { getToken } from '../../helpers/decode';
 import swal from 'sweetalert2'
 
 export default {
     name: 'Login',
-    data: () => ({
-        valid: true,
-        passwordFieldType: 'password',
-        email: '',
-        emailRules: [
-            v => !!v || 'Votre E-mail est requis',
-            v => /.+@.+\..+/.test(v) || 'Votre E-mail doit être valide',
-        ],
-        password: '',
-        passwordRules: [
-            v => !!v || 'Votre mot de passe est requis',
-        ],
-    }),
+    data() {
+        return {
+            valid: true,
+            userId: '',
+            token: '',
+            passwordFieldType: 'password',
+            email: '',
+            emailRules: [
+                v => !!v || 'Votre E-mail est requis',
+                v => /.+@.+\..+/.test(v) || 'Votre E-mail doit être valide',
+            ],
+            password: '',
+            passwordRules: [
+                v => !!v || 'Votre mot de passe est requis',
+            ],
+        }
+    },
+    created() {
+        const token = JSON.parse(this.$cookie.get('token'));
+        this.token = token;
+        const user = getToken();
+        this.userId = user.id;
+
+        this.getAllPosts();
+    },
     methods: {
+        getAllPosts: function() {
+            this.axios
+                .get(`http://localhost:3000/api/v1/posts`, {
+                    headers: {
+                        Authorization: "Bearer " + this.token,
+                    }
+                })
+                .then(
+                    setTimeout(() => {
+                        this.$router.push({ path: '/' })
+                    }, 1000)
+                )
+        },
         formSubmit() {
             this.$refs.form.validate();
-            axios
+            this.axios
             .post('http://localhost:3000/api/v1/auth/login', {
                 email: this.email,
                 password: this.password
@@ -87,7 +112,7 @@ export default {
             .then(response => {
                 const token = response.data.token;
                 this.$cookie.set('token', JSON.stringify(token), 1);
-                this.$router.push({ path: '/posts' });
+                this.$router.push({ path: '/' });
             })
             .catch(error => { 
                 if (error.response.status == 404) {

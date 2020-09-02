@@ -68,7 +68,6 @@
 <script>
     import Header from './Header'
     import { getToken } from '../../helpers/decode'
-    import axios from 'axios'
     import swal from 'sweetalert2';
 
     export default {
@@ -114,7 +113,7 @@
                     }
                 };
 
-                axios(infosUserObj)
+                this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
                         console.log(this.userDatas);
@@ -122,7 +121,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -132,7 +131,7 @@
                 this.$refs.form.validate();
                 
                 if (this.newPassword == this.newPasswordConf) {
-                    axios
+                    this.axios
                     .put(`http://localhost:3000/api/v1/users/${this.userId}/password`, {
                         password: this.newPassword
                     }, {
@@ -151,7 +150,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);

@@ -39,7 +39,6 @@
 <script>
     import Header from './Header';
     import { getToken } from '../../helpers/decode';
-    import axios from 'axios'
 
     export default {
         name:'DeleteProfile',
@@ -70,7 +69,7 @@
                     }
                 };
 
-                axios(infosUserObj)
+                this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
                         console.log(this.userDatas);
@@ -78,32 +77,29 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
                     });
             },
             deleteProfile: function() {
-                let deleteUserObj = {
-                    url: `http://localhost:3000/api/v1/users/${this.userId}`,
-                    method: "DELETE",
-                    headers: {
-                        Authorization: "Bearer " + this.token,
-                    }
-                };
-
-                axios(deleteUserObj)
+                this.axios
+                    .delete(`http://localhost:3000/api/v1/users/${this.userId}`, {
+                        headers: {
+                            Authorization: "Bearer " + this.token,
+                        }
+                    })
                     .then(response => {
                         console.log(response.data);
 
                         this.$cookie.delete('token');
-                        this.$router.push({ path: '/' });
+                        this.$router.push({ path: '/login' });
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);

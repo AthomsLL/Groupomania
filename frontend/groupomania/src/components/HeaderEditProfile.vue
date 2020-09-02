@@ -8,9 +8,11 @@
 <script>
     export default {
         name: 'HeaderPosts',
-        data: () => ({
-
-        }),
+        data() {
+            return {
+                
+            }
+        },
         methods: {
             
         }

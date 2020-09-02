@@ -70,7 +70,7 @@
             <div class="already-account">
                 <p>
                     Vous avez déjà un compte ?
-                    <router-link :to="'/'">
+                    <router-link :to="'/login'">
                         <span class="login">Login</span>
                     </router-link>
                 </p>
@@ -82,7 +82,6 @@
 
 <script>
     import HeaderSign from './HeaderSign'
-    import axios from 'axios'
 
     export default {
         name: 'Register',
@@ -118,7 +117,7 @@
         methods: {
             formSubmit() {
                 this.$refs.form.validate();
-                axios
+                this.axios
                 .post('http://localhost:3000/api/v1/auth/signup', {
                     email: this.email,
                     firstName: this.firstName,

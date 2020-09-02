@@ -45,7 +45,7 @@
                 }
             },
             goToPosts: function() {
-                if(this.$route.path == '/posts') {
+                if(this.$route.path == '/') {
                     return true;
                 }
             },
@@ -90,12 +90,12 @@
                 } 
             },
             goToEditPost: function() {
-                if(this.$route.path == '/post/edit-post') {
+                if(this.$route.path == `/edit-post/${this.$route.params.postId}`) {
                     return true;
                 } 
             },
             goToDeletePost: function() {
-                if(this.$route.path == '/post/delete-post') {
+                if(this.$route.path == '/delete-post') {
                     return true;
                 } 
             }

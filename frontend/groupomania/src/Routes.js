@@ -28,7 +28,7 @@ import EditPost from './components/EditPost';
 
 export default [
     {
-        path: '/', 
+        path: '/login', 
         name: 'login', 
         component: Login 
     },
@@ -46,6 +46,19 @@ export default [
         path: '/recover-password', 
         name: 'recover-password', 
         component: RecoverPassword
+    },
+    { 
+        requiresAuth: true,
+        beforeEnter: (to, from, next) => {
+            if (VueCookie.get('token') == null) {
+                next ({ name: 'login'})
+            } else {
+                next()
+            }
+        },
+        path: '/', 
+        name: 'posts', 
+        component: Posts
     },
     { 
         requiresAuth: true,
@@ -144,20 +157,6 @@ export default [
         path: '/delete-profile', 
         name: 'delete-profile', 
         component: DeleteProfile
-    },
-    { 
-        requiresAuth: true,
-        beforeEnter: (to, from, next) => {
-            if (VueCookie.get('token') == null) {
-                next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
-            } else {
-                next()
-            }
-        },
-        path: '/posts', 
-        name: 'posts', 
-        component: Posts
     },
     { 
         requiresAuth: true,

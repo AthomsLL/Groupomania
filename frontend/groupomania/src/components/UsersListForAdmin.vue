@@ -52,7 +52,7 @@
                 .catch(error  => {
                     if (error.response.status == 401) {
                         this.$cookie.delete('token');
-                        this.$router.push({ path: `/` })
+                        this.$router.push({ path: `/login` })
                     }
 
                     console.log(error);

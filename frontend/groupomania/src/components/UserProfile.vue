@@ -82,7 +82,6 @@
             this.userId = user.id;
             this.isAdmin = user.isAdmin;
             this.usernameParams = this.$route.params.username;
-            console.log(this.usernameParams);
 
             this.getInfosUser();
         },
@@ -110,7 +109,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -150,7 +149,7 @@
                 .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -186,7 +185,7 @@
                             this.$router.push({ path: `/user/profile/${this.userId}` })
                         } else {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: '/' });
+                            this.$router.push({ path: '/login' });
                         }
 
                         console.log(response);
@@ -194,7 +193,7 @@
                     .catch(error => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);

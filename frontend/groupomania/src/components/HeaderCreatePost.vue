@@ -6,19 +6,21 @@
             </v-btn>
 
             <h1>Créer un post</h1>
-    </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         name: 'HeaderPosts',
-        data: () => ({
-
-        }),
+        data() {
+            return {
+                
+            }
+        },
         methods: {
             goToPosts: function() {
-                this.$router.push({ path: '/posts' });
+                this.$router.push({ path: '/' });
             },
         }
     }

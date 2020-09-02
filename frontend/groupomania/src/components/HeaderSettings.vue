@@ -47,7 +47,7 @@
             },
             logout: function() {
                 this.$cookie.delete('token');
-                this.$router.push({ path: '/' });
+                this.$router.push({ path: '/login' });
             }
         }
     }

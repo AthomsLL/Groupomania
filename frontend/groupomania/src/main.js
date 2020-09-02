@@ -5,6 +5,8 @@ import VueRouter from 'vue-router';
 import Routes from './Routes';
 import Vuelidate from 'vuelidate';
 import VueCookie from 'vue-cookie';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 Vue.config.productionTip = false
 
@@ -17,6 +19,7 @@ Vue.use(require('vue-moment'), {
 
 Vue.use(VueRouter);
 Vue.use(VueCookie);
+Vue.use(VueAxios, axios);
 Vue.use(Vuelidate);
 
 const router = new VueRouter({

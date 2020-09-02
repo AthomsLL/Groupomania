@@ -26,7 +26,7 @@
                 }
             },
             login: function() {
-                if(this.$route.path == '/') {
+                if(this.$route.path == '/login') {
                     return true;
                 }
             },

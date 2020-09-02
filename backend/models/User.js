@@ -54,9 +54,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         avatarPublicId : { 
             type: DataTypes.STRING,
-            validate: {
-                isAlphanumeric: true,
-            }
         },
         department : { 
             type: DataTypes.STRING,
@@ -70,19 +67,19 @@ module.exports = (sequelize, DataTypes) => {
     
     User.associate = models => {
         User.hasMany(models.Post, {
-            onDelete: "cascade"
+            onDelete: "CASCADE"
         });
 
         User.hasMany(models.Comment, {
-            onDelete: "cascade"
+            onDelete: "CASCADE"
         });
 
         User.hasMany(models.Like_post, {
-            onDelete: "cascade"
+            onDelete: "CASCADE"
         })
 
         User.hasMany(models.Like_comment, {
-            onDelete: "cascade"
+            onDelete: "CASCADE"
         })
     };
 

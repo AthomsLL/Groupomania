@@ -283,6 +283,10 @@ exports.editPost = (req, res, next) => {
     const postObject = { ...req.body };
 
     if (postObject.attachment) {
+        postObject.attachment = postObject.attachment.split('upload/').join('upload/f_auto,w_600/');
+    }
+
+    if (postObject.attachmentPublicId) {
         db.database.Post.findOne({ where: { id: req.params.id }}, 'attachment')
             .then(post => {
                 cloudinary.uploader.destroy(`${post.attachmentPublicId}`, function(error, result) {

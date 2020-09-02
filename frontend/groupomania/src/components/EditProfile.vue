@@ -50,7 +50,6 @@
     import { getToken } from '../../helpers/decode';
     import Header from './Header';
     import AvatarPreview from './AvatarPreview';
-    import axios from 'axios';
 
     export default {
         name: 'EditProfile',
@@ -110,7 +109,7 @@
                     }
                 };
 
-                axios(infosUserObj)
+                this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
                         console.log(this.userDatas);
@@ -121,7 +120,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -142,7 +141,7 @@
                                 method: "POST",
                                 data: this.formData,
                             };
-                            axios(requestObj)
+                            this.axios(requestObj)
                                 .then(response => {
                                     this.results = response.data;
                                     this.urlAvatar = this.results.secure_url;
@@ -152,7 +151,7 @@
                                     console.log(this.urlAvatar);
                                     console.log(this.avatarPublicId);
 
-                                    axios
+                                    this.axios
                                     .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
                                         firstName: this.firstName,
                                         lastName: this.lastName,
@@ -177,7 +176,7 @@
                                         
                                         if (error.response.status == 401) {
                                             this.$cookie.delete('token');
-                                            this.$router.push({ path: `/` })
+                                            this.$router.push({ path: `/login` })
                                         }
                                     })
                                 })
@@ -191,7 +190,7 @@
                         reader.readAsDataURL(this.file);
                     }
                 } else {
-                    axios
+                    this.axios
                     .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
                         firstName: this.firstName,
                         lastName: this.lastName,

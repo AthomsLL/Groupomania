@@ -40,10 +40,18 @@
                     ></v-textarea>
                 </div>
 
-                <div class="cta-submit-post">
-                    <v-btn class="fc-white" color="#F44336" large type="submit" @click.prevent="formSubmit()">
-                        Publier
-                    </v-btn>
+                <div class="cta-row">
+                    <div class="cta-create-post">
+                        <v-btn class="fc-white" color="#F44336" large type="submit" @click.prevent="formSubmit()">
+                            Publier
+                        </v-btn>
+                    </div>
+
+                    <div class="cta-cancel">
+                        <v-btn  color="#F44336" outlined large type="button" @click="goToPosts()">
+                            Annuler
+                        </v-btn>
+                    </div>
                 </div>
 
             </v-form>
@@ -55,7 +63,6 @@
     import Header from './Header';
     import AttachmentPreview from './AttachmentPreview';
     import { getToken } from '../../helpers/decode';
-    import axios from 'axios';
 
     export default {
         name: 'CreatePost',
@@ -96,7 +103,7 @@
         },
         methods: {
             getUserMe: function() {
-                axios
+                this.axios
                     .get(`http://localhost:3000/api/v1/users/${this.userId}`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
@@ -109,7 +116,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -130,7 +137,7 @@
                                 method: "POST",
                                 data: this.formData,
                             };
-                            axios(requestObj)
+                            this.axios(requestObj)
                                 .then(response => {
                                     this.results = response.data;
                                     this.urlAttachment = this.results.secure_url;
@@ -140,7 +147,7 @@
                                     console.log(this.urlAttachment);
                                     console.log(this.attachmentPublicId);
 
-                                    axios
+                                    this.axios
                                     .post(`http://localhost:3000/api/v1/posts`, {
                                         title: this.title,
                                         content: this.content,
@@ -156,7 +163,7 @@
                                         const post = response.data;
                                         console.log(post);
 
-                                        this.$router.push({ path: `/posts` });
+                                        this.$router.push({ path: `/` });
                                     })
                                     .catch(error => {
                                         this.errors.push(error);
@@ -164,7 +171,7 @@
 
                                         if (error.response.status == 401) {
                                             this.$cookie.delete('token');
-                                            this.$router.push({ path: `/` })
+                                            this.$router.push({ path: `/login` })
                                         }
                                     })
                                 })
@@ -178,7 +185,7 @@
                         reader.readAsDataURL(this.file);
                     }
                 } else {
-                    axios
+                    this.axios
                     .post(`http://localhost:3000/api/v1/posts`, {
                         title: this.title,
                         content: this.content,
@@ -192,7 +199,7 @@
                         const post = response.data;
                         console.log(post);
 
-                        this.$router.push({ path: `/posts` });
+                        this.$router.push({ path: `/` });
                     })
                     .catch(error => {
                         this.errors.push(error);
@@ -208,6 +215,9 @@
             goToMyProfile: function() {
                 this.$router.push({ path: `/user/profile/${this.userId}`});
             },
+            goToPosts: function() {
+                this.$router.push({ path: '/' });
+            }
         },
         components: {
             'main-header': Header,
@@ -251,9 +261,9 @@
         font-weight: 500;
     }
 
-    .cta-submit-post {
+    .cta-row {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         margin-top: 10px;
     }
 

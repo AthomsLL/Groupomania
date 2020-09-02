@@ -96,6 +96,10 @@
                     </v-card>
                 </div>
             </div>
+
+            <div v-else class="unfortunately">
+                <p>Désolé, aucun post à afficher pour le moment.</p>
+            </div>
         </div>
 
         <footer-menu :userId="userId" />
@@ -110,7 +114,6 @@
     import FooterMenu from './FooterMenu';
     import CreatePostButton from './CreatePostButton';
     import { getToken } from '../../helpers/decode';
-    import axios from 'axios';
     import swal from 'sweetalert2';
 
     export default {
@@ -135,7 +138,7 @@
         },
         methods: {
             getAllPosts: function() {
-                axios
+                this.axios
                     .get(`http://localhost:3000/api/v1/posts`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
@@ -147,7 +150,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -163,7 +166,7 @@
                 this.$router.push({ path: `/edit-post/${postId}`});
             },
             deletePost: function(postId) {
-                axios
+                this.axios
                     .delete(`http://localhost:3000/api/v1/posts/${postId}`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
@@ -180,7 +183,7 @@
                     .catch(error  => {
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
-                            this.$router.push({ path: `/` })
+                            this.$router.push({ path: `/login` })
                         }
 
                         console.log(error);
@@ -188,7 +191,7 @@
             },
             toggleLike: function(post) {
                 if (post.liked == false) {
-                    axios
+                    this.axios
                         .post(`http://localhost:3000/api/v1/posts/${post.id}/likes`, {
                             UserId: post.userId,
                             PostId: post.id
@@ -204,13 +207,13 @@
                         .catch(error  => {
                             if (error.response.status == 401) {
                                 this.$cookie.delete('token');
-                                this.$router.push({ path: `/` })
+                                this.$router.push({ path: `/login` })
                             }
 
                             console.log(error);
                         })
                 } else {
-                    axios
+                    this.axios
                         .delete(`http://localhost:3000/api/v1/posts/${post.id}/likes/${this.userId}`, {
                             headers: {
                                 Authorization: "Bearer " + this.token,
@@ -223,7 +226,7 @@
                         .catch(error  => {
                             if (error.response.status == 401) {
                                 this.$cookie.delete('token');
-                                this.$router.push({ path: `/` })
+                                this.$router.push({ path: `/login` })
                             }
 
                             console.log(error);
@@ -241,6 +244,10 @@
 
 <style scoped lang="scss">
 
+    .container {
+        margin-bottom: 40px;
+    }
+
     .moment {
         display: flex;
     }
@@ -257,7 +264,7 @@
     }
 
     .col-content {
-        max-width: 80%;
+        width: 80%;
     }
 
     .post-img {

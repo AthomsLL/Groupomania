@@ -31,16 +31,18 @@
 <script>
     export default {
         name: 'HeaderPosts',
-        data: () => ({
-
-        }),
+        data() {
+            return {
+                
+            }
+        },
         methods: {
             goToSettings: function() {
                 this.$router.push({ path: '/settings' });
             },
             logout: function() {
                 this.$cookie.delete('token');
-                this.$router.push({ path: '/' });
+                this.$router.push({ path: '/login' });
             }
         }
     }

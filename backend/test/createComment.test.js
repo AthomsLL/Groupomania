@@ -9,9 +9,9 @@ describe("POST /api/v1/posts/:id/comments", () => {
     test("It responds with a new created post", async () => {
       const auth = await tools.auth();
 
-      const response = await request(app).post("/api/v1/posts/729d9b1e-cb01-438d-9c37-90f199e71c55/comments").set('Authorization', 'Bearer ' + auth.token).send({
-            content: "Premier commentaire du premier post",
-            UserId: "1c50ee41-7752-4afa-b581-495bedf53b89"
+      const response = await request(app).post("/api/v1/posts/f4e897cb-f603-4541-aae7-f5664afd36a1/comments").set('Authorization', 'Bearer ' + auth.token).send({
+            content: "Deuxième commentaire test",
+            UserId: "d38b6408-88cd-44f9-90cc-1c99ad4f95df"
       });
 
       const comment = JSON.parse(response.body);

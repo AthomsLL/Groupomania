@@ -40,6 +40,7 @@ exports.signup = (req, res, next) => {
                             'id': user.id,
                             'email': user.email, 
                             'username': user.username, 
+                            'isAdmin': user.isAdmin,
                             'createdAt': user.createdAt 
                         },
                         process.env.SECRET,
