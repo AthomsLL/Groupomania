@@ -1,20 +1,20 @@
 import swal from 'sweetalert2';
 import VueCookie from 'vue-cookie';
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
-import ForgotPassword from './components/ForgotPassword.vue';
-import RecoverPassword from './components/RecoverPassword.vue';
-import EditProfile from './components/EditProfile.vue';
-import MyProfile from './components/MyProfile.vue';
-import UserProfile from './components/UserProfile.vue';
-import UserSettings from './components/UserSettings.vue';
-import EditUsername from './components/EditUsername';
-import EditPassword from './components/EditPassword';
-import DeleteProfile from './components/DeleteProfile';
-import Posts from './components/Posts';
-import OnePost from './components/OnePost';
-import CreatePost from './components/CreatePost';
-import EditPost from './components/EditPost';
+import Login from './components/Login/Login.vue';
+import Register from './components/Register/Register.vue';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword.vue';
+import RecoverPassword from './components/RecoverPassword/RecoverPassword.vue';
+import EditProfile from './components/EditProfile/EditProfile.vue';
+import MyProfile from './components/MyProfile/MyProfile.vue';
+import UserProfile from './components/UserProfile/UserProfile.vue';
+import UserSettings from './components/UserSettings/UserSettings.vue';
+import EditUsername from './components/EditUsername/EditUsername.vue';
+import EditPassword from './components/EditPassword/EditPassword.vue';
+import DeleteProfile from './components/DeleteProfile/DeleteProfile.vue';
+import Posts from './components/Posts/Posts.vue';
+import OnePost from './components/OnePost/OnePost.vue';
+import CreatePost from './components/CreatePost/CreatePost.vue';
+import EditPost from './components/EditPost/EditPost.vue';
 
 // requiresAuth: true,
 //         beforeEnter: (to, from, next) => {

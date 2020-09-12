@@ -66,7 +66,7 @@ exports.postMe = async (req,res,next) => {
 exports.commentMe = async (req, res, next) => {
   const userId = token.getUserIdByToken(req);
 
-  let comment = await db.database.Comment.findOne({ where : { id: req.params.idComment }});
+  let comment = await db.database.Comment.findOne({ where : { id: req.params.commentId }});
 
   if (comment.UserId == userId) {
     return next();
@@ -98,7 +98,7 @@ exports.adminAndCommentMe = async (req, res, next) => {
   const userId = token.getUserIdByToken(req);
 
   let user = await db.database.User.findOne({ where: { id: userId }});
-  let comment = await db.database.Comment.findOne({ where : { id: req.params.idComment }});
+  let comment = await db.database.Comment.findOne({ where : { id: req.params.commentId }});
 
   if ((user.isAdmin == true) || (comment.UserId == userId)) {
     return next();
