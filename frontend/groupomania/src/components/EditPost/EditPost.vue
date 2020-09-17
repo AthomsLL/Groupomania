@@ -81,6 +81,7 @@
                 isAdmin: '',
                 postIdParams: '',
                 postDatas: '',
+                post: '',
                 content: '',
                 contentRules: [
                     v => !!v || 'Un contenu est requis ',
@@ -91,6 +92,16 @@
                     v => !!v || 'Le titre du post est requis ',
                     v => v.length <= 50 || 'Votre titre doit contenir moins de 50 caractères'
                 ],
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -146,10 +157,6 @@
                                     this.urlAttachment = this.results.secure_url;
                                     this.attachmentPublicId = this.results.public_id;
 
-                                    console.log(this.results);
-                                    console.log(this.urlAttachment);
-                                    console.log(this.attachmentPublicId);
-
                                     this.axios
                                         .put(`http://localhost:3000/api/v1/posts/${this.postIdParams}`, {
                                             title: this.title,
@@ -163,14 +170,17 @@
                                             }
                                         })
                                         .then(response => {
-                                            const post = response.data;
-                                            console.log(post);
-
-                                            this.$router.push({ path: `/` });
+                                            this.post = response.data;
+                                            this.$toast.success('Post modifié avec succès !', 'OK', this.notificationSystem.options.success);
+                                            setTimeout(() => {
+                                                this.$router.push({ path: `/` });
+                                            }, 100)
                                         })
                                         .catch(error => {
                                             this.errors.push(error);
                                             console.log(this.errors[0]);
+
+                                            this.$toast.error('Impossible de modifier le post !', 'Oups', this.notificationSystem.options.error);
 
                                             if (error.response.status == 401) {
                                                 this.$cookie.delete('token');
@@ -199,14 +209,16 @@
                             }
                         })
                         .then(response => {
-                            const post = response.data;
-                            console.log(post);
-
-                            this.$router.push({ path: `/` });
+                            this.post = response.data;
+                            this.$toast.success('Post modifié avec succès !', 'OK', this.notificationSystem.options.success);
+                            setTimeout(() => {
+                                this.$router.push({ path: `/` });
+                            }, 100)
                         })
                         .catch(error => {
                             this.errors.push(error);
                             console.log(this.errors[0]);
+                            this.$toast.error('Impossible de modifier le post !', 'Oups', this.notificationSystem.options.error);
                         })
                 }
             },
@@ -226,49 +238,6 @@
     }
 </script>
 
-<style scoped>
-
-    .container {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .avatar {
-        margin-right: 20px;
-    }
-
-    .post-header-title {
-        display: flex;
-        align-items: flex-end;
-    }
-
-    .attachment-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .attachment-title {
-        font-size: 21px;
-    }
-
-    .attachment-preview-container {
-        height: 100px;
-        width: 100px;
-    }
-
-    .post-content-title {
-        font-weight: 500;
-    }
-
-    .cta-row {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 10px;
-    }
-
-    .fc-white {
-        color: #fff;
-    }
+<style scoped src="./EditPost.css">
     
 </style>

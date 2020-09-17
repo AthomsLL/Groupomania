@@ -70,40 +70,6 @@
     }
 </script>
 
-<style scoped>
-
-    .header-home {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .header-home__img {
-        flex: 0;
-        margin-left: 20px;
-    }
-
-    .header-home-img-box {
-        max-width: 225px;
-    }
-
-    .v-btn--round .v-btn__content .v-icon {
-        color: white;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 376px) {
-        .header-home-img-box {
-            max-width: 300px;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-        .header-home-img-box {
-            max-width: 400px;
-        }
-    }
+<style scoped src="./HeaderPosts.css">
 
 </style>

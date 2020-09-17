@@ -45,7 +45,6 @@
                         }
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.users = response.data;
                     })
                     .catch(error  => {
@@ -64,10 +63,6 @@
     }
 </script>
 
-<style scoped>
-
-    .headline {
-        font-size: 20px !important;
-    }
+<style scoped src="./UsersListForAdmin.css">
 
 </style>

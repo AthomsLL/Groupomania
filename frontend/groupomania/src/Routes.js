@@ -16,16 +16,6 @@ import OnePost from './components/OnePost/OnePost.vue';
 import CreatePost from './components/CreatePost/CreatePost.vue';
 import EditPost from './components/EditPost/EditPost.vue';
 
-// requiresAuth: true,
-//         beforeEnter: (to, from, next) => {
-//             if (this.$cookie.get('token') == null) {
-//                 next ({ name: ''login' })
-//                 swal('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
-//             } else {
-//                 next()
-//             }
-//         }
-
 export default [
     {
         path: '/login', 

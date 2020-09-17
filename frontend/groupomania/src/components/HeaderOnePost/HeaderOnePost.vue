@@ -66,40 +66,6 @@
     }
 </script>
 
-<style scoped>
-
-    .header-home {
-        height: 100%;
-        min-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .header-home-img-box {
-        max-width: 225px;
-    }
-
-    .header-home__img {
-        flex: auto;
-        margin: 0 10px 0 15px;
-    }
-    
-    .v-btn--round .v-btn__content .v-icon {
-        color: white;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 428px) {
-        .header-home-img-box {
-            max-width: 300px;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-        .header-home-img-box {
-            max-width: 400px;
-        }
-    }
+<style scoped src="./HeaderOnePost.css">
 
 </style>

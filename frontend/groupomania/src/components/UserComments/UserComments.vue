@@ -74,53 +74,6 @@
 
 </script>
 
-<style scoped>
-
-    .v-list-item:not(:last-child)::after {
-        background-color: rgba(0,0,0,.3);
-        content: "";
-        display: block;
-        position: absolute;
-        left: 41px;
-        top: 57px;
-        width: 2px;
-    }
-
-    .created-at {
-        font-size: 17px;
-        font-weight: 500;
-        padding-bottom: 0;
-    }
-
-    .content {
-        padding-top: 0;
-    }
-
-    .headline {
-        font-size: 20px !important;
-    }
-
-    .username {
-        font-size: 15px;
-    }
-
-    .comment-username {
-        font-size: 20px;
-        color: #707070;
-    }
-
-    .flex-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: -10px;
-    }
-
-    .like {
-        text-align: center;
-    }
-    
-    .comment-created {
-        color: #707070;
-    }
+<style scoped src="./UserComments.css">
 
 </style>

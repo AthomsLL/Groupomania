@@ -57,9 +57,8 @@
 
 <script>
 
-import HeaderSign from '../HeaderSign/HeaderSign'
+import HeaderSign from '../HeaderSign/HeaderSign';
 import { getToken } from '../../../helpers/decode';
-import swal from 'sweetalert2'
 
 export default {
     name: 'Login',
@@ -78,6 +77,16 @@ export default {
             passwordRules: [
                 v => !!v || 'Votre mot de passe est requis',
             ],
+            notificationSystem: {
+                options: {
+                    success: {
+                        position: "bottomCenter",
+                    },
+                    error: {
+                        position: "bottomCenter"
+                    },
+                }
+            }
         }
     },
     created() {
@@ -114,15 +123,18 @@ export default {
                 .then(response => {
                     const token = response.data.token;
                     this.$cookie.set('token', JSON.stringify(token), 1);
-                    this.$router.push({ path: '/' });
+                    this.$toast.success('Bienvenue !', 'Connexion réussie !', this.notificationSystem.options.success);
+                    setTimeout(() => {
+                        this.$router.push({ path: `/` });
+                    }, 100)
                 })
                 .catch(error => { 
                     if (error.response.status == 404) {
-                        swal.fire('UTILISATEUR INCONNU', "Merci de vous authentifier avec un utilisateur enregistré", 'error')
+                        this.$toast.error("Merci de vous authentifier avec un utilisateur enregistré !", 'Utilisateur inconnu !', this.notificationSystem.options.error)
                     }
 
                     if (error.response.status == 401) {
-                        swal.fire('IDENTIFIANTS INCORRECTS', "Merci de renseigner vos identifiants", 'error')
+                        this.$toast.error("Merci de renseigner vos identifiants !", 'Identifiants incorrects !', this.notificationSystem.options.error)
                     }
 
                     console.log(error);
@@ -139,38 +151,6 @@ export default {
 
 </script>
 
-<style scoped>
-
-    .container {
-        margin-top: 25px;
-        padding: 0 30px;
-        text-align: center;
-    }
-
-    .container a {
-        color: #FE421A;
-        text-decoration: none;
-    }
-
-    .login-form {
-        margin-top: 40px;
-    }
-
-    .eye {
-        margin-top: 16px !important;
-        margin-left: 10px !important;
-    }
-
-    .forgot-password {
-        text-align: right;
-    }
-
-    .login {
-        background-color: #FE421A !important;
-        color: #fff;
-        font-size: 20px;
-        margin-bottom: 20px;
-        margin-top: 80px;
-    }
+<style scoped src="./Login.css">
 
 </style>

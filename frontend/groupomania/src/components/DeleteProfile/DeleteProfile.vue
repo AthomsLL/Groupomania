@@ -48,6 +48,16 @@
                 userId: '',
                 isAdmin: '',
                 userDatas: '',
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -72,7 +82,6 @@
                 this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
-                        console.log(this.userDatas);
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
@@ -90,13 +99,15 @@
                             Authorization: "Bearer " + this.token,
                         }
                     })
-                    .then(response => {
-                        console.log(response.data);
-
+                    .then(() => {
                         this.$cookie.delete('token');
-                        this.$router.push({ path: '/login' });
+                        this.$toast.success('Compte utilisateur supprimé avec succès !', 'OK', this.notificationSystem.options.success);
+                        setTimeout(() => {
+                            this.$router.push({ path: '/login' });
+                        }, 100)
                     })
                     .catch(error  => {
+                        this.$toast.error('Suppression du compte utilisateur impossible !', 'Merci de réessayer.', this.notificationSystem.options.error);
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
                             this.$router.push({ path: `/login` })
@@ -115,36 +126,6 @@
     }
 </script>
 
-<style scoped>
-
-    .delete-text {
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    .cta-delete-profile {
-        background-color: #FE421A !important;
-        color: #fff;
-        margin-top: 30px;
-    }
-
-    .cta-edit {
-        margin-top: 30px;
-    }
-
-    .cta-row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 550px) {
-        .cta-row {
-            flex-direction: row;
-            justify-content: space-around;
-            margin-top: 30px;
-            padding: 0 55px;
-        }
-    }
+<style scoped src="./DeleteProfile.css">
 
 </style>

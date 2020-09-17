@@ -67,20 +67,6 @@
     }
 </script>
 
-<style scoped>
-
-    .footer-menu-content {
-        position: fixed;
-        bottom: 0;
-        background-color: #fff;
-        box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.16);
-        width: 100%;
-    }
-
-    .footer-menu-icons {
-        display: flex;
-        justify-content: space-between;
-        padding: 3px 15px;
-    }
+<style scoped src="./FooterMenu.css">
 
 </style>

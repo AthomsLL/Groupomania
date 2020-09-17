@@ -1,0 +1,29 @@
+.delete-text {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.cta-delete-profile {
+    background-color: #FE421A !important;
+    color: #fff;
+    margin-top: 30px;
+}
+
+.cta-edit {
+    margin-top: 30px;
+}
+
+.cta-row {
+    display: flex;
+    flex-direction: column;
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 550px) {
+    .cta-row {
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 30px;
+        padding: 0 55px;
+    }
+}

@@ -45,36 +45,6 @@
 
 </script>
 
-<style scoped>
-
-    .header-sign-contenu {
-        background-color: #F44336;
-        box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.16);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 15px 15px 15px;
-    }
-
-    .header-sign-contenu__img-box {
-        max-width: 400px;
-    }
-
-    .header-sign-contenu__img-box img {
-        height: 100%;
-        width: 100%;
-    }
-
-    h1 {
-        color: #fff;
-        font-size: 28px;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 450px) {
-        h1 {
-            font-size: 36px;
-        }
-    }
+<style scoped src="./HeaderSign.css">
 
 </style>

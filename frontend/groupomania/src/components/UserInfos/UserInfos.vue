@@ -36,15 +36,6 @@
     }
 </script>
 
-<style scoped>
-
-    .infos-title {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .infos-subtitle {
-        font-size: 18px;
-    }
+<style scoped src="./UserInfos.css">
     
 </style>

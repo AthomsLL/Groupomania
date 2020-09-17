@@ -68,7 +68,6 @@
 <script>
     import Header from '../Header/Header'
     import { getToken } from '../../../helpers/decode'
-    import swal from 'sweetalert2';
 
     export default {
         name: 'EditPassword',
@@ -92,6 +91,16 @@
                     v => (v && this.newPasswordConf === this.newPassword)  || 'Les mots de passe ne correspondent pas',
                 ],
                 valid: true,
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+            }
             }
         },
         created() {
@@ -116,7 +125,6 @@
                 this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
-                        console.log(this.userDatas);
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
@@ -140,14 +148,13 @@
                             }
                         })
                         .then(() => {
-                            swal.fire({
-                                icon: 'success',
-                                title: 'Mot de passe modifié avec succès !',
-                                timer: 1500
-                            });
-                            this.$router.push({ path: '/settings' });
+                            this.$toast.success('Mot de passe modifié avec succès !', 'OK', this.notificationSystem.options.success);
+                            setTimeout(() => {
+                                this.$router.push({ path: '/settings' });
+                            }, 100)
                         })
                         .catch(error  => {
+                            this.$toast.error('Merci de réessayer.', 'Impossible de modifier le mot de passe', this.notificationSystem.options.error);
                             if (error.response.status == 401) {
                                 this.$cookie.delete('token');
                                 this.$router.push({ path: `/login` })
@@ -156,7 +163,7 @@
                             console.log(error);
                         });   
                 } else {
-                    swal.fire('Echec de la modification du mot de passe !', "Merci de réessayer.", 'error')
+                    this.$toast.error('Merci de réessayer.', 'Les mot de passe ne correspondent pas !', this.notificationSystem.options.error);
                 }
             },
             toggleShowPassword1: function() {
@@ -175,42 +182,6 @@
     }
 </script>
 
-<style scoped>
-
-    .form {
-        padding: 0 30px;
-    }
-
-    .v-form .password {
-        flex-wrap: nowrap !important;
-    }
-
-    .eye {
-        margin-top: 16px !important;
-        margin-left: 10px !important;
-    }
-
-    .cta {
-        margin-top: 20px;
-    }
-
-    .cta-edit {
-        background-color: #FE421A !important;
-        color: #fff;
-    }
-
-    .cta-row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 500px) {
-        .cta-row {
-            flex-direction: row;
-            justify-content: space-evenly;
-            margin-top: 20px;
-        }
-    }
+<style scoped src="./EditPassword.css">
 
 </style>

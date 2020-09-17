@@ -59,7 +59,6 @@
 <script>
     import Header from '../Header/Header';
     import { getToken } from '../../../helpers/decode';
-    import swal from 'sweetalert2';
 
     export default {
         name: 'EditUsername',
@@ -76,6 +75,16 @@
                     v => !!v || 'Votre pseudo est requis',
                     v => (v && v.length <= 15) || 'Votre pseudo doit contenir moins de 15 caractères',
                 ],
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -101,7 +110,6 @@
                     .then(response => {
                         this.userDatas = response.data;
                         this.oldUsername = this.userDatas.username;
-                        console.log(this.userDatas);
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
@@ -125,14 +133,13 @@
                             }
                         })
                         .then(() => {
-                            swal.fire({
-                                icon: 'success',
-                                title: 'Pseudo modifié avec succès !',
-                                timer: 1500
-                            });
-                            this.$router.push({ path: '/settings' });
+                            this.$toast.success('Pseudo mis à jour avec succès !', 'OK', this.notificationSystem.options.success);
+                            setTimeout(() => {
+                                this.$router.push({ path: '/settings' });
+                            }, 100)
                         })
                         .catch(error  => {
+                            this.$toast.error('Merci de réessayer.', 'Impossible de mettre à jour le pseudo', this.notificationSystem.options.error);
                             if (error.response.status == 401) {
                                 this.$cookie.delete('token');
                                 this.$router.push({ path: `/login` })
@@ -141,7 +148,7 @@
                             console.log(error);
                         });   
                 } else {
-                    swal.fire('Ancien Pseudo Incorrect !', "Merci de renseigner le bon pseudo.", 'error')
+                    this.$toast.error('Merci de renseigner le bon pseudo.', 'Ancien pseudo incorrect !', this.notificationSystem.options.error);
                 }
             },
             goToSettings: function() {
@@ -154,33 +161,6 @@
     }
 </script>
 
-<style scoped>
-
-    .form {
-        margin-top: 30px !important;
-        padding: 0 30px;
-    }
-
-    .cta-row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cta {
-        margin-top: 20px;
-    }
-
-    .cta-edit {
-        color: #fff;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 450px) {
-        .cta-row {
-            flex-direction: row;
-            justify-content: space-around;
-            margin-top: 30px;
-        }
-    }
+<style scoped src="./EditUsername.css">
 
 </style>

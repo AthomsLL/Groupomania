@@ -128,7 +128,6 @@
                 this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
-                        console.log(this.userDatas);
                         this.email = this.userDatas.email;
                         this.username = this.userDatas.username;
                         this.department = this.userDatas.department;
@@ -153,7 +152,6 @@
                         }
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.posts = response.data;
                     })
                     .catch(error  => {
@@ -173,7 +171,6 @@
                         }
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.comments = response.data;
                     })
                     .catch(error  => {
@@ -232,43 +229,6 @@
 
 </script>
 
-<style scoped>
-
-    .container {
-        margin-bottom: 50px;
-    }
-
-    .user-header {
-        border-bottom: 1px solid rgba(112,112,112, .5);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 30px;
-    }
-
-    .avatar {
-        margin-top: 20px;
-        margin-bottom: 5px;
-    }
-
-    .name {
-        font-size: 18px;
-        font-weight: 500;
-        margin-bottom: 8px;
-    }
-
-    .role {
-        background-color: #707070;
-        border-radius: 5px;
-        color: #fff;
-        font-weight: 500;
-        padding: 5px 8px;
-    }
-
-    .cta-edit {
-        display: flex;
-        justify-content: center !important;
-        margin-top: 30px;
-    }
+<style scoped src="./MyProfile.css">
 
 </style>

@@ -265,7 +265,6 @@
     import Header from '../Header/Header';
     import FooterMenu from '../FooterMenu/FooterMenu';
     import { getToken } from '../../../helpers/decode';
-    import swal from 'sweetalert2';
 
     export default {
         name: 'OnePost',
@@ -287,6 +286,16 @@
                     v => !!v || 'Un contenu est requis ',
                     v => v.length <= 200 || 'Votre contenu doit contenir moins de 200 caractères'
                 ],
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -331,14 +340,13 @@
                         }
                     })
                     .then(() => {
-                        swal.fire({
-                            icon: 'success',
-                            title: 'Post supprimé avec succès !',
-                            timer: 1500
-                        });
-                        this.$router.push({ path: '/' });
+                        this.$toast.success('Post supprimé avec succès !', 'OK', this.notificationSystem.options.success);
+                        setTimeout(() => {
+                            this.$router.push({ path: '/' });
+                        }, 100)
                     })
                     .catch(error  => {
+                        this.$toast.error('Impossible de supprimer le post !', 'Oups', this.notificationSystem.options.error);
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
                             this.$router.push({ path: `/login` })
@@ -465,10 +473,12 @@
                         }
                     })
                     .then(() => {
+                        this.$toast.success('Commentaire créé avec succès', 'OK', this.notificationSystem.options.success);
                         this.commentContent = '';
                         this.getOnePost();
                     })
                     .catch(error  => {
+                        this.$toast.error('Impossible de créer le commentaire', 'Oups', this.notificationSystem.options.error);
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
                             this.$router.push({ path: `/login` })
@@ -490,14 +500,11 @@
                     .then(() => {
                         this.commentContent = '';
                         this.dialogEditComment = false;
-                        swal.fire({
-                            icon: 'success',
-                            title: 'Commentaire modifié avec succès !',
-                            timer: 1500
-                        });
+                        this.$toast.success('Commentaire modifié avec succès !', 'OK', this.notificationSystem.options.success);
                         this.getOnePost();
                     })
                     .catch(error  => {
+                        this.$toast.error('Impossible de modifier le commentaire', 'Oups', this.notificationSystem.options.error);
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
                             this.$router.push({ path: `/login` })
@@ -515,14 +522,11 @@
                     })
                     .then(() => {
                         this.dialogDeleteComment = false;
-                        swal.fire({
-                            icon: 'success',
-                            title: 'Commentaire supprimé avec succès !',
-                            timer: 1500
-                        });
+                        this.$toast.success('Commentaire supprimé avec succès !', 'OK', this.notificationSystem.options.success);
                         this.getOnePost();
                     })
                     .catch(error  => {
+                        this.$toast.error('Impossible de supprimer le commentaire !', 'Oups', this.notificationSystem.options.error);
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
                             this.$router.push({ path: `/login` })
@@ -539,102 +543,6 @@
     }
 </script>
 
-<style scoped>
-
-    .container {
-        margin-bottom: 40px;
-    }
-
-    .fc-white {
-        color: #fff;
-    }
-
-    .moment {
-        display: flex;
-    }
-
-    .created-at {
-        font-size: 17px;
-        font-weight: 500;
-        padding: 8px 13px 0 13px;
-    }
-
-    .post-container {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .col-content {
-        width: 80%;
-    }
-
-    .post-img {
-        width: fit-content;
-    }
-
-    .post-content {
-        margin-top: 15px;
-    }
-
-    .avatar {
-        margin-top: 0;
-        margin-right: 10px !important;
-    }
-
-    .content {
-        padding-top: 0;
-    }
-
-    .headline {
-        font-size: 20px !important;
-    }
-
-    .icons {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        padding-left: 0;
-    }
-
-    .username {
-        font-size: 15px;
-    }
-
-    .comments-title {
-        text-decoration: underline;
-    }
-
-    .comments-container .comment-card {
-        border-radius: 0;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .comment-container {
-        width: 90%;
-    }
-
-    .comment-box {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .like {
-        padding: 15px 15px 0 15px;
-    }
-
-    .comment-edit {
-        padding: 0 16px;
-    }
-
-    .comment-create {
-        margin-top: 10px;
-        padding: 0 16px;
-    }
-
-    .cta-comment {
-        display: flex;
-        justify-content: flex-end;
-    }
+<style scoped src="./OnePost.css">
 
 </style>

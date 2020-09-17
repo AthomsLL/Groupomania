@@ -86,7 +86,6 @@
                 this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
-                        console.log(this.userDatas);
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
@@ -114,44 +113,7 @@
     }
 </script>
 
-<style scoped>
-
-    .container {
-        margin-bottom: 50px;
-    }
-
-    .infos-title {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .infos-subtitle {
-        font-size: 18px;
-    }
-
-    .cta-row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cta-edit {
-        margin-top: 20px;
-    }
-
-    .cta-delete-profile {
-        background-color: #FE421A !important;
-        color: #fff;
-        margin-top: 20px;
-    }
-
-    /* MEDIA QUERIES */
-    @media screen and (min-width: 695px) {
-        .cta-row {
-            flex-direction: row;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-    }
+<style scoped src="./UserSettings.css">
 
 </style>
     

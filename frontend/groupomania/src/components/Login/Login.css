@@ -1,0 +1,31 @@
+.container {
+    margin-top: 25px;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.container a {
+    color: #FE421A;
+    text-decoration: none;
+}
+
+.login-form {
+    margin-top: 40px;
+}
+
+.eye {
+    margin-top: 16px !important;
+    margin-left: 10px !important;
+}
+
+.forgot-password {
+    text-align: right;
+}
+
+.login {
+    background-color: #FE421A !important;
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 80px;
+}

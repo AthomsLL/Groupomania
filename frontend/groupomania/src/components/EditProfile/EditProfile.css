@@ -1,0 +1,29 @@
+.container {
+    margin-top: 40px;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.avatar-container {
+    margin: 0 auto;
+    width: 150px;        
+}
+
+.form {
+    margin-top: 30px;
+}
+
+.v-btn {
+    font-size: 20px;
+}
+
+.cta-submit-profile {
+    background-color: #FE421A !important;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.cta-cancel {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

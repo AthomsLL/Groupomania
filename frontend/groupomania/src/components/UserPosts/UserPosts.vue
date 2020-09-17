@@ -92,53 +92,6 @@
     }
 </script>
 
-<style scoped>
-
-    .created-at {
-        font-size: 17px;
-        font-weight: 500;
-        padding-bottom: 0;
-    }
-
-    .post-container {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .col-content {
-        width: 80%;
-    }
-
-    .post-img {
-        width: fit-content;
-    }
-
-    .post-content {
-        margin-top: 15px;
-    }
-
-    .avatar {
-        margin-top: 0;
-        margin-right: 10px !important;
-    }
-
-    .content {
-        padding-top: 0;
-    }
-
-    .headline {
-        font-size: 20px !important;
-    }
-
-    .icons {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        padding-left: 0;
-    }
-
-    .username {
-        font-size: 15px;
-    }
+<style scoped src="./UserPosts.css">
     
 </style>

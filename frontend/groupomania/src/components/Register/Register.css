@@ -1,0 +1,30 @@
+.container {
+    margin-top: 25px;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.eye {
+    margin-top: 16px !important;
+    margin-left: 10px !important;
+}
+
+.v-form .password {
+    flex-wrap: nowrap !important;
+}
+
+.register {
+    background-color: #FE421A !important;
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.already-account a {
+    text-decoration: none;
+}
+
+.login {
+    color: #FE421A;
+}

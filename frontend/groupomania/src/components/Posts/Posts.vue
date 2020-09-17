@@ -23,7 +23,7 @@
                                         <v-icon left>mdi-pencil</v-icon>
                                         <v-list-item-title>Modifier le Post</v-list-item-title>
                                     </v-list-item>
-                                    <v-dialog v-model="dialog">
+                                    <v-dialog v-model="dialog" max-width="700">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-list-item v-bind="attrs" v-on="on">
                                                 <v-icon left>mdi-delete-forever-outline</v-icon>
@@ -50,7 +50,7 @@
                                 </template>
 
                                 <v-list>
-                                    <v-dialog v-model="dialog">
+                                    <v-dialog v-model="dialog" max-width="700">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-list-item v-bind="attrs" v-on="on">
                                                 <v-icon left>mdi-delete-forever-outline</v-icon>
@@ -138,7 +138,6 @@
     import FooterMenu from '../FooterMenu/FooterMenu';
     import CreatePostButton from '../CreatePostButton/CreatePostButton';
     import { getToken } from '../../../helpers/decode';
-    import swal from 'sweetalert2';
 
     export default {
         name: 'Posts',
@@ -150,6 +149,16 @@
                 dialog: false,
                 isLiked: '',
                 posts: [],
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter",
+                        }
+                    }
+                }
             }
         },
         created() {
@@ -198,14 +207,11 @@
                         }
                     })
                     .then(() => {
-                        swal.fire({
-                            icon: 'success',
-                            title: 'Post supprimé avec succès !',
-                            timer: 1500
-                        });
+                        this.$toast.success('Post supprimé avec succès !', 'OK', this.notificationSystem.options.success);
                         this.getAllPosts();
                     })
                     .catch(error  => {
+                        this.$toast.error('Impossible de supprimer le post !', 'Oups', this.notificationSystem.options.error);
                         if (error.response.status == 401) {
                             this.$cookie.delete('token');
                             this.$router.push({ path: `/login` })
@@ -267,61 +273,6 @@
     }
 </script>
 
-<style scoped>
-
-    .container {
-        margin-bottom: 40px;
-    }
-
-    .moment {
-        display: flex;
-    }
-
-    .created-at {
-        font-size: 17px;
-        font-weight: 500;
-        padding: 8px 13px 0 13px;
-    }
-
-    .post-container {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .col-content {
-        width: 80%;
-    }
-
-    .post-img {
-        width: fit-content;
-    }
-
-    .post-content {
-        margin-top: 15px;
-    }
-
-    .avatar {
-        margin-top: 0;
-        margin-right: 10px !important;
-    }
-
-    .content {
-        padding-top: 0;
-    }
-
-    .headline {
-        font-size: 20px !important;
-    }
-
-    .icons {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        padding-left: 0;
-    }
-
-    .username {
-        font-size: 15px;
-    }
+<style scoped src="./Posts.css">
 
 </style>

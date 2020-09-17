@@ -88,6 +88,7 @@
         data() {
             return {
                 valid: true,
+                token: '',
                 passwordFieldType: 'password',
                 email: '',
                 emailRules: [
@@ -114,6 +115,16 @@
                     v => !!v || 'Votre mot de passe est requis',
                     v => (v && v.length >= 8 && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v)) || 'Le mot de passe doit comporter au moins 8 caractères, dont au moins 1 minuscule, 1 majuscule et 1 chiffre'
                 ],
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         methods: {
@@ -128,12 +139,17 @@
                         password: this.password
                     })
                     .then(response => {
-                        const token = response.data.token;
-                        console.log(token);
-                        this.$cookie.set('token', JSON.stringify(token), 1);
-                        this.$router.push({ path: '/user/edit-profile' });
+                        this.token = response.data.token;
+                        this.$cookie.set('token', JSON.stringify(this.token), 1);
+                        this.$toast.success('Bienvenue !', 'Inscription réussie !', this.notificationSystem.options.success);
+                        setTimeout(() => {
+                            this.$router.push({ path: '/user/edit-profile' });
+                        }, 100)
                     })
-                    .catch(error => console.log(error));
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.error('Merci de réessayer.', 'Inscription refusée !', this.notificationSystem.options.error);
+                    });
             },
             toggleShowPassword: function() {
                 this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
@@ -146,37 +162,6 @@
 
 </script>
 
-<style scoped>
-
-    .container {
-        margin-top: 25px;
-        padding: 0 30px;
-        text-align: center;
-    }
-
-    .eye {
-        margin-top: 16px !important;
-        margin-left: 10px !important;
-    }
-
-    .v-form .password {
-        flex-wrap: nowrap !important;
-    }
-
-    .register {
-        background-color: #FE421A !important;
-        color: #fff;
-        font-size: 20px;
-        margin-bottom: 20px;
-        margin-top: 40px;
-    }
-
-    .already-account a {
-        text-decoration: none;
-    }
-
-    .login {
-        color: #FE421A;
-    }
+<style scoped src="./Register.css">
 
 </style>

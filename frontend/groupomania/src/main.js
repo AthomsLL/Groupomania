@@ -7,6 +7,9 @@ import Vuelidate from 'vuelidate';
 import VueCookie from 'vue-cookie';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueIziToast from 'vue-izitoast';
+import '../node_modules/izitoast/dist/css/iziToast.min.css';
+import '../node_modules/izitoast/dist/js/iziToast';
 
 Vue.config.productionTip = false
 
@@ -21,6 +24,7 @@ Vue.use(VueRouter);
 Vue.use(VueCookie);
 Vue.use(VueAxios, axios);
 Vue.use(Vuelidate);
+Vue.use(VueIziToast);
 
 const router = new VueRouter({
   routes: Routes,

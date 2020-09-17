@@ -22,12 +22,6 @@
     }
 </script>
 
-<style scoped>
-
-    .cta-create {
-        position: fixed;
-        bottom: 55px;
-        right: 10px;
-    }
+<style scoped src="./CreatePostButton.css">
     
 </style>

@@ -71,6 +71,16 @@
                 showInfos: true,
                 showPosts: false,
                 showComments: false,
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -122,7 +132,6 @@
                         }
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.posts = response.data;
                     })
                     .catch(error  => {
@@ -142,7 +151,6 @@
                         }
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.comments = response.data;
                     })
                     .catch(error  => {
@@ -179,15 +187,16 @@
                 };
 
                 this.axios(deleteProfileObj)
-                    .then(response => {
+                    .then(() => {
                         if (this.isAdmin == true) {
-                            this.$router.push({ path: `/user/profile/${this.userId}` })
+                            this.$toast.success('Compte utilisateur supprimé avec succès !', 'OK', this.notificationSystem.options.success);
+                            setTimeout(() => {
+                                this.$router.push({ path: `/user/profile/${this.userId}` })
+                            }, 100)
                         } else {
                             this.$cookie.delete('token');
                             this.$router.push({ path: '/login' });
                         }
-
-                        console.log(response);
                     })
                     .catch(error => {
                         if (error.response.status == 401) {
@@ -209,39 +218,6 @@
 
 </script>
 
-<style scoped>
-
-    .user-header {
-        border-bottom: 1px solid rgba(112,112,112, .5);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 30px;
-    }
-
-    .avatar {
-        margin-top: 20px;
-        margin-bottom: 5px;
-    }
-
-    .name {
-        font-size: 18px;
-        font-weight: 500;
-        margin-bottom: 8px;
-    }
-
-    .role {
-        background-color: #707070;
-        border-radius: 5px;
-        color: #fff;
-        font-weight: 500;
-        padding: 5px 8px;
-    }
-
-    .cta-edit {
-        display: flex;
-        justify-content: center !important;
-        margin-top: 30px;
-    }
+<style scoped src="./UserProfile.css">
 
 </style>

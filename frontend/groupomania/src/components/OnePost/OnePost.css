@@ -1,0 +1,95 @@
+.container {
+    margin-bottom: 40px;
+}
+
+.fc-white {
+    color: #fff;
+}
+
+.moment {
+    display: flex;
+}
+
+.created-at {
+    font-size: 17px;
+    font-weight: 500;
+    padding: 8px 13px 0 13px;
+}
+
+.post-container {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.col-content {
+    width: 80%;
+}
+
+.post-img {
+    width: fit-content;
+}
+
+.post-content {
+    margin-top: 15px;
+}
+
+.avatar {
+    margin-top: 0;
+    margin-right: 10px !important;
+}
+
+.content {
+    padding-top: 0;
+}
+
+.headline {
+    font-size: 20px !important;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    padding-left: 0;
+}
+
+.username {
+    font-size: 15px;
+}
+
+.comments-title {
+    text-decoration: underline;
+}
+
+.comments-container .comment-card {
+    border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-container {
+    width: 90%;
+}
+
+.comment-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.like {
+    padding: 15px 15px 0 15px;
+}
+
+.comment-edit {
+    padding: 0 16px;
+}
+
+.comment-create {
+    margin-top: 10px;
+    padding: 0 16px;
+}
+
+.cta-comment {
+    display: flex;
+    justify-content: flex-end;
+}

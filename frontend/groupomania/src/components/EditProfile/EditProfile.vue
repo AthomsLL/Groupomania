@@ -87,7 +87,18 @@
                 errors: [],
                 urlAvatar: '',
                 avatarPublicId: '',
-                token: ''
+                token: '',
+                profile: '',
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -112,7 +123,6 @@
                 this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
-                        console.log(this.userDatas);
                         this.firstName = this.userDatas.firstName;
                         this.lastName = this.userDatas.lastName;
                         this.department = this.userDatas.department;
@@ -147,10 +157,6 @@
                                     this.urlAvatar = this.results.secure_url;
                                     this.avatarPublicId = this.results.public_id;
 
-                                    console.log(this.results);
-                                    console.log(this.urlAvatar);
-                                    console.log(this.avatarPublicId);
-
                                     this.axios
                                     .put(`http://localhost:3000/api/v1/users/${this.userId}`, {
                                         firstName: this.firstName,
@@ -164,16 +170,17 @@
                                         }
                                     })
                                     .then(response => {
-                                        const profile = response.data;
-                                        console.log(profile);
-
-                                        this.$router.push({ path: `/user/profile/${this.userId}` });
+                                        this.profile = response.data;
+                                        this.$toast.success('Profil mis à jour avec succès !', 'OK', this.notificationSystem.options.success);
+                                        setTimeout(() => {
+                                            this.$router.push({ path: `/user/profile/${this.userId}` });
+                                        }, 100)
                                     })
                                     .catch(error => {
                                         this.errors.push(error);
                                         console.log(this.errors[0]);
+                                        this.$toast.error('Impossible de mettre à jour le profil !', '', this.notificationSystem.options.error);
 
-                                        
                                         if (error.response.status == 401) {
                                             this.$cookie.delete('token');
                                             this.$router.push({ path: `/login` })
@@ -201,14 +208,16 @@
                             }
                         })
                         .then(response => {
-                            const profile = response.data;
-                            console.log(profile);
-
-                            this.$router.push({ path: `/user/profile/${this.userId}` });
+                            this.profile = response.data;
+                            this.$toast.success('Profil mis à jour avec succès !', 'OK', this.notificationSystem.options.success);
+                            setTimeout(() => {
+                                this.$router.push({ path: `/user/profile/${this.userId}` });
+                            }, 100)
                         })
                         .catch(error => {
                             this.errors.push(error);
                             console.log(this.errors[0]);
+                            this.$toast.error('Impossible de mettre à jour le profil !', '', this.notificationSystem.options.error);
                         })
                 }
             },
@@ -229,37 +238,7 @@
 
 </script>
 
-<style scoped>
-
-    .container {
-        margin-top: 40px;
-        padding: 0 30px;
-        text-align: center;
-    }
-
-    .avatar-container {
-        margin: 0 auto;
-        width: 150px;        
-    }
-
-    .form {
-        margin-top: 30px;
-    }
-
-    .v-btn {
-        font-size: 20px;
-    }
-
-    .cta-submit-profile {
-        background-color: #FE421A !important;
-        color: #fff;
-        margin-top: 20px;
-    }
-
-    .cta-cancel {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+<style scoped src="./EditProfile.css">
 
 </style>
 
