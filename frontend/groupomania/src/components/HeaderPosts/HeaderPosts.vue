@@ -1,6 +1,7 @@
 <template>
     <div class="header-home">
         <div></div>
+
         <div class="header-home-img-box">
             <v-img 
                 class="header-home__img"
@@ -47,6 +48,7 @@
             return {
                 token: '',
                 userId: '',
+                search: '',
             }
         },
         created() {

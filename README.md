@@ -8,26 +8,52 @@ La partie backend du projet est développée avec NodeJS, Express, Sequelize et 
 
 Node JS doit être installé localement sur la machine, ainsi que npm.
 @vue/cli doit être installé localement pour pouvoir lancer le frontend.
+
+Côté frontend, plusieurs dépendances npm sont nécessaires : 
+- Axios
+- Filepond et ses plugins (file-validate - image-crop - image-exif-orientation - image-preview)
+- Izitoast
+- jwt-decode
+- Material-design-icons-iconfont
+- Moment
+- Vue
+- Vue-axios
+- Vue-filepond
+- Vue-izitoast
+- Vue-moment
+- Vue-router
+- Vuelidate
+- Vuetify
+
 Côté backend, plusieurs dépendances npm sont nécessaires : 
     - Bcrypt
     - Body-Parser
+    - Cloudinary
     - Dotenv
     - Email-validator
     - Express
     - Express-bouncer
-    - jsonwebtoken
+    - Express-sequelize
     - Helmet
-    - Multer
+    - jsonwebtoken
     - Nodemon
     - Passport
     - Passport-jwt
     - Password-validator
+    - Pg
+    - Pg-hstore
+    - Sequelize
+    - Sequelize-cli
+    - Supertest
     - Uniqid
+
+### Connexion ###
+La connexion à la base de données s'effectue avec des identifiants créés et stockés dans des variables d'environnement.
 
 ### Lancement ###
 
 Côté frontend : 
-    - Dans le terminal, se placer dans le dossier frontend du projet et taper la commande "npm run serve"
+    - Dans le terminal, se placer dans le dossier frontend/groupomania du projet et taper la commande "npm run serve"
     - Le frontend se lance sur http://localhost:8080/.
 
 Côté backend : 

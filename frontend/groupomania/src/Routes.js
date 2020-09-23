@@ -1,5 +1,5 @@
-import swal from 'sweetalert2';
 import VueCookie from 'vue-cookie';
+import iziToast from 'izitoast';
 import Login from './components/Login/Login.vue';
 import Register from './components/Register/Register.vue';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword.vue';
@@ -54,8 +54,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -68,8 +73,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -82,8 +92,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -96,8 +111,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -110,8 +130,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -124,8 +149,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -138,8 +168,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -152,8 +187,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -166,8 +206,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }
@@ -180,8 +225,13 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
-                swal.fire('ACCES INTERDIT', "Merci de vous authentifier avant de tenter d'accéder à cette page", 'error')
             } else {
                 next()
             }

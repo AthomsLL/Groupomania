@@ -3,8 +3,15 @@
         <main-header />
 
         <div class="container">
+            <div class="header-searchbar">
+                <div class="search">
+                    <input type="text" v-model="search" placeholder="Rechercher des posts"/>
+                    <v-icon color="#FE421A">mdi-magnify</v-icon>
+                </div>
+            </div>
+
             <div v-if="posts.length > 0">
-                <div v-for="post in posts" :key="post.id" justify="center">
+                <div v-for="post in filteredPosts" :key="post.id" justify="center">
                     <v-card class="mx-auto mb-3 card elevation-2">
                         <div class="moment">
                             <v-card-text class="created-at">
@@ -149,6 +156,7 @@
                 dialog: false,
                 isLiked: '',
                 posts: [],
+                search: '',
                 notificationSystem: {
                     options: {
                         success: {
@@ -169,6 +177,14 @@
             this.isAdmin = user.isAdmin;
 
             this.getAllPosts();
+        },
+        computed: {
+            filteredPosts: function() {
+                return this.posts.filter((post) => {
+                    return post.title.match(this.search) || 
+                              post.username.match(this.search);
+                });
+            }
         },
         methods: {
             getAllPosts: function() {

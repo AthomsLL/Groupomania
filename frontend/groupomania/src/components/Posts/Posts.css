@@ -2,6 +2,31 @@
     margin-bottom: 40px;
 }
 
+.header-searchbar {
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.header-searchbar input:focus {
+    outline: none;
+}
+
+.header-searchbar input::placeholder {
+    color: #FE421A
+}
+
+.search {
+    border: 1.5px solid #FE421A;
+    border-radius: 20px;
+    padding: 5px 15px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
 .moment {
     display: flex;
 }
