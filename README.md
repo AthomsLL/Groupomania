@@ -1,8 +1,17 @@
 # Groupomania #
 
 Projet 7 de la formation Développeur Web "Créez un réseau social d'entreprise".
-La partie frontend du projet est développée en VueJS + l'utilsiation de Vuelidate et Vuetify.
-La partie backend du projet est développée avec NodeJS, Express, Sequelize et une base de données PostgreSQL.
+
+La partie frontend du projet est développée avec : 
+- VueJS 
+- Vuetify.
+
+La partie backend du projet est développée avec :
+- NodeJS
+- Express
+- Sequelize 
+- Une base de données PostgreSQL 
+- Et l'outil PGAdmin.
 
 ### Pré requis ###
 
@@ -48,7 +57,7 @@ Côté backend, plusieurs dépendances npm sont nécessaires :
     - Uniqid
 
 ### Connexion ###
-La connexion à la base de données s'effectue avec des identifiants créés et stockés dans des variables d'environnement.
+La connexion à la base de données "groupomania" s'effectue avec des identifiants créés et stockés dans des variables d'environnement.
 
 ### Lancement ###
 
