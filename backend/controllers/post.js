@@ -1,6 +1,7 @@
 const db = require('../config/database-test');
 const token = require('../middleware/getUserIdByToken');
 const cloudinary = require('cloudinary').v2;
+const pagination = require('../middleware/pagination');
 
 // Controller permettant d'afficher les informations d'un utilisateur
 exports.getOnePost = (req, res, next) => {
@@ -60,7 +61,7 @@ exports.getOnePost = (req, res, next) => {
 };
 
 // Controller permettant d'afficher la liste des posts
-exports.getAllPosts = (req, res, next) => {
+/* exports.getAllPosts = (req, res, next) => {
     db.database.Post.findAll({
         order: [["createdAt", "DESC"]],
         include: [{
@@ -112,6 +113,77 @@ exports.getAllPosts = (req, res, next) => {
             })
         }
         return res.status(200).json(arrayPosts)
+    })
+    .catch(error => res.status(400).json({ error: error }))
+}; */
+
+// Controller permettant d'afficher la liste des posts et la pagination
+exports.getAllPosts = (req, res, next) => {
+    const { page, size } = req.query;
+    const { limit, offset } = pagination.getPagination(page, size);
+
+    db.database.Post.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        order: [["createdAt", "DESC"]],
+        include: [{
+            model: db.database.User,
+            attributes: ['id', 'username', 'avatar']
+        }]
+    })
+    .then(async posts => {
+        const userId = token.getUserIdByToken(req);
+        const arrayPosts = [];
+        const totalPosts = posts.count;
+        const currentPage = page ? +page : 0;
+        const totalPages = Math.ceil(totalPosts / limit);
+
+        for (const post of posts.rows) {
+            const commentsCount = await db.database.Comment.count({
+                where: {
+                    PostId: post.id,
+                }
+            });
+            
+            const likesCount = await db.database.Like_post.count({
+                where: {
+                    PostId: post.id, 
+                },
+            });
+
+            const like = await db.database.Like_post.findOne({
+                where: {
+                    UserId: userId,
+                    PostId: post.id,
+                },
+            });
+
+            if (like) {
+                liked = true;
+            } else {
+                liked = false;
+            }
+
+            arrayPosts.push({
+                "id": post.id,
+                "title": post.title,
+                "content": post.content,
+                "attachment": post.attachment,
+                "avatar": post.User.avatar,
+                "username": post.User.username,
+                "userId": post.UserId,
+                "nbLikes": likesCount,
+                "nbComments": commentsCount,
+                "liked": liked,
+                "createdAt": post.createdAt
+            })
+        }
+        return res.status(200).json({
+            'posts': arrayPosts, 
+            'totalPosts': totalPosts, 
+            'totalPages': totalPages,
+            'currentPage': currentPage
+        })
     })
     .catch(error => res.status(400).json({ error: error }))
 };

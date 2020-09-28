@@ -126,6 +126,11 @@
                         </v-list-item>
                     </v-card>
                 </div>
+
+                <v-pagination
+                    v-model.lazy="page"
+                    :length="totalPages"                
+                ></v-pagination>
             </div>
 
             <div v-else class="unfortunately">
@@ -156,6 +161,10 @@
                 dialog: false,
                 isLiked: '',
                 posts: [],
+                page: 1,
+                currentPage: '',
+                totalPages: '',
+                totalPosts: '',
                 search: '',
                 notificationSystem: {
                     options: {
@@ -178,24 +187,33 @@
 
             this.getAllPosts();
         },
+        watch: {
+            page: function (value) {
+                this.page = value;
+                this.getAllPosts();
+            }
+        },
         computed: {
             filteredPosts: function() {
                 return this.posts.filter((post) => {
                     return post.title.match(this.search) || 
                               post.username.match(this.search);
                 });
-            }
+            },
         },
         methods: {
             getAllPosts: function() {
                 this.axios
-                    .get(`http://localhost:3000/api/v1/posts`, {
+                    .get(`http://localhost:3000/api/v1/posts?page=${this.page - 1}`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
                         }
                     })
                     .then(response => {
-                        this.posts = response.data;
+                        this.posts = response.data.posts;
+                        this.totalPosts = response.data.totalPosts;
+                        this.totalPages = parseInt(response.data.totalPages, 10);
+                        this.currentPage = response.data.currentPage;
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
@@ -279,6 +297,11 @@
                             console.log(error);
                         })
                 }
+            },
+            handlePageChange: function(evt) {
+                this.$emit("change", evt);
+                this.page = evt;
+                this.getAllPosts();
             }
         },
         components: {
