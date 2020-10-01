@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
             validate: {
-                isAlphanumeric: true,
                 len: [3, 15],
             }
         },

@@ -49,6 +49,16 @@
                 token: '',
                 userId: '',
                 search: '',
+                notificationSystem: {
+                    options: {
+                        success: {
+                            position: "bottomCenter",
+                        },
+                        error: {
+                            position: "bottomCenter"
+                        },
+                    }
+                }
             }
         },
         created() {
@@ -66,7 +76,10 @@
             },
             logout: function() {
                 this.$cookie.delete('token');
-                this.$router.push({ path: '/login' });
+                this.$toast.success('Vous avez été déconnecté !', 'OK', this.notificationSystem.options.success);
+                setTimeout(() => {
+                    this.$router.push({ path: '/login' });
+                }, 100)
             }
         }
     }

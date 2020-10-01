@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'test'; // Mettre 'development' pour le projet définitif
+const env = process.env.NODE_ENV || 'development'; // Mettre 'development' pour le projet définitif // Mettre 'test' pour la bdd de test
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 

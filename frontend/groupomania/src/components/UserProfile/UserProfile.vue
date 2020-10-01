@@ -87,7 +87,6 @@
             const token = JSON.parse(this.$cookie.get('token'));
             this.token = token;
             const user = getToken();
-            console.log(user);
             this.userId = user.id;
             this.isAdmin = user.isAdmin;
             this.usernameParams = this.$route.params.username;
@@ -107,7 +106,6 @@
                 this.axios(infosUserObj)
                     .then(response => {
                         this.userDatas = response.data;
-                        console.log(this.userDatas);
                         this.email = this.userDatas.email;
                         this.username = this.userDatas.username;
                         this.department = this.userDatas.department;

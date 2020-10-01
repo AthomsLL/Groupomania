@@ -34,6 +34,7 @@
                     <v-textarea
                         v-model="content"
                         placeholder="Que voulez-vous dire ?"
+                        :counter="250"
                         :rules="contentRules"
                         hint="Entre 3 et 250 caractères"
                         required
@@ -88,7 +89,7 @@
                 title: '',
                 titleRules: [
                     v => !!v || 'Le titre du post est requis ',
-                    v => v.length <= 50 || 'Votre titre doit contenir moins de 50 caractères'
+                    v => v.length <= 75 || 'Votre titre doit contenir moins de 75 caractères'
                 ],
                 post: '',
                 notificationSystem: {
@@ -150,10 +151,6 @@
                                     this.urlAttachment = this.results.secure_url;
                                     this.attachmentPublicId = this.results.public_id;
 
-                                    console.log(this.results);
-                                    console.log(this.urlAttachment);
-                                    console.log(this.attachmentPublicId);
-
                                     this.axios
                                         .post(`http://localhost:3000/api/v1/posts`, {
                                             title: this.title,
@@ -175,7 +172,6 @@
                                         })
                                         .catch(error => {
                                             this.errors.push(error);
-                                            console.log(this.errors[0]);
 
                                             this.$toast.error('Impossible de créer le post !', 'Oups', this.notificationSystem.options.error);
 
@@ -214,7 +210,6 @@
                         })
                         .catch(error => {
                             this.errors.push(error);
-                            console.log(this.errors[0]);
                             this.$toast.error('Impossible de créer le post !', 'Oups', this.notificationSystem.options.error);
                         })
                 }
