@@ -21,10 +21,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     res.setHeader('Content-Type', 'Application/json');
-    res.setHeader('Content-Type', 'image/jpeg');
-    res.setHeader('Content-Type', 'image/jpg');
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Content-Type', 'image/gif');
     res.removeHeader('X-Powered-By');
     next();
 });

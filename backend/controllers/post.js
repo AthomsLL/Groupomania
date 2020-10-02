@@ -60,63 +60,6 @@ exports.getOnePost = (req, res, next) => {
     .catch(error => res.status(404).json({ error }));
 };
 
-// Controller permettant d'afficher la liste des posts
-/* exports.getAllPosts = (req, res, next) => {
-    db.database.Post.findAll({
-        order: [["createdAt", "DESC"]],
-        include: [{
-            model: db.database.User,
-            attributes: ['id', 'username', 'avatar']
-        }]
-    })
-    .then(async posts => {
-        const userId = token.getUserIdByToken(req);
-        const arrayPosts = [];
-        for (const post of posts) {
-            const commentsCount = await db.database.Comment.count({
-                where: {
-                    PostId: post.id,
-                }
-            });
-            
-            const likesCount = await db.database.Like_post.count({
-                where: {
-                    PostId: post.id, 
-                },
-            });
-
-            const like = await db.database.Like_post.findOne({
-                where: {
-                    UserId: userId,
-                    PostId: post.id,
-                },
-            });
-
-            if (like) {
-                liked = true;
-            } else {
-                liked = false;
-            }
-
-            arrayPosts.push({
-                "id": post.id,
-                "title": post.title,
-                "content": post.content,
-                "attachment": post.attachment,
-                "avatar": post.User.avatar,
-                "username": post.User.username,
-                "userId": post.UserId,
-                "nbLikes": likesCount,
-                "nbComments": commentsCount,
-                "liked": liked,
-                "createdAt": post.createdAt
-            })
-        }
-        return res.status(200).json(arrayPosts)
-    })
-    .catch(error => res.status(400).json({ error: error }))
-}; */
-
 // Controller permettant d'afficher la liste des posts et la pagination
 exports.getAllPosts = (req, res, next) => {
     const { page, size } = req.query;
