@@ -57,6 +57,11 @@
                         </v-list-item>
                     </v-card>
                 </div>
+
+                <v-pagination
+                    v-model.lazy="page"
+                    :length="totalPages"                
+                ></v-pagination>
             </div>
 
             <div v-else class="unfortunately">
@@ -75,6 +80,10 @@
             return {
                 token: '',
                 userId: '',
+                page: 1,
+                currentPage: '',
+                totalPages: '',
+                totalPosts: '',
                 posts: [],
             }
         },
@@ -86,16 +95,25 @@
 
             this.getAllPosts();
         },
+        watch: {
+            page: function (value) {
+                this.page = value;
+                this.getAllPosts();
+            }
+        },
         methods: {
             getAllPosts: function() {
                 this.axios
-                    .get(`http://localhost:3000/api/v1/posts`, {
+                    .get(`http://localhost:3000/api/v1/posts?page=${this.page - 1}`, {
                         headers: {
                             Authorization: "Bearer " + this.token,
                         }
                     })
                     .then(response => {
-                        this.posts = response.data;
+                        this.posts = response.data.posts;
+                        this.totalPosts = response.data.totalPosts;
+                        this.totalPages = parseInt(response.data.totalPages, 10);
+                        this.currentPage = response.data.currentPage;
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {
@@ -108,7 +126,7 @@
             },
             goToOnePost: function(postId) {
                 this.$router.push({ path: `/post/${postId}` });
-            }
+            },
         }
     }
 </script>

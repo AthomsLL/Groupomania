@@ -197,7 +197,7 @@
             filteredPosts: function() {
                 return this.posts.filter((post) => {
                     return post.title.match(this.search) || 
-                              post.username.match(this.search);
+                           post.username.match(this.search);
                 });
             },
         },
@@ -298,11 +298,6 @@
                         })
                 }
             },
-            handlePageChange: function(evt) {
-                this.$emit("change", evt);
-                this.page = evt;
-                this.getAllPosts();
-            }
         },
         components: {
             'main-header': Header,
