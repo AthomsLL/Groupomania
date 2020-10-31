@@ -59,6 +59,15 @@ Côté backend, plusieurs dépendances npm sont nécessaires :
 ### Connexion ###
 La connexion à la base de données "groupomania" s'effectue avec des identifiants créés et stockés dans des variables d'environnement.
 
+### Installation ###
+Pour installer les dépendances listées ci-dessus, voici la marche à suivre : 
+
+Pour le frontend, se placer à l'aide du terminal dans le dossier "frontend/groupomania" et taper la commande : "npm install".
+Ceci installera les dépendances nécessaires au fonctionnement du frontend.
+
+Pour le backend, se placer toujours à l'aide du terminal dans le dossier "backend" et taper la commande : "npm install".
+Ceci installera les dépendances nécessaires au fonctionnement du backend.
+
 ### Lancement ###
 
 Côté frontend : 
@@ -67,5 +76,5 @@ Côté frontend :
 
 Côté backend : 
     - Dans le terminal, se placer dans le dossier backend du projet et taper la commande "nodemon server"
-    - Le backend (API) se lance sur http://localhost:3000/.
+    - Le backend (API) se lance sur http://localhost:3000/api/v1.
 
