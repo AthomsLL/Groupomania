@@ -2,6 +2,10 @@
     margin-bottom: 40px;
 }
 
+.label {
+    display: none;
+}
+
 .header-searchbar {
     display: flex;
     font-size: 18px;

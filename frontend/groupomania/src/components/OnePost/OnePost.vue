@@ -11,7 +11,7 @@
 
                     <v-menu v-if="userId === postDatas.userId">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn icon v-on="on" v-bind="attrs">
+                            <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                                 <v-icon size="24px">mdi-dots-horizontal</v-icon>
                             </v-btn>
                         </template>
@@ -42,7 +42,7 @@
 
                     <v-menu v-else-if="isAdmin === true">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn icon v-on="on" v-bind="attrs">
+                            <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                                 <v-icon size="24px">mdi-dots-horizontal</v-icon>
                             </v-btn>
                         </template>
@@ -152,7 +152,7 @@
                             <div class="comment-menu">
                                 <v-menu v-if="userId === comment.userId">
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn icon v-on="on" v-bind="attrs">
+                                        <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                                             <v-icon size="24px">mdi-dots-horizontal</v-icon>
                                         </v-btn>
                                     </template>
@@ -204,7 +204,7 @@
 
                                 <v-menu v-else-if="isAdmin === true">
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn icon v-on="on" v-bind="attrs">
+                                        <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                                             <v-icon size="24px">mdi-dots-horizontal</v-icon>
                                         </v-btn>
                                     </template>
@@ -237,8 +237,10 @@
                     </div>
 
                     <div class="comment-create">
+                        <label for="comment" class="label">Rechercher</label>
                         <v-textarea
                             v-model="commentContent"
+                            id="comment"
                             placeholder="Laisser un commentaire..."
                             :rules="commentContentRules"
                             hint="Entre 3 et 200 caractères"
@@ -247,7 +249,7 @@
                         ></v-textarea>
 
                         <div class="cta-comment">
-                            <v-btn class="fc-white mb-3" small color="#F44332" type="submit" @click.prevent="createComment()">
+                            <v-btn class="fc-white mb-3" small color="#EA1C04" type="submit" @click.prevent="createComment()">
                                 <v-icon color="white" size="20px">mdi-send</v-icon>
                                 Envoyer
                             </v-btn>

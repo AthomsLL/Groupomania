@@ -54,8 +54,8 @@
                         required
                     ></v-text-field>
 
-                    <v-btn class="eye mb-0" icon v-if="passwordFieldType === 'password'" @click="toggleShowPassword()"><v-icon>mdi-eye</v-icon></v-btn>
-                    <v-btn class="eye mb-0" icon v-if="passwordFieldType != 'password'" @click="toggleShowPassword()"><v-icon>mdi-eye-off</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType === 'password'" @click="toggleShowPassword()" aria-label="icone oeil"><v-icon>mdi-eye</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType != 'password'" @click="toggleShowPassword()" aria-label="icone oeil barré"><v-icon>mdi-eye-off</v-icon></v-btn>
                 </v-row>
 
                 <v-btn

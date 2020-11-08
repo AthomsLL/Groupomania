@@ -38,7 +38,7 @@
                 </v-btn>
             </v-form>
 
-            <v-btn class="cta-cancel" type="button" outlined color="#F44336" @click.prevent="goToProfile()">
+            <v-btn class="cta-cancel" type="button" outlined color="#EA1C04" @click.prevent="goToProfile()">
                 Annuler
             </v-btn>
         </div>

@@ -15,14 +15,14 @@
                 <p class="role" v-else>Modérateur</p>
 
                 <div v-if="isAdmin == true" class="cta-delete">
-                    <v-btn color="#F44336" outlined @click="deleteProfile()">
+                    <v-btn color="#EA1C04" outlined @click="deleteProfile()">
                         Supprimer le compte
                     </v-btn>
                 </div>
             </div>
 
             <div class="tabs">
-                <v-tabs centered show-arrows color="#F44336">
+                <v-tabs centered show-arrows color="#EA1C04">
                     <v-tab @click="toggleInfos()">Infos</v-tab>
                     <v-tab @click="togglePosts()">Posts</v-tab>
                     <v-tab @click="toggleComments()">Commentaires</v-tab>

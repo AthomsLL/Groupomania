@@ -14,7 +14,7 @@
 
         <v-menu class="header-menu">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-on="on" v-bind="attrs">
+                <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                     <v-icon size="24px">mdi-dots-vertical</v-icon>
                 </v-btn>
             </template>

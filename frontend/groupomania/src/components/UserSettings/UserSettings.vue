@@ -24,13 +24,13 @@
 
                 <div class="cta-row">
                     <div v-if="userId == userDatas.id" class="cta-edit cta">
-                        <v-btn color="#F44336" outlined @click="goToEditUsername()">
+                        <v-btn color="#EA1C04" outlined @click="goToEditUsername()">
                             Modifier Pseudo
                         </v-btn>
                     </div>
 
                     <div v-if="userId == userDatas.id" class="cta-edit cta">
-                        <v-btn color="#F44336" outlined @click="goToEditPassword()">
+                        <v-btn color="#EA1C04" outlined @click="goToEditPassword()">
                             Modifier Mot de passe
                         </v-btn>
                     </div>

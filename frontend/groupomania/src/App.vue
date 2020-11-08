@@ -40,7 +40,7 @@ export default {
   }
 
   .unfortunately {
-      color: #F44336;
+      color: #EA1C04;
       font-size: 20px;
       font-weight: 500;
       margin-top: 20px;

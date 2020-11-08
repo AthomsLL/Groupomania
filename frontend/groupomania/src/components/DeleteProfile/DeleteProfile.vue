@@ -26,7 +26,7 @@
                 </div>
 
                 <div v-if="userId == userDatas.id" class="cta-edit cta">
-                    <v-btn color="#F44336" outlined large @click="goToSettings()">
+                    <v-btn color="#EA1C04" outlined large @click="goToSettings()">
                         Annuler
                     </v-btn>
                 </div>

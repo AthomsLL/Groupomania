@@ -35,7 +35,7 @@
                     <div class="cta cta-edit">
                         <v-btn
                             class="cta-edit"
-                            color="#F44336"
+                            color="#EA1C04"
                             :disabled="!valid"
                             type="submit"
                             @click.prevent="formSubmit">
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="cta">
-                        <v-btn color="#F44336" outlined @click="goToSettings()">
+                        <v-btn color="#EA1C04" outlined @click="goToSettings()">
                             Annuler
                         </v-btn>
                     </div>

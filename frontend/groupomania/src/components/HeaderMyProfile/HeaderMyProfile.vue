@@ -1,6 +1,6 @@
 <template>
     <div class="header-home">
-        <v-btn icon @click="goHomePage()">
+        <v-btn icon @click="goHomePage()" aria-label="close button">
             <v-icon size="24px">mdi-close</v-icon>
         </v-btn>
 
@@ -8,7 +8,7 @@
 
         <v-menu>
             <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-on="on" v-bind="attrs">
+                <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                     <v-icon size="24px">mdi-dots-vertical</v-icon>
                 </v-btn>
             </template>

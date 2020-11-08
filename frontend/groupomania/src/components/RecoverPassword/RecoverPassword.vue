@@ -2,9 +2,9 @@
     <div>
         <header-sign></header-sign>
         <div class="container">
-            <p class="feature-dev">
+            <h1 class="feature-dev">
                 FEATURE EN COURS DE DEVELOPPEMENT
-            </p>
+            </h1>
 
             <p class="forgot-text">
                 Vous pourrez renseigner votre nouveau mot de passe

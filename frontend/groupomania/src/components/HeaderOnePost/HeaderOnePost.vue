@@ -1,6 +1,6 @@
 <template>
     <div class="header-home">
-        <v-btn icon @click="goToPosts()">
+        <v-btn icon @click="goToPosts()" aria-label="return to timeline button">
             <v-icon size="24px">mdi-arrow-left</v-icon>
         </v-btn>
 
@@ -16,7 +16,7 @@
 
         <v-menu>
             <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-on="on" v-bind="attrs">
+                <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                     <v-icon size="24px">mdi-dots-vertical</v-icon>
                 </v-btn>
             </template>

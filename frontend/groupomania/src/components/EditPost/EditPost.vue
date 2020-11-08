@@ -27,12 +27,13 @@
                 </div>
 
                 <div class="post-content mt-6">
-                    <h3 class="post-content-title">
+                    <label for="content" class="post-content-title">
                         Exprimez-vous :
-                    </h3>
+                    </label>
 
                     <v-textarea
                         v-model="content"
+                        id="content"
                         placeholder="Que voulez-vous dire ?"
                         :rules="contentRules"
                         hint="Entre 3 et 250 caractères"
@@ -42,13 +43,13 @@
 
                 <div class="cta-row">
                     <div class="cta-submit-post">
-                        <v-btn class="fc-white" color="#F44336" large type="submit" @click.prevent="formSubmit()">
+                        <v-btn class="fc-white" color="#EA1C04" large type="submit" @click.prevent="formSubmit()">
                             Modifier
                         </v-btn>
                     </div>
 
                     <div class="cta-cancel">
-                        <v-btn color="#F44336" outlined large type="button" @click="goToPosts()">
+                        <v-btn color="#EA1C04" outlined large type="button" @click="goToPosts()">
                             Annuler
                         </v-btn>
                     </div>

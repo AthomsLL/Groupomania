@@ -24,8 +24,8 @@
                         required
                     ></v-text-field>
 
-                    <v-btn class="eye mb-0" icon v-if="passwordFieldType1 === 'password'" @click="toggleShowPassword1()"><v-icon>mdi-eye</v-icon></v-btn>
-                    <v-btn class="eye mb-0" icon v-if="passwordFieldType1 != 'password'" @click="toggleShowPassword1()"><v-icon>mdi-eye-off</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType1 === 'password'" @click="toggleShowPassword1()" aria-label="eye icon"><v-icon>mdi-eye</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType1 != 'password'" @click="toggleShowPassword1()" aria-label="eye-off icon"><v-icon>mdi-eye-off</v-icon></v-btn>
                 </v-row>
 
                 <v-row class="password">
@@ -37,8 +37,8 @@
                         required
                     ></v-text-field>
 
-                    <v-btn class="eye mb-0" icon v-if="passwordFieldType2 === 'password'" @click="toggleShowPassword2()"><v-icon>mdi-eye</v-icon></v-btn>
-                    <v-btn class="eye mb-0" icon v-if="passwordFieldType2 != 'password'" @click="toggleShowPassword2()"><v-icon>mdi-eye-off</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType2 === 'password'" @click="toggleShowPassword2()" aria-label="eye icon"><v-icon>mdi-eye</v-icon></v-btn>
+                    <v-btn class="eye mb-0" icon v-if="passwordFieldType2 != 'password'" @click="toggleShowPassword2()" aria-label="eye-off icon"><v-icon>mdi-eye-off</v-icon></v-btn>
                 </v-row>
 
                 <div class="cta-row">
@@ -53,7 +53,7 @@
                     </div>
 
                     <div>
-                        <v-btn color="#F44336" outlined class="cta" @click="goToSettings()">
+                        <v-btn color="#EA1C04" outlined class="cta" @click="goToSettings()">
                             Annuler
                         </v-btn>
                     </div>

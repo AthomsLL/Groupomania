@@ -16,13 +16,13 @@
             </div>
 
             <div class="tabs">
-                <v-tabs v-if="userDatas.isAdmin == false" centered show-arrows color="#F44336" grow>
+                <v-tabs v-if="userDatas.isAdmin == false" centered show-arrows color="#EA1C04" grow>
                     <v-tab @click="toggleInfos()">Infos Personnelles</v-tab>
                     <v-tab @click="togglePosts()">Posts</v-tab>
                     <v-tab @click="toggleComments()">Commentaires</v-tab>
                 </v-tabs>
 
-                <v-tabs v-else centered show-arrows color="#F44336" grow>
+                <v-tabs v-else centered show-arrows color="#EA1C04" grow>
                     <v-tab @click="toggleInfosAdmin()">Infos Personnelles</v-tab>
                     <v-tab @click="toggleUsers()">Utilisateurs</v-tab>
                     <v-tab @click="toggleLastPosts()">Derniers posts</v-tab>
@@ -34,7 +34,7 @@
                     <user-infos :email="email" :username="username" :department="department" />
 
                     <div v-if="userId == userDatas.id" class="cta-edit">
-                        <v-btn color="#F44336" outlined  @click="goToEditProfile()">
+                        <v-btn color="#EA1C04" outlined  @click="goToEditProfile()">
                             Modifier Profil
                         </v-btn>
                     </div>
@@ -54,7 +54,7 @@
                     <user-infos :email="email" :username="username" :department="department" />
 
                     <div v-if="userId == userDatas.id" class="cta-edit">
-                        <v-btn color="#F44336" outlined large @click="goToEditProfile()">
+                        <v-btn color="#EA1C04" outlined large @click="goToEditProfile()">
                             Modifier Profil
                         </v-btn>
                     </div>

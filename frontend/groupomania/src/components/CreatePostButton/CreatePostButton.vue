@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn class="cta-create" fab dark color="#F44332" @click="goToCreatePost()">
+        <v-btn class="cta-create" fab dark color="#F44332" @click="goToCreatePost()" aria-label="create post button">
             <v-icon dark>mdi-pencil-plus</v-icon>
         </v-btn>
     </div>

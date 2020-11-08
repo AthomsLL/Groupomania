@@ -5,8 +5,9 @@
         <div class="container">
             <div class="header-searchbar">
                 <div class="search">
-                    <input type="text" v-model="search" placeholder="Rechercher des posts"/>
-                    <v-icon color="#FE421A">mdi-magnify</v-icon>
+                    <label for="search" class="label">Rechercher</label>
+                    <input type="text" id="search" v-model="search" placeholder="Rechercher des posts"/>
+                    <v-icon color="#EA1C04">mdi-magnify</v-icon>
                 </div>
             </div>
 
@@ -20,7 +21,7 @@
 
                             <v-menu v-if="userId === post.userId">
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn icon v-on="on" v-bind="attrs">
+                                    <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                                         <v-icon size="24px">mdi-dots-horizontal</v-icon>
                                     </v-btn>
                                 </template>
@@ -51,7 +52,7 @@
 
                             <v-menu v-else-if="isAdmin === true">
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn icon v-on="on" v-bind="attrs">
+                                    <v-btn icon v-on="on" v-bind="attrs" aria-label="more options">
                                         <v-icon size="24px">mdi-dots-horizontal</v-icon>
                                     </v-btn>
                                 </template>
@@ -102,7 +103,7 @@
                                                 <p>{{ post.nbLikes }}</p>
                                             </div>
                                             <div class="like pointer" v-else @click="toggleLike(post)">
-                                                <v-icon color="#FE421A">mdi-heart</v-icon>
+                                                <v-icon color="#EA1C04">mdi-heart</v-icon>
                                                 <p>{{ post.nbLikes }}</p>
                                             </div>
                                         

@@ -1,6 +1,6 @@
 <template>
     <div class="header-home">
-        <v-btn icon @click="goToPosts()">
+        <v-btn icon @click="goToPosts()" aria-label="close button">
             <v-icon size="24px">mdi-close</v-icon>
         </v-btn>
 

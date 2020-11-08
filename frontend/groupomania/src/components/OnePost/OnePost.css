@@ -89,6 +89,10 @@
     padding: 0 16px;
 }
 
+.label {
+    display: none;
+}
+
 .cta-comment {
     display: flex;
     justify-content: flex-end;
