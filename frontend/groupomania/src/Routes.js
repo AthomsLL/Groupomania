@@ -41,6 +41,12 @@ export default [
         requiresAuth: true,
         beforeEnter: (to, from, next) => {
             if (VueCookie.get('token') == null) {
+                iziToast.error({
+                    title: 'ACCES INTERDIT !',
+                    message: "Merci de vous authentifier pour accéder au contenu.",
+                    position: 'bottomCenter'
+                })
+                
                 next ({ name: 'login'})
             } else {
                 next()
