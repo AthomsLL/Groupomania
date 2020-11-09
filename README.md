@@ -35,26 +35,26 @@ Côté frontend, plusieurs dépendances npm sont nécessaires :
 - Vuetify
 
 Côté backend, plusieurs dépendances npm sont nécessaires : 
-    - Bcrypt
-    - Body-Parser
-    - Cloudinary
-    - Dotenv
-    - Email-validator
-    - Express
-    - Express-bouncer
-    - Express-sequelize
-    - Helmet
-    - jsonwebtoken
-    - Nodemon
-    - Passport
-    - Passport-jwt
-    - Password-validator
-    - Pg
-    - Pg-hstore
-    - Sequelize
-    - Sequelize-cli
-    - Supertest
-    - Uniqid
+- Bcrypt
+- Body-Parser
+- Cloudinary
+- Dotenv
+- Email-validator
+- Express
+- Express-bouncer
+- Express-sequelize
+- Helmet
+- jsonwebtoken
+- Nodemon
+- Passport
+- Passport-jwt
+- Password-validator
+- Pg
+- Pg-hstore
+- Sequelize
+- Sequelize-cli
+- Supertest
+- Uniqid
 
 ### Connexion ###
 La connexion à la base de données "groupomania" s'effectue avec des identifiants créés et stockés dans des variables d'environnement.
