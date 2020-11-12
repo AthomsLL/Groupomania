@@ -373,6 +373,10 @@
                             this.getOnePost();
                         })
                         .catch(error  => {
+                            if(error.response.status == 403) {
+                                this.$toast.error('Vous avez déjà liké ce Post !', 'Oups', this.notificationSystem.options.error);
+                            }
+
                             if (error.response.status == 401) {
                                 this.$cookie.delete('token');
                                 this.$router.push({ path: `/login` })
@@ -417,6 +421,10 @@
                             this.getOnePost();
                         })
                         .catch(error  => {
+                            if(error.response.status == 403) {
+                                this.$toast.error('Vous avez déjà liké ce Commentaire !', 'Oups', this.notificationSystem.options.error);
+                            }
+
                             if (error.response.status == 401) {
                                 this.$cookie.delete('token');
                                 this.$router.push({ path: `/login` })

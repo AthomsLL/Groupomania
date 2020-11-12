@@ -124,9 +124,17 @@
                         }
                     })
                     .then(response => {
-                        this.postDatas = response.data;
-                        this.title = this.postDatas.title;
-                        this.content = this.postDatas.content;
+                        console.log(response.data.userId);
+                        if(this.userId == response.data.userId) {
+                            this.postDatas = response.data;
+                            this.title = this.postDatas.title;
+                            this.content = this.postDatas.content;
+                        } else {
+                            this.$toast.error("Vous n'êtes pas autorisé à visiter cette page !", 'Oups !', this.notificationSystem.options.error)
+                            setTimeout(() => {
+                                this.$router.push({ path: `/` });
+                            }, 100)
+                        }
                     })
                     .catch(error  => {
                         if (error.response.status == 401) {

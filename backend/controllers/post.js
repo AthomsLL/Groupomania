@@ -251,18 +251,29 @@ exports.likePost = async (req, res, next) => {
         });
     }
 
-    const like = await db.database.Like_post.create({
-        UserId: user.id,
-        PostId: post.id,
+    const isLiked = await db.database.Like_post.findOne({
+        where: {
+            UserId: user.id,
+            PostId: post.id,
+        },
     });
 
-    if (like) {
-        res.status(201).json({ 
-            message: 'Like ajouté au post avec succès !',
-            liked : true 
-        });
+    if(isLiked) {
+        res.status(403).json({ message: "Vous avez déjà liké ce Post !"})
     } else {
-        res.status(400).json({ message: "Impossible d'ajouter le like à ce Post !"});
+        const like = await db.database.Like_post.create({
+            UserId: user.id,
+            PostId: post.id,
+        });
+
+        if (like) {
+            res.status(201).json({ 
+                message: 'Like ajouté au post avec succès !',
+                liked : true 
+            });
+        } else {
+            res.status(400).json({ message: "Impossible d'ajouter le like à ce Post !"});
+        }
     }
 };
 
@@ -450,18 +461,29 @@ exports.likeComment = async (req, res, next) => {
         });
     }
 
-    const like = await db.database.Like_comment.create({
-        UserId: user.id,
-        CommentId: comment.id,
+    const isLiked = await db.database.Like_comment.findOne({
+        where: {
+            UserId: user.id,
+            CommentId: comment.id,
+        },
     });
 
-    if (like) {
-        res.status(201).json({ 
-            message: 'Like ajouté au commentaire avec succès !',
-            liked : true 
-        });
+    if(isLiked) {
+        res.status(403).json({ message: "Vous avez déjà liké ce Commentaire !"})
     } else {
-        res.status(400).json({ message: "Impossible d'ajouter le like à ce Commentaire !"});
+        const like = await db.database.Like_comment.create({
+            UserId: user.id,
+            CommentId: comment.id,
+        });
+
+        if (like) {
+            res.status(201).json({ 
+                message: 'Like ajouté au commentaire avec succès !',
+                liked : true 
+            });
+        } else {
+            res.status(400).json({ message: "Impossible d'ajouter le like à ce Commentaire !"});
+        }
     }
 };
 
