@@ -59,12 +59,14 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import Header from '../Header/Header';
     import AttachmentPreview from '../AttachmentPreview/AttachmentPreview';
     import { getToken } from '../../../helpers/decode';
 
     export default {
         name: 'CreatePost',
+        mixins: [iziToast],
         data() {
             return {
                 valid: true,
@@ -90,13 +92,6 @@
                     v => v.length <= 75 || 'Votre titre doit contenir moins de 75 caractères'
                 ],
                 post: '',
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        }
-                    }
-                }
             }
         },
         created() {

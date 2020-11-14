@@ -48,6 +48,7 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import { getToken } from '../../../helpers/decode';
     import Header from '../Header/Header';
     import UserInfos from '../UserInfos/UserInfos';
@@ -56,6 +57,7 @@
 
     export default {
         name: 'UserProfile',
+        mixins: [iziToast],
         data() {
             return {
                 usernameParams: '',
@@ -71,16 +73,6 @@
                 showInfos: true,
                 showPosts: false,
                 showComments: false,
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
             }
         },
         created() {

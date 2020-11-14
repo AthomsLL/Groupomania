@@ -41,20 +41,14 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
+
     export default {
         name: 'HeaderOnePost',
+        mixins: [iziToast],
         data() {
             return {
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
+                
             }
         },
         methods: {

@@ -26,21 +26,15 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
+
     export default {
         name: 'FooterMenu',
+        mixins: [iziToast],
         props: ['userId'],
         data() {
             return {
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
+                
             }
         },
         methods: {

@@ -25,24 +25,16 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import { getToken } from '../../../helpers/decode';
 
     export default {
         name: 'HeaderSettings',
+        mixins: [iziToast],
         data() {
             return {
                 token: '',
                 userId: '',
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
             }
         },
         created() {

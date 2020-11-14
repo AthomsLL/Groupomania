@@ -39,10 +39,12 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import HeaderSign from '../HeaderSign/HeaderSign'
 
     export default {
         name: 'RecoverPassword',
+        mixins: [iziToast],
         data() {
             return {
                 valid: true,
@@ -52,16 +54,6 @@
                     v => !!v || 'Votre mot de passe est requis',
                     v => (v && v.length >= 8 && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v)) || 'Le mot de passe doit comporter au moins 8 caractères, dont au moins 1 minuscule, 1 majuscule et 1 chiffre'
                 ],
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-            }
             }
         },
         methods: {

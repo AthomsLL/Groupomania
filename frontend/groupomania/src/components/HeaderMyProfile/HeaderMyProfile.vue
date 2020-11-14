@@ -29,20 +29,14 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
+
     export default {
         name: 'HeaderMyProfile',
+        mixins: [iziToast],
         data() {
             return {
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
+                
             }
         },
         methods: {

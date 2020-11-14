@@ -66,11 +66,13 @@
 </template>
     
 <script>
+    import iziToast from '../mixins/iziToast';
     import Header from '../Header/Header'
     import { getToken } from '../../../helpers/decode'
 
     export default {
         name: 'EditPassword',
+        mixins: [iziToast],
         data() {
             return {
                 token: '',
@@ -91,16 +93,6 @@
                     v => (v && this.newPasswordConf === this.newPassword)  || 'Les mots de passe ne correspondent pas',
                 ],
                 valid: true,
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-            }
             }
         },
         created() {

@@ -146,7 +146,7 @@
 </template>
 
 <script>
-
+    import iziToast from '../mixins/iziToast';
     import Header from '../Header/Header';
     import FooterMenu from '../FooterMenu/FooterMenu';
     import CreatePostButton from '../CreatePostButton/CreatePostButton';
@@ -154,6 +154,7 @@
 
     export default {
         name: 'Posts',
+        mixins: [iziToast],
         data() {
             return {
                 token: '',
@@ -167,16 +168,6 @@
                 totalPages: '',
                 totalPosts: '',
                 search: '',
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter",
-                        }
-                    }
-                }
             }
         },
         created() {

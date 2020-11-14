@@ -264,12 +264,14 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import Header from '../Header/Header';
     import FooterMenu from '../FooterMenu/FooterMenu';
     import { getToken } from '../../../helpers/decode';
 
     export default {
         name: 'OnePost',
+        mixins: [iziToast],
         data() {
             return {
                 token: '',
@@ -288,16 +290,6 @@
                     v => !!v || 'Un contenu est requis ',
                     v => v.length <= 200 || 'Votre contenu doit contenir moins de 200 caractères'
                 ],
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
             }
         },
         created() {

@@ -47,12 +47,14 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import { getToken } from '../../../helpers/decode';
     import Header from '../Header/Header';
     import AvatarPreview from '../AvatarPreview/AvatarPreview';
 
     export default {
         name: 'EditProfile',
+        mixins: [iziToast],
         data() {
             return {
                 valid: true,
@@ -89,16 +91,6 @@
                 avatarPublicId: '',
                 token: '',
                 profile: '',
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
             }
         },
         created() {

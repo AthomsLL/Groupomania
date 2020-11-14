@@ -57,11 +57,13 @@
 
 <script>
 
+import iziToast from '../mixins/iziToast';
 import HeaderSign from '../HeaderSign/HeaderSign';
 import { getToken } from '../../../helpers/decode';
 
 export default {
     name: 'Login',
+    mixins: [iziToast],
     data() {
         return {
             valid: true,
@@ -77,16 +79,6 @@ export default {
             passwordRules: [
                 v => !!v || 'Votre mot de passe est requis',
             ],
-            notificationSystem: {
-                options: {
-                    success: {
-                        position: "bottomCenter",
-                    },
-                    error: {
-                        position: "bottomCenter"
-                    },
-                }
-            }
         }
     },
     created() {

@@ -37,27 +37,19 @@
 </template>
     
 <script>
+    import iziToast from '../mixins/iziToast';
     import Header from '../Header/Header';
     import { getToken } from '../../../helpers/decode';
 
     export default {
         name:'DeleteProfile',
+        mixins: [iziToast],
         data() {
             return {
                 token: '',
                 userId: '',
                 isAdmin: '',
                 userDatas: '',
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
             }
         },
         created() {

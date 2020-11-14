@@ -61,12 +61,14 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import Header from '../Header/Header';
     import AttachmentPreview from '../AttachmentPreview/AttachmentPreview';
     import { getToken } from '../../../helpers/decode';
 
     export default {
         name: 'EditPost',
+        mixins: [iziToast],
         data() {
             return {
                 valid: true,
@@ -93,16 +95,6 @@
                     v => !!v || 'Le titre du post est requis ',
                     v => v.length <= 50 || 'Votre titre doit contenir moins de 50 caractères'
                 ],
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "bottomCenter",
-                        },
-                        error: {
-                            position: "bottomCenter"
-                        },
-                    }
-                }
             }
         },
         created() {
