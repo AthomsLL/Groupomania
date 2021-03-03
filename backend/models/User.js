@@ -61,6 +61,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
+        },
+        resetLink: {
+            type: DataTypes.STRING,
+            defaultValue: ''
         }
     });
     
