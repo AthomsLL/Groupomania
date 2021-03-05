@@ -7,7 +7,7 @@ const authCtrl = require('../controllers/auth');
 router.post('/signup', authCtrl.signup);
 router.post('/login', bouncer.block, authCtrl.login);
 
-router.put('/forgot-password', authCtrl.forgotPassword);
-router.put('resetPassword', authCtrl.resetPassword);
+router.post('/forgot-password', authCtrl.forgotPassword);
+router.put('/resetPassword', authCtrl.resetPassword);
 
 module.exports = router;

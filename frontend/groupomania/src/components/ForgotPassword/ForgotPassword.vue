@@ -22,7 +22,7 @@
                     <div>
                         <v-btn
                             class="cta-confirm"
-                            :disabled="true"
+                            :disabled="false"
                             type="submit"
                             @click.prevent="formSubmit">
                                 Confirmer
@@ -45,10 +45,12 @@
 </template>
 
 <script>
+    import iziToast from '../mixins/iziToast';
     import HeaderSign from '../HeaderSign/HeaderSign'
 
     export default {
         name: 'ForgotPassword',
+        mixins: [iziToast],
         data: () => ({
             valid: true,
             email: '',
@@ -60,6 +62,22 @@
         methods: {
             formSubmit: function() {
                 this.$refs.form.validate();
+                this.axios
+                    .post('http://localhost:3000/api/v1/auth/forgot-password', {
+                        email: this.email
+                    })
+                    .then(response => {
+                        console.log(response);
+                        this.$toast.success('Un email avec un lien de modification de mot de passe vient de vous être envoyé !', 'Succès !', this.notificationSystem.options.success);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        if(error.response.status == 404) {
+                            this.$toast.error('Merci de renseigner un email existant !', 'Email non reconnu !', this.notificationSystem.options.error)
+                        } else {
+                            this.$toast.error('Une erreur est survenue !', 'Oups !', this.notificationSystem.options.error)
+                        }
+                    })
             },
             goToLogin: function() {
                 this.$router.push({ path: '/login' });
