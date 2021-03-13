@@ -3,7 +3,7 @@
         <header-sign></header-sign>
         <div class="container">
             <h1 class="feature-dev">
-                FEATURE EN COURS DE DEVELOPPEMENT
+                MODIFIEZ VOTRE MOT DE PASSE
             </h1>
 
             <p class="forgot-text">

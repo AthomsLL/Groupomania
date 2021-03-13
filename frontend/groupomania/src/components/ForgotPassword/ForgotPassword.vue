@@ -3,11 +3,11 @@
         <header-sign></header-sign>
         <div class="container">
             <h1 class="feature-dev">
-                FEATURE EN COURS DE DEVELOPPEMENT
+                DEMANDEZ UN NOUVEAU MOT DE PASSE
             </h1>
 
             <p class="forgot-text">
-                Vous pourrez renseigner votre email pour recevoir un lien qui permettra de modifier votre mot de passe
+                Renseignez votre email pour recevoir un code de vérification permettant de modifier votre mot de passe.
             </p>
 
             <v-form ref="form" v-model="valid" lazy-validation>
@@ -68,7 +68,10 @@
                     })
                     .then(response => {
                         console.log(response);
-                        this.$toast.success('Un email avec un lien de modification de mot de passe vient de vous être envoyé !', 'Succès !', this.notificationSystem.options.success);
+                        this.$toast.success('Un email avec un code de vérification pour modifier votre mot de passe vient de vous être envoyé !', 'Succès !', this.notificationSystem.options.success);
+                        setTimeout(() => {
+                            this.$router.push({ path: `/recover-password` });
+                        }, 100)
                     })
                     .catch(error => {
                         console.log(error);

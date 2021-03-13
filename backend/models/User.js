@@ -62,9 +62,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: false
         },
-        resetLink: {
-            type: DataTypes.STRING,
-            defaultValue: ''
+        resetCode: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         }
     });
     
