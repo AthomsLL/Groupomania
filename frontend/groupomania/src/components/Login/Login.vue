@@ -129,7 +129,9 @@ export default {
                         this.$toast.error("Merci de renseigner vos identifiants !", 'Identifiants incorrects !', this.notificationSystem.options.error)
                     }
 
-                    console.log(error);
+                    if (error.response.status == 429) {
+                        this.$toast.error("Trop de tentatives de connexion erronées, merci de patienter quelques minutes avant d'essayer de vous connecter de nouveau !", 'Tentatives excessives !', this.notificationSystem.options.error)
+                    }
                 })
         },
         toggleShowPassword: function() {

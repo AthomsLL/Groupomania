@@ -58,6 +58,7 @@
                 v => !!v || 'Votre E-mail est requis',
                 v => /.+@.+\..+/.test(v) || 'Votre E-mail doit être valide',
             ],
+            token: '',
         }),
         methods: {
             formSubmit: function() {
@@ -67,14 +68,14 @@
                         email: this.email
                     })
                     .then(response => {
-                        console.log(response);
+                        this.token = response.data.token;
+                        this.$cookie.set('token', JSON.stringify(this.token), 1);
                         this.$toast.success('Un email avec un code de vérification pour modifier votre mot de passe vient de vous être envoyé !', 'Succès !', this.notificationSystem.options.success);
                         setTimeout(() => {
                             this.$router.push({ path: `/recover-password` });
                         }, 100)
                     })
                     .catch(error => {
-                        console.log(error);
                         if(error.response.status == 404) {
                             this.$toast.error('Merci de renseigner un email existant !', 'Email non reconnu !', this.notificationSystem.options.error)
                         } else {

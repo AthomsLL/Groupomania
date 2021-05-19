@@ -8,6 +8,6 @@ router.post('/signup', authCtrl.signup);
 router.post('/login', bouncer.block, authCtrl.login);
 
 router.post('/forgot-password', authCtrl.forgotPassword);
-router.put('/resetPassword', authCtrl.resetPassword);
+router.post('/reset-password', authCtrl.resetPassword);
 
 module.exports = router;

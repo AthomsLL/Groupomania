@@ -113,49 +113,46 @@ exports.forgotPassword = (req, res, next) => {
         const msg = {
             to: req.body.email,
             from: process.env.SENDGRID_FROM_MAIL,
-            subject: 'Groupomania - Voici votre code de vérification pour modifier votre mot de passe',
+            subject: 'GROUPOMANIA - Réinitialisation de mot de passe !',
             html: `
-                    <h2>Merci d'utiliser Groupomania</h2>
-                    <br><br>
+                    <h2>Merci d'utiliser Groupomania.</h2>
                     <p>Votre code de vérification pour modifier votre mot de passe est :</p>
-                    <br><br>
-                    <strong>${code}</strong>
-                    <br><br>
+                    <p><strong>${code}</strong></p>
                     <p>Merci de copier ce code et de l'utiliser sur l'application pour valider la modification de votre mot de passe.</p>
-                    <br><br>
-                    <p>L'équipe technique Groupomania.</p>
+                    <p>L'équipe technique GROUPOMANIA.</p>
             `
         }
 
         db.database.User.update({resetCode: code}, { returning: true, where: { email: req.body.email }})
-        .then(
+        .then(([rowsUpdate, [updatedUser]]) => {
+            res.status(200).send({
+                token: jwt.sign(
+                    { 
+                        'id': updatedUser.id,
+                        'avatar': updatedUser.avatar, 
+                        'avatarPublicId': updatedUser.avatarPublicId,
+                        'email': updatedUser.email, 
+                        'username': updatedUser.username,
+                        'firstName': updatedUser.firstName,
+                        'lastName': updatedUser.lastName,
+                        'department': updatedUser.department,
+                        'isAdmin': updatedUser.isAdmin,
+                        'resetCode': updatedUser.resetCode,
+                        'createdAt': updatedUser.createdAt 
+                    },
+                    process.env.SECRET,
+                    { expiresIn: '1d' }
+                )
+            });
             sgMail
             .send(msg)
-            .then(() => {
-                console.log('Email envoyé !')
-                res.status(200).send({
-                    token: jwt.sign(
-                        { 
-                            'id': user.id,
-                            'avatar': user.avatar, 
-                            'avatarPublicId': user.avatarPublicId,
-                            'email': user.email, 
-                            'username': user.username,
-                            'firstName': user.firstName,
-                            'lastName': user.lastName,
-                            'department': user.department,
-                            'isAdmin': user.isAdmin,
-                            'createdAt': user.createdAt 
-                        },
-                        process.env.SECRET,
-                        { expiresIn: '1d' }
-                    )
-                });
-            })
+            .then("Email envoyé avec succès !")
             .catch((error) => {
                 console.error(error);
                 res.status(401).send({ error: "L'email n'a pas pu être envoyé !"});
-            }))
+            })
+        })
+            
         .catch(error => res.status(400).json({ error }))
     })
 };
@@ -163,6 +160,10 @@ exports.forgotPassword = (req, res, next) => {
 exports.resetPassword = (req, res, next) => {
     db.database.User.findOne({ where: { resetCode: req.body.resetCode }})
         .then((user) => {
+            if(!user) {
+                return res.status(404).json({ error: 'Utilisateur non trouvé !'});
+            }
+
             let isValid = true;
             let message = '';
 
@@ -187,4 +188,5 @@ exports.resetPassword = (req, res, next) => {
                 })
             }
         })
+        .catch(error => res.status(400).json({ error }))
 };
